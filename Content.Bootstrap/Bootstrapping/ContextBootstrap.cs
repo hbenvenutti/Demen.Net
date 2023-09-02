@@ -9,7 +9,7 @@ namespace Demen.Content.Bootstrap.Bootstrapping;
 public static class ContextBootstrap
 {
 	public static IServiceCollection ConfigureDbContext(
-		IServiceCollection services,
+		this IServiceCollection services,
 		IConfiguration configuration
 	)
 	{
@@ -33,6 +33,8 @@ public static class ContextBootstrap
 			.ServiceProvider
 			.GetRequiredService<ContentDbContext>();
 
-		contentContext.Database.Migrate();
+		contentContext
+			.Database
+			.Migrate();
 	}
 }
