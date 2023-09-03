@@ -35,7 +35,7 @@ public class ManagerDomain : BaseDomain
 	}
 
 	// ---- factories ------------------------------------------------------- //
-	public ManagerDomain Create(
+	public static ManagerDomain Create(
 		string name,
 		string surname,
 		string password
