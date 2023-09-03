@@ -1,6 +1,7 @@
 using Demen.Content.Data.Contexts;
 using Demen.Content.Data.Entities;
 using Demen.Content.Domain.Manager;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demen.Content.Data.Repositories;
 
@@ -26,7 +27,18 @@ public class ManagerRepository : IManagerRepository
 		await _contentDbContext
 			.SaveChangesAsync();
 
-		managerDomain = managerEntity;
+		managerDomain = managerEntity!;
+
+		return managerDomain;
+	}
+
+	public async Task<ManagerDomain?> FindByIdAsync(Guid id)
+	{
+		var managerEntity = await _contentDbContext
+			.Managers
+			.FirstOrDefaultAsync(manager => manager.ExternalId == id);
+
+		ManagerDomain? managerDomain = managerEntity;
 
 		return managerDomain;
 	}
