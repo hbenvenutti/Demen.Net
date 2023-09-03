@@ -1,4 +1,4 @@
-namespace Demen.Content.Common;
+namespace Demen.Content.Common.Exceptions;
 
 public class InvalidEnumException : ArgumentException
 {
