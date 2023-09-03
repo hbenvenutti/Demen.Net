@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
+using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 namespace Demen.Content.Bootstrap.Bootstrapping;
 
@@ -12,15 +11,12 @@ public static class MediatorBootstrap
 		this IServiceCollection services
 	)
 	{
-		// services.AddMediatR(config => config
-		// 	.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly())
-		// );
 
 		services.AddMediatR(config => config
-			.RegisterServicesFromAssemblies(typeof(CreateManagerCommandHandler).Assembly)
+			.RegisterServicesFromAssemblies(typeof(CreateManagerCommandHandler)
+				.Assembly
+			)
 		);
-
-		// services.AddMediatR(typeof(CreateManagerCommandHandler));
 
 		return services;
 	}

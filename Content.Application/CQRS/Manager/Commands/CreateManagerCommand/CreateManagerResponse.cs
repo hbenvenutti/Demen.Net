@@ -1,6 +1,6 @@
 using Ether.Outcomes;
-using Demen.Content.Application.Manager.Base;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.CQRS.Base;
+using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 
 namespace Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 

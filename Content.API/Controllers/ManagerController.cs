@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Demen.Content.API.Dto;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
+using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 
 namespace Demen.Content.API.Controllers;
 

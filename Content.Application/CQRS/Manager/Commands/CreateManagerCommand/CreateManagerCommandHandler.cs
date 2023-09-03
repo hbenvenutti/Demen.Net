@@ -2,10 +2,11 @@ using Ether.Outcomes;
 using MediatR;
 using Demen.Content.Application.Error;
 using Demen.Content.Application.Helpers;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 using Demen.Content.Domain.Manager;
 
-namespace Demen.Content.Application.Manager.Commands.CreateManagerCommand;
+namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 public class CreateManagerCommandHandler
 	: IRequestHandler<CreateManagerRequest, CreateManagerResponse>
