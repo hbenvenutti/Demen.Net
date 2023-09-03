@@ -28,7 +28,7 @@ public class CreateManagerCommandHandler
 			password: request.RequestDto.Password
 		);
 
-		var responseDto = (CreateManagerResponseDto) await _managerRepository
+		CreateManagerResponseDto responseDto = await _managerRepository
 			.CreateAsync(managerDomain);
 
 		return new CreateManagerResponse(
