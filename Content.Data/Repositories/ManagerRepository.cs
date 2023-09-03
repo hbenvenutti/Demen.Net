@@ -26,6 +26,8 @@ public class ManagerRepository : IManagerRepository
 		await _contentDbContext
 			.SaveChangesAsync();
 
-		return managerEntity;
+		managerDomain = managerEntity;
+
+		return managerDomain;
 	}
 }
