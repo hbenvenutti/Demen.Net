@@ -1,7 +1,7 @@
-using System.Net;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Demen.Content.API.Dto;
+using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 using Demen.Content.Application.Manager.Commands.CreateManagerCommand.Dto;
 
 namespace Demen.Content.API.Controllers;
@@ -24,17 +24,20 @@ public class ManagerController : ControllerBase
 
 	[HttpPost]
 	[Consumes(contentType: "application/json")]
+
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status201Created,
 		type: typeof(CreateManagerResponseDto)
 	)]
+
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status400BadRequest,
-		type: typeof(CreateManagerResponseDto)
+		type: typeof(ErrorDto)
 	)]
+
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status500InternalServerError,
-		type: typeof(CreateManagerResponseDto)
+		type: typeof(ErrorDto)
 	)]
 
 	public async Task<IActionResult> CreateManager(
@@ -45,6 +48,17 @@ public class ManagerController : ControllerBase
 
 		var response = await _mediator
 			.Send(request: request);
+
+		if (response.Outcome.Failure)
+		{
+			var errorDto = new ErrorDto(response.Outcome.Messages);
+
+			return StatusCode(
+				statusCode: response.Outcome.StatusCode
+				    ?? StatusCodes.Status500InternalServerError,
+				value: errorDto
+			);
+		}
 
 		return CreatedAtAction(
 			actionName: nameof(GetManagerById),
