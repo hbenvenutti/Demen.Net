@@ -11,7 +11,7 @@ public class CreateManagerResponseDto
 	public DateTime CreatedAt { get; init; }
 
 	// ---- operators ------------------------------------------------------- //
-	public static explicit operator CreateManagerResponseDto(
+	public static implicit operator CreateManagerResponseDto(
 		ManagerDomain managerDomain
 	)
 	{

@@ -17,6 +17,7 @@ public static class ApiBootstrap
 	{
 		services.ConfigureDbContext(configuration);
 		services.ConfigureMediatorServices();
+		services.ConfigureRepositories();
 
 		services.AddControllers();
 		services.AddEndpointsApiExplorer();
