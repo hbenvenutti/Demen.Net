@@ -7,11 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Content.Application\Content.Application.csproj" />
       <ProjectReference Include="..\Content.Data\Content.Data.csproj" />
     </ItemGroup>
 

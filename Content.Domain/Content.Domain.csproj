@@ -6,13 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
-    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Content.Common\Content.Common.csproj" />
-      <ProjectReference Include="..\Content.Domain\Content.Domain.csproj" />
     </ItemGroup>
-	
+
 </Project>
