@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Demen.Content.API.Dto;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery;
+using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 
 namespace Demen.Content.API.Controllers;
 
@@ -68,11 +70,47 @@ public class ManagerController : ControllerBase
 	}
 
 	[HttpGet(template: "{id:guid}")]
+	[Consumes(contentType: "application/json")]
+	[ProducesResponseType(
+		statusCode: StatusCodes.Status200OK,
+		type: typeof(GetManagerResponseDto)
+	)]
 
-	public async Task<IActionResult> GetManagerById(Guid id)
+	[ProducesResponseType(
+		statusCode: StatusCodes.Status400BadRequest,
+		type: typeof(ErrorDto)
+	)]
+
+	[ProducesResponseType(
+		statusCode: StatusCodes.Status404NotFound,
+		type: typeof(ErrorDto)
+	)]
+
+	[ProducesResponseType(
+		statusCode: StatusCodes.Status500InternalServerError,
+		type: typeof(ErrorDto)
+	)]
+
+	public async Task<IActionResult> GetManagerById([FromRoute] Guid id)
 	{
-		// var responseDto = await _mediator.Send(new GetManagersRequestDto());
-		// return Ok(responseDto);
-		return Ok();
+		var requestDto = new GetManagerRequestDto(id: id);
+
+		var request = new GetManagerRequest(requestDto);
+
+		var response = await _mediator
+			.Send(request: request);
+
+		if (response.Outcome.Failure)
+		{
+			var errorDto = new ErrorDto(response.Outcome.Messages);
+
+			return StatusCode(
+				statusCode: response.Outcome.StatusCode
+				            ?? StatusCodes.Status500InternalServerError,
+				value: errorDto
+			);
+		}
+
+		return Ok(response.Outcome.Value);
 	}
 }
