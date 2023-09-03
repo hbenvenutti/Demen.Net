@@ -10,8 +10,10 @@ public class ManagerEntity : BaseEntity
 	public required string Password { get; set; }
 
 	// ---- factories ------------------------------------------------------- //
-	public static implicit operator ManagerDomain(ManagerEntity managerEntity)
+	public static implicit operator ManagerDomain?(ManagerEntity? managerEntity)
 	{
+		if (managerEntity is null) return null;
+
 		return new ManagerDomain(
 			id: managerEntity.Id,
 			externalId: managerEntity.ExternalId,
