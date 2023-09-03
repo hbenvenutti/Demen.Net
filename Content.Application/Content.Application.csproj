@@ -6,4 +6,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Manager\Queries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ether.Outcomes" Version="2.9.5" />
+      <PackageReference Include="MediatR" Version="12.1.1" />
+    </ItemGroup>
+
 </Project>
