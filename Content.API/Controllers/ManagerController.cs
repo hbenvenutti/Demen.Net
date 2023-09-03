@@ -25,15 +25,15 @@ public class ManagerController : ControllerBase
 	[HttpPost]
 	[Consumes(contentType: "application/json")]
 	[ProducesResponseType(
-		statusCode: (int)HttpStatusCode.Created,
+		statusCode: StatusCodes.Status201Created,
 		type: typeof(CreateManagerResponseDto)
 	)]
 	[ProducesResponseType(
-		statusCode: (int)HttpStatusCode.BadRequest,
+		statusCode: StatusCodes.Status400BadRequest,
 		type: typeof(CreateManagerResponseDto)
 	)]
 	[ProducesResponseType(
-		statusCode: (int)HttpStatusCode.InternalServerError,
+		statusCode: StatusCodes.Status500InternalServerError,
 		type: typeof(CreateManagerResponseDto)
 	)]
 
@@ -61,5 +61,4 @@ public class ManagerController : ControllerBase
 		// return Ok(responseDto);
 		return Ok();
 	}
-
 }
