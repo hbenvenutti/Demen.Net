@@ -1,5 +1,6 @@
 using Demen.Content.Bootstrap.Bootstrapping;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,8 @@ public static class ApiBootstrap
 			app.UseSwagger();
 			app.UseSwaggerUI();
 		}
+
+		app.ConfigureGlobalMiddlewares();
 
 		app.UseHttpsRedirection();
 		app.UseAuthorization();

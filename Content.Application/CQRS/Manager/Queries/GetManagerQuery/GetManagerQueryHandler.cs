@@ -27,33 +27,23 @@ public class GetManagerQueryHandler :
 		CancellationToken cancellationToken
 	)
 	{
-		try
-		{
-			var managerDomain = await _managerRepository
-				.FindByIdAsync(request.RequestDto.Id);
+		var managerDomain = await _managerRepository
+			.FindByIdAsync(request.RequestDto.Id);
 
-			if (managerDomain is null)
-				return new GetManagerResponse(
-					_outcomeErrorHelper
-						.CreateOutcomeFailure(
-							new ResourceNotFoundError(
-								nameof(ManagerDomain).GetResource()
-							)
+		if (managerDomain is null)
+			return new GetManagerResponse(
+				_outcomeErrorHelper
+					.CreateOutcomeFailure(
+						new ResourceNotFoundError(
+							nameof(ManagerDomain).GetResource()
 						)
-				);
-
-			GetManagerResponseDto responseDto = managerDomain;
-
-			return new GetManagerResponse(outcome: Outcomes
-				.Success(responseDto)
+					)
 			);
-		}
 
-		catch (Exception e)
-		{
-			return new GetManagerResponse(_outcomeErrorHelper
-				.CreateOutcomeFailure(new UnexpectedError(e.Message))
-			);
-		}
+		GetManagerResponseDto responseDto = managerDomain;
+
+		return new GetManagerResponse(outcome: Outcomes
+			.Success(responseDto)
+		);
 	}
 }

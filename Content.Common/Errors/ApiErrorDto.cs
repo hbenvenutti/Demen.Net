@@ -1,18 +1,18 @@
 using Demen.Content.Common.Helpers;
 
-namespace Demen.Content.API.Dto;
+namespace Demen.Content.Common.Errors;
 
-public class ErrorDto
+public class ApiErrorDto
 {
 	public ICollection<string> Errors { get; init; }
 
 	// ---- constructors ---------------------------------------------------- //
-	public ErrorDto(ICollection<string> errors)
+	public ApiErrorDto(ICollection<string> errors)
 	{
 		Errors = errors;
 	}
 
-	public ErrorDto(string error)
+	public ApiErrorDto(string error)
 	{
 		Errors = new List<string>() { error };
 	}
