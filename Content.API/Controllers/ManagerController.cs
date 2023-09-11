@@ -1,10 +1,11 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Demen.Content.API.Dto;
+using Demen.Content.API.Handlers;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery;
 using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
+using Demen.Content.Common.Errors;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Demen.Content.API.Controllers;
 
@@ -34,12 +35,12 @@ public class ManagerController : ControllerBase
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status400BadRequest,
-		type: typeof(ErrorDto)
+		type: typeof(ApiErrorDto)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status500InternalServerError,
-		type: typeof(ErrorDto)
+		type: typeof(ApiErrorDto)
 	)]
 
 	public async Task<IActionResult> CreateManager(
@@ -52,15 +53,7 @@ public class ManagerController : ControllerBase
 			.Send(request: request);
 
 		if (response.Outcome.Failure)
-		{
-			var errorDto = new ErrorDto(response.Outcome.Messages);
-
-			return StatusCode(
-				statusCode: response.Outcome.StatusCode
-				    ?? StatusCodes.Status500InternalServerError,
-				value: errorDto
-			);
-		}
+			return response.Outcome.HandleFailure();
 
 		return CreatedAtAction(
 			actionName: nameof(GetManagerById),
@@ -68,6 +61,8 @@ public class ManagerController : ControllerBase
 			value: response.Outcome.Value
 		);
 	}
+
+	// ---------------------------------------------------------------------- //
 
 	[HttpGet(template: "{id:guid}")]
 	[Consumes(contentType: "application/json")]
@@ -78,17 +73,17 @@ public class ManagerController : ControllerBase
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status400BadRequest,
-		type: typeof(ErrorDto)
+		type: typeof(ApiErrorDto)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status404NotFound,
-		type: typeof(ErrorDto)
+		type: typeof(ApiErrorDto)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status500InternalServerError,
-		type: typeof(ErrorDto)
+		type: typeof(ApiErrorDto)
 	)]
 
 	public async Task<IActionResult> GetManagerById([FromRoute] Guid id)
@@ -101,15 +96,7 @@ public class ManagerController : ControllerBase
 			.Send(request: request);
 
 		if (response.Outcome.Failure)
-		{
-			var errorDto = new ErrorDto(response.Outcome.Messages);
-
-			return StatusCode(
-				statusCode: response.Outcome.StatusCode
-				            ?? StatusCodes.Status500InternalServerError,
-				value: errorDto
-			);
-		}
+			return response.Outcome.HandleFailure();
 
 		return Ok(response.Outcome.Value);
 	}
