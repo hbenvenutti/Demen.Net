@@ -1,10 +1,9 @@
-using Ether.Outcomes;
-using MediatR;
-using Demen.Content.Application.Error;
-using Demen.Content.Application.Helpers;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.Helpers;
 using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 using Demen.Content.Domain.Manager;
+using Ether.Outcomes;
+using MediatR;
 
 namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
@@ -29,28 +28,18 @@ public class CreateManagerCommandHandler
 		CancellationToken cancellationToken
 	)
 	{
-		try
-		{
-			var managerDomain = ManagerDomain.Create(
-				name: request.RequestDto.Name,
-				surname: request.RequestDto.Surname,
-				password: request.RequestDto.Password
-			);
+		var managerDomain = ManagerDomain.Create(
+			name: request.RequestDto.Name,
+			surname: request.RequestDto.Surname,
+			password: request.RequestDto.Password
+		);
 
-			CreateManagerResponseDto responseDto = await _managerRepository
-				.CreateAsync(managerDomain);
+		CreateManagerResponseDto responseDto = await _managerRepository
+			.CreateAsync(managerDomain);
 
-			return new CreateManagerResponse(
-				outcome: Outcomes
-					.Success(responseDto)
-			);
-		}
-
-		catch (Exception e)
-		{
-			return new CreateManagerResponse(_outcomeErrorHelper
-				.CreateOutcomeFailure(new UnexpectedError(e.Message))
-			);
-		}
+		return new CreateManagerResponse(
+			outcome: Outcomes
+				.Success(responseDto)
+		);
 	}
 }
