@@ -1,6 +1,5 @@
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Content.Application.Helpers;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 using Demen.Content.Domain.Manager;
 using Ether.Outcomes;
 using MediatR;

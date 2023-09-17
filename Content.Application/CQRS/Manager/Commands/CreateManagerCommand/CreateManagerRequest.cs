@@ -1,7 +1,6 @@
 using MediatR;
 using Demen.Content.Application.CQRS.Base;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Demen.Content.Application.Manager.Commands.CreateManagerCommand;
 
 namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
