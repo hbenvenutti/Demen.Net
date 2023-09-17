@@ -1,12 +1,14 @@
+using Demen.Content.Common.Enums;
+
 namespace Demen.Content.Application.Error;
 
 public class UnexpectedError : ApplicationError
 {
-	private const int _statusCode = 500;
+	private new const ErrorCode StatusCode = ErrorCode.Unexpected;
 
 	// ---- constructors ---------------------------------------------------- //
 	public UnexpectedError(string message)
-		: base(message: message, statusCode: _statusCode)
+		: base(message: message, statusCode: StatusCode)
 	{
 	}
 }

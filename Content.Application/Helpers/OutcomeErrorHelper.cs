@@ -13,6 +13,6 @@ public class OutcomeErrorHelper<T>
 		return Outcomes
 			.Failure<T>()
 			.WithMessage(applicationError.Message)
-			.WithStatusCode(applicationError.StatusCode);
+			.WithStatusCode((int)applicationError.StatusCode);
 	}
 }
