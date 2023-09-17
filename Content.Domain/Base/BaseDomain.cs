@@ -4,12 +4,12 @@ namespace Demen.Content.Domain.Base;
 
 public abstract class BaseDomain
 {
-	public int Id { get; set; }
-	public Guid ExternalId { get; set; }
-	public DateTime CreatedAt { get; set; }
-	public DateTime? UpdatedAt { get; set; }
-	public DateTime? DeletedAt { get; set; }
+	public int Id { get; protected init; }
+	public Guid ExternalId { get; protected init; }
+	public DateTime CreatedAt { get; protected init; }
+	public DateTime? UpdatedAt { get; protected init; }
+	public DateTime? DeletedAt { get; protected init; }
 
 	public string StatusString => Status.ToString();
-	public Status Status { get; set; }
+	public Status Status { get; protected init; }
 }

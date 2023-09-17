@@ -6,9 +6,9 @@ namespace Demen.Content.Domain.Manager;
 public class ManagerDomain : BaseDomain
 {
 	// ---- properties ------------------------------------------------------ //
-	public string Name { get; set; }
-	public string Surname { get; set; }
-	public string Password { get; set; }
+	public string Name { get; init; }
+	public string Surname { get; init; }
+	public string Password { get; init; }
 
 	// ---- constructors ---------------------------------------------------- //
 	public ManagerDomain(
