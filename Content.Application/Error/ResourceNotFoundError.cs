@@ -1,12 +1,14 @@
+using Demen.Content.Common.Enums;
+
 namespace Demen.Content.Application.Error;
 
 public class ResourceNotFoundError : ApplicationError
 {
-	private const int _statusCode = 404;
+	private new const ErrorCode StatusCode = ErrorCode.ResourceNotFound;
 
 	public ResourceNotFoundError(string resource)
 		: base(
-			_statusCode,
+			StatusCode,
 			message: $"{resource} not found."
 		)
 	{

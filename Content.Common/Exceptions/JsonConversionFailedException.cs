@@ -2,15 +2,15 @@ namespace Demen.Content.Common.Exceptions;
 
 public class JsonConversionFailedException : Exception
 {
-	private static readonly string _message = "Json conversion failed";
+	private new const string Message = "Json conversion failed";
 
 	// ---- constructors ---------------------------------------------------- //
-	public JsonConversionFailedException() : base(_message)
+	public JsonConversionFailedException() : base(Message)
 	{
 	}
 
 	public JsonConversionFailedException(Exception innerException)
-		: base(_message, innerException)
+		: base(Message, innerException)
 	{
 	}
 }
