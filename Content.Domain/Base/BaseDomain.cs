@@ -9,7 +9,5 @@ public abstract class BaseDomain
 	public DateTime CreatedAt { get; protected init; }
 	public DateTime? UpdatedAt { get; protected init; }
 	public DateTime? DeletedAt { get; protected init; }
-
-	public string StatusString => Status.ToString();
 	public Status Status { get; protected init; }
 }
