@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
 using Demen.Content.Data.Config.Entities;
-using Demen.Content.Data.HashMaps;
 using Demen.Content.Data.Entities;
+using Demen.Content.Data.HashMaps;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demen.Content.Data.Contexts;
 
@@ -10,6 +10,7 @@ namespace Demen.Content.Data.Contexts;
 public class ContentDbContext : DbContext
 {
 	public required DbSet<ManagerEntity> Managers { get; set; }
+	public required DbSet<EmailEntity> Emails { get; set; }
 
 	public ContentDbContext(DbContextOptions<ContentDbContext> options)
 		: base(options) {}
@@ -17,6 +18,7 @@ public class ContentDbContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
+		modelBuilder.ApplyConfiguration(new EmailEntityConfig());
 	}
 
 	public override Task<int> SaveChangesAsync(
