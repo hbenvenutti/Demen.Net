@@ -20,6 +20,17 @@ public class ManagerEntity : BaseEntity
 	{
 		if (managerEntity is null) return null;
 
+		var emails = managerEntity.Emails?.Count > 0
+			? managerEntity
+				.Emails
+				.Select(email =>
+				{
+					email.Manager = null;
+					return (EmailDomain)email!;
+				})
+				.ToList()
+			: null;
+
 		return new ManagerDomain(
 			id: managerEntity.Id,
 			externalId: managerEntity.ExternalId,
@@ -30,9 +41,7 @@ public class ManagerEntity : BaseEntity
 			name: managerEntity.Name,
 			surname: managerEntity.Surname,
 			password: managerEntity.Password,
-			emails: managerEntity.Emails?
-				.Select(email => (EmailDomain) email!)
-				.ToList()
+			emails: emails
 		);
 	}
 
