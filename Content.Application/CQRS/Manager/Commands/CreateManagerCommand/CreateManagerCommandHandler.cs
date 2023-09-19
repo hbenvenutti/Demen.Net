@@ -11,7 +11,6 @@ public class CreateManagerCommandHandler
 	// ---- fields ---------------------------------------------------------- //
 	private readonly IManagerRepository _managerRepository;
 
-
 	// ---- constructors ---------------------------------------------------- //
 	public CreateManagerCommandHandler(IManagerRepository managerRepository)
 	{
