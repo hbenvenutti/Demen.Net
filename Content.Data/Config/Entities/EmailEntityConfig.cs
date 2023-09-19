@@ -15,6 +15,8 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 		builder
 			.ToTable("emails");
 
+		// ---- keys -------------------------------------------------------- //
+
 		builder
 			.HasKey(email => email.Id)
 			.HasName("pk_email_id");
@@ -34,6 +36,8 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.Property(email => email.ManagerId)
 			.HasColumnName("manager_id")
 			.IsRequired();
+
+		// ---- columns ----------------------------------------------------- //
 
 		builder
 			.Property(email => email.ExternalId)
@@ -86,5 +90,11 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.Property(email => email.DeletedAt)
 			.HasColumnName("deleted_at")
 			.IsRequired(false);
+
+		// ---- indexes ----------------------------------------------------- //
+
+		builder
+			.HasIndex(email => email.Address)
+			.IsUnique();
 	}
 }
