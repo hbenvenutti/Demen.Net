@@ -1,3 +1,4 @@
+using Content.Domain.Email;
 using Demen.Content.Common.Enums;
 using Demen.Content.Domain.Base;
 
@@ -10,6 +11,11 @@ public class ManagerDomain : BaseDomain
 	public string Surname { get; init; }
 	public string Password { get; init; }
 
+	// ---- relationships --------------------------------------------------- //
+
+	public ICollection<EmailDomain>? Emails { get; init; } =
+		new List<EmailDomain>();
+
 	// ---- constructors ---------------------------------------------------- //
 	public ManagerDomain(
 		int id,
@@ -20,7 +26,8 @@ public class ManagerDomain : BaseDomain
 		DateTime? deletedAt,
 		string name,
 		string surname,
-		string password
+		string password,
+		ICollection<EmailDomain>? emails
 	)
 	{
 		Id = id;
@@ -32,6 +39,7 @@ public class ManagerDomain : BaseDomain
 		Name = name;
 		Surname = surname;
 		Password = password;
+		Emails = emails;
 	}
 
 	// ---- factories ------------------------------------------------------- //
@@ -50,7 +58,8 @@ public class ManagerDomain : BaseDomain
 			deletedAt: null,
 			name: name,
 			surname: surname,
-			password: password
+			password: password,
+			emails: null
 		);
 	}
 }

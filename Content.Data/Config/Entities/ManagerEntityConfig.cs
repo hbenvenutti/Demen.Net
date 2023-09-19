@@ -1,9 +1,13 @@
+using System.Diagnostics.CodeAnalysis;
+using Demen.Content.Common.Enums;
+using Demen.Content.Common.Helpers;
+using Demen.Content.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Demen.Content.Data.Entities;
 
 namespace Demen.Content.Data.Config.Entities;
 
+[ExcludeFromCodeCoverage]
 public class ManagerEntityConfig : IEntityTypeConfiguration<ManagerEntity>
 {
 	public void Configure(EntityTypeBuilder<ManagerEntity> builder)
@@ -13,7 +17,7 @@ public class ManagerEntityConfig : IEntityTypeConfiguration<ManagerEntity>
 
 		builder
 			.HasKey(manager => manager.Id)
-			.HasName("id");
+			.HasName("pk_manager_id");
 
 		builder
 			.Property(manager => manager.Id)
@@ -27,9 +31,13 @@ public class ManagerEntityConfig : IEntityTypeConfiguration<ManagerEntity>
 			.IsRequired();
 
 		builder
-			.Property(manager => manager.StatusString)
+			.Property(manager => manager.Status)
 			.HasColumnType("varchar")
 			.HasColumnName("status")
+			.HasConversion(
+				status => status.ToString(),
+				str => str.StringToEnum<Status>()
+			)
 			.IsRequired();
 
 		builder
@@ -64,8 +72,5 @@ public class ManagerEntityConfig : IEntityTypeConfiguration<ManagerEntity>
 			.Property(manager => manager.DeletedAt)
 			.HasColumnName("deleted_at")
 			.IsRequired(false);
-
-		builder
-			.Ignore(manager => manager.Status);
 	}
 }

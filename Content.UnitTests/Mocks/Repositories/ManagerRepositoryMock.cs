@@ -26,7 +26,8 @@ public class ManagerRepositoryMock : IManagerRepository
 			password: managerDomain.Password,
 			createdAt: DateTime.Now,
 			updatedAt: null,
-			deletedAt: null
+			deletedAt: null,
+			emails: null
 		);
 
 		_managers.Add(newDomain);

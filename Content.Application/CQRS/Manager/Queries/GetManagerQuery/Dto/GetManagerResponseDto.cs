@@ -23,7 +23,7 @@ public class GetManagerResponseDto
 			Id = managerDomain.ExternalId,
 			Name = managerDomain.Name,
 			Surname = managerDomain.Surname,
-			Status = managerDomain.StatusString,
+			Status = managerDomain.Status.ToString(),
 			CreatedAt = managerDomain.CreatedAt,
 			UpdatedAt = managerDomain.UpdatedAt,
 			DeletedAt = managerDomain.DeletedAt
