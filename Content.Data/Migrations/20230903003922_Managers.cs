@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Data.Migrations
+namespace Demen.Content.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Managers : Migration

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Data.Migrations
+namespace Demen.Content.Data.Migrations
 {
     [DbContext(typeof(ContentDbContext))]
     [Migration("20230903003922_Managers")]
