@@ -56,7 +56,7 @@ public class ManagerRepository : IManagerRepository
 		var managerEntity = await _contentDbContext
 			.Managers
 			.AsNoTracking()
-			.FirstOrDefaultAsync(manager => manager.ExternalId == id);
+			.SingleOrDefaultAsync(manager => manager.ExternalId == id);
 
 		return (ManagerDomain?)managerEntity;
 	}
