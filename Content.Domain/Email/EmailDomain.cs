@@ -51,7 +51,8 @@ public class EmailDomain : BaseDomain
 
 	public static EmailDomain Create(
 		int managerId,
-		string address
+		string address,
+		EmailType? type = null
 	)
 	{
 		return new EmailDomain(
@@ -64,7 +65,8 @@ public class EmailDomain : BaseDomain
 			status: Status.Active,
 			createdAt: DateTime.Now,
 			updatedAt: null,
-			deletedAt: null
+			deletedAt: null,
+			type: type ?? EmailType.Personal
 		);
 	}
 }

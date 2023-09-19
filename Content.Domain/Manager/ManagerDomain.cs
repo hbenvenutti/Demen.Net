@@ -45,9 +45,22 @@ public class ManagerDomain : BaseDomain
 	public static ManagerDomain Create(
 		string name,
 		string surname,
-		string password
+		string password,
+		string? email = null,
+		EmailType? emailType = null
 	)
 	{
+		var emails = email is not null
+			? new List<EmailDomain>()
+			{
+				EmailDomain.Create(
+					managerId: 0,
+					address: email,
+					type: emailType
+				)
+			}
+			: null;
+
 		return new ManagerDomain(
 			id: 0,
 			externalId: Guid.Empty,
@@ -58,7 +71,7 @@ public class ManagerDomain : BaseDomain
 			name: name,
 			surname: surname,
 			password: password,
-			emails: null
+			emails: emails
 		);
 	}
 }
