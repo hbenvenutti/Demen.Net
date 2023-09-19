@@ -29,6 +29,7 @@ public class GetManagerQueryTests
 	}
 
 	// ---- tests ----------------------------------------------------------- //
+
 	[Theory]
 	[InlineData(true)]
 	[InlineData(false)]
