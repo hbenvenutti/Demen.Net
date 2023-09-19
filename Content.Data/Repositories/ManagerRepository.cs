@@ -1,3 +1,4 @@
+using Demen.Content.Common.Enums;
 using Demen.Content.Data.Contexts;
 using Demen.Content.Data.Entities;
 using Demen.Content.Domain.Manager;
@@ -15,10 +16,11 @@ public class ManagerRepository : IManagerRepository
 		_contentDbContext = contentDbContext;
 	}
 
-	// ---- methods --------------------------------------------------------- //
+	// ---- write methods --------------------------------------------------- //
+
 	public async Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
 	{
-		ManagerEntity managerEntity = managerDomain;
+		var managerEntity = (ManagerEntity)managerDomain!;
 
 		await _contentDbContext
 			.Managers
@@ -27,19 +29,35 @@ public class ManagerRepository : IManagerRepository
 		await _contentDbContext
 			.SaveChangesAsync();
 
-		managerDomain = managerEntity!;
-
-		return managerDomain;
+		return (ManagerDomain)managerEntity!;
 	}
+
+	public async Task DeleteAsync(ManagerDomain managerDomain)
+	{
+		var managerEntity = (ManagerEntity)managerDomain!;
+
+		managerEntity.Status = Status.Deleted;
+		managerEntity.DeletedAt = DateTime.UtcNow;
+
+		_contentDbContext
+			.Managers
+			.Update(managerEntity);
+
+		await _contentDbContext
+			.SaveChangesAsync();
+
+		return;
+	}
+
+	// ---- read methods ---------------------------------------------------- //
 
 	public async Task<ManagerDomain?> FindByIdAsync(Guid id)
 	{
 		var managerEntity = await _contentDbContext
 			.Managers
+			.AsNoTracking()
 			.FirstOrDefaultAsync(manager => manager.ExternalId == id);
 
-		ManagerDomain? managerDomain = managerEntity;
-
-		return managerDomain;
+		return (ManagerDomain?)managerEntity;
 	}
 }
