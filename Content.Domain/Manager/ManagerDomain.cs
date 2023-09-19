@@ -1,6 +1,6 @@
-using Content.Domain.Email;
 using Demen.Content.Common.Enums;
 using Demen.Content.Domain.Base;
+using Demen.Content.Domain.Email;
 
 namespace Demen.Content.Domain.Manager;
 
@@ -13,8 +13,7 @@ public class ManagerDomain : BaseDomain
 
 	// ---- relationships --------------------------------------------------- //
 
-	public ICollection<EmailDomain>? Emails { get; init; } =
-		new List<EmailDomain>();
+	public ICollection<EmailDomain>? Emails { get; init; }
 
 	// ---- constructors ---------------------------------------------------- //
 	public ManagerDomain(

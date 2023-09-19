@@ -1,5 +1,5 @@
-using Content.Domain.Email;
 using Demen.Content.Common.Enums;
+using Demen.Content.Domain.Email;
 
 namespace Demen.Content.Data.Entities;
 
