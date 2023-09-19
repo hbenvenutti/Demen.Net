@@ -1,5 +1,4 @@
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Demen.Content.Application.Helpers;
 using Demen.Content.Domain.Manager;
 using Ether.Outcomes;
 using MediatR;
@@ -11,14 +10,12 @@ public class CreateManagerCommandHandler
 {
 	// ---- fields ---------------------------------------------------------- //
 	private readonly IManagerRepository _managerRepository;
-	private readonly OutcomeErrorHelper<CreateManagerResponseDto>
-		_outcomeErrorHelper;
+
 
 	// ---- constructors ---------------------------------------------------- //
 	public CreateManagerCommandHandler(IManagerRepository managerRepository)
 	{
 		_managerRepository = managerRepository;
-		_outcomeErrorHelper = new OutcomeErrorHelper<CreateManagerResponseDto>();
 	}
 
 	// ---- methods --------------------------------------------------------- //
@@ -27,11 +24,7 @@ public class CreateManagerCommandHandler
 		CancellationToken cancellationToken
 	)
 	{
-		var managerDomain = ManagerDomain.Create(
-			name: request.RequestDto.Name,
-			surname: request.RequestDto.Surname,
-			password: request.RequestDto.Password
-		);
+		var managerDomain = (ManagerDomain)request.RequestDto;
 
 		CreateManagerResponseDto responseDto = await _managerRepository
 			.CreateAsync(managerDomain);
