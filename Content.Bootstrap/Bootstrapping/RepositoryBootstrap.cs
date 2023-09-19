@@ -1,4 +1,5 @@
 using Demen.Content.Data.Repositories;
+using Demen.Content.Domain.Email;
 using Demen.Content.Domain.Manager;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class RepositoryBootstrap
 	)
 	{
 		services.AddScoped<IManagerRepository, ManagerRepository>();
+		services.AddScoped<IEmailRepository, EmailRepository>();
 
 		return services;
 	}
