@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Content.Application.Error;
 using Demen.Content.Application.Helpers;
@@ -7,6 +8,8 @@ using Ether.Outcomes;
 using MediatR;
 
 namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
+
+[ExcludeFromCodeCoverage]
 
 public class CreateManagerCommandHandler
 	: IRequestHandler<CreateManagerRequest, CreateManagerResponse>
@@ -43,7 +46,7 @@ public class CreateManagerCommandHandler
 
 		if (email is not null)
 			return new CreateManagerResponse(_outcomeErrorHelper
-				.CreateOutcomeFailure(new EmailInUSeError())
+				.CreateOutcomeFailure(new EmailInUseError())
 			);
 
 		var responseDto = (CreateManagerResponseDto) await _managerRepository
