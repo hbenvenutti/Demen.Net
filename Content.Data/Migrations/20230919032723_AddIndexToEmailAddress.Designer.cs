@@ -3,6 +3,7 @@ using System;
 using Demen.Content.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Demen.Content.Data.Migrations
 {
     [DbContext(typeof(ContentDbContext))]
-    partial class ContentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230919032723_AddIndexToEmailAddress")]
+    partial class AddIndexToEmailAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,10 +82,7 @@ namespace Demen.Content.Data.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("emails", null, t =>
-                        {
-                            t.HasCheckConstraint("CK_email_type", "[type] IN ('Personal', 'Corporate')");
-                        });
+                    b.ToTable("emails", (string)null);
                 });
 
             modelBuilder.Entity("Demen.Content.Data.Entities.ManagerEntity", b =>

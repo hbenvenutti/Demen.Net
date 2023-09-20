@@ -2,7 +2,7 @@ using Demen.Content.Common.Enums;
 using Demen.Content.Domain.Base;
 using Demen.Content.Domain.Manager;
 
-namespace Content.Domain.Email;
+namespace Demen.Content.Domain.Email;
 
 public class EmailDomain : BaseDomain
 {
@@ -51,7 +51,8 @@ public class EmailDomain : BaseDomain
 
 	public static EmailDomain Create(
 		int managerId,
-		string address
+		string address,
+		EmailType? type = null
 	)
 	{
 		return new EmailDomain(
@@ -64,7 +65,8 @@ public class EmailDomain : BaseDomain
 			status: Status.Active,
 			createdAt: DateTime.Now,
 			updatedAt: null,
-			deletedAt: null
+			deletedAt: null,
+			type: type ?? EmailType.Personal
 		);
 	}
 }

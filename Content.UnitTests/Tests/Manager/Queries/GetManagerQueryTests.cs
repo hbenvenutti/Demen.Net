@@ -29,6 +29,7 @@ public class GetManagerQueryTests
 	}
 
 	// ---- tests ----------------------------------------------------------- //
+
 	[Theory]
 	[InlineData(true)]
 	[InlineData(false)]
@@ -52,17 +53,17 @@ public class GetManagerQueryTests
 
 		// ---- Act --------------------------------------------------------- //
 
-		var result = await handler
+		var response = await handler
 			.Handle(request, _cancellationToken);
 
 		// ---- Assert ------------------------------------------------------ //
-		var value = result.Outcome.Value;
+		var responseDto = response.Outcome.Value;
 
 		if (!idExists)
 		{
 			Assert.Equal(
 				expected: (int)ErrorCode.ResourceNotFound,
-				actual: result.Outcome.StatusCode
+				actual: response.Outcome.StatusCode
 			);
 
 			return;
@@ -70,17 +71,17 @@ public class GetManagerQueryTests
 
 		Assert.Equal(
 			expected: _managerDomain.ExternalId,
-			actual: value.Id
+			actual: responseDto.Id
 		);
 
 		Assert.Equal(
 			expected: _managerDomain.Name,
-			actual: value.Name
+			actual: responseDto.Name
 		);
 
 		Assert.Equal(
 			expected: _managerDomain.Surname,
-			actual: value.Surname
+			actual: responseDto.Surname
 		);
 	}
 }

@@ -8,12 +8,8 @@ namespace Demen.Content.UnitTests.Mocks.Repositories;
 public class ManagerRepositoryMock : IManagerRepository
 {
 	private static int _id = 1;
-	private readonly ICollection<ManagerDomain> _managers;
-
-	public ManagerRepositoryMock()
-	{
-		_managers = new List<ManagerDomain>();
-	}
+	private readonly ICollection<ManagerDomain> _managers =
+		new List<ManagerDomain>();
 
 	public Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
 	{
@@ -35,9 +31,13 @@ public class ManagerRepositoryMock : IManagerRepository
 		return Task.FromResult(newDomain);
 	}
 
+	public Task DeleteAsync(ManagerDomain domain)
+	{
+		return Task.CompletedTask;
+	}
+
 	public Task<ManagerDomain?> FindByIdAsync(Guid id)
 	{
-
 		var manager = _managers
 			.FirstOrDefault(manager => manager.ExternalId == id);
 

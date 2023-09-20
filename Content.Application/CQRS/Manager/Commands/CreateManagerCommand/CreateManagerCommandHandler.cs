@@ -1,21 +1,38 @@
+using System.Diagnostics.CodeAnalysis;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Content.Application.Error;
+using Demen.Content.Application.Helpers;
+using Demen.Content.Common.Enums;
+using Demen.Content.Common.Helpers;
+using Demen.Content.Domain.Email;
 using Demen.Content.Domain.Manager;
 using Ether.Outcomes;
 using MediatR;
 
 namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
+[ExcludeFromCodeCoverage]
+
 public class CreateManagerCommandHandler
 	: IRequestHandler<CreateManagerRequest, CreateManagerResponse>
 {
 	// ---- fields ---------------------------------------------------------- //
 	private readonly IManagerRepository _managerRepository;
-
+	private readonly IEmailRepository _emailRepository;
+	private readonly OutcomeErrorHelper<CreateManagerResponseDto>
+		_outcomeErrorHelper;
 
 	// ---- constructors ---------------------------------------------------- //
-	public CreateManagerCommandHandler(IManagerRepository managerRepository)
+	public CreateManagerCommandHandler(
+		IManagerRepository managerRepository,
+		IEmailRepository emailRepository
+	)
 	{
 		_managerRepository = managerRepository;
+		_emailRepository = emailRepository;
+
+		_outcomeErrorHelper =
+			new OutcomeErrorHelper<CreateManagerResponseDto>();
 	}
 
 	// ---- methods --------------------------------------------------------- //
@@ -24,14 +41,35 @@ public class CreateManagerCommandHandler
 		CancellationToken cancellationToken
 	)
 	{
+		if (!IsRequestDtoValid(requestDto: request.RequestDto))
+			return new CreateManagerResponse(_outcomeErrorHelper
+				.CreateOutcomeFailure(new InvalidDataError())
+			);
+
 		var managerDomain = (ManagerDomain)request.RequestDto;
 
-		CreateManagerResponseDto responseDto = await _managerRepository
+		var email = await _emailRepository
+			.FindByAddressAsync(request.RequestDto.Email);
+
+		if (email is not null)
+			return new CreateManagerResponse(_outcomeErrorHelper
+				.CreateOutcomeFailure(new EmailInUseError())
+			);
+
+		var responseDto = (CreateManagerResponseDto) await _managerRepository
 			.CreateAsync(managerDomain);
 
 		return new CreateManagerResponse(
 			outcome: Outcomes
 				.Success(responseDto)
 		);
+	}
+
+	// ---- helpers --------------------------------------------------------- //
+
+	private static bool IsRequestDtoValid(CreateManagerRequestDto requestDto)
+	{
+		return requestDto.EmailType is null
+			|| requestDto.EmailType.IsEnum<EmailType>();
 	}
 }
