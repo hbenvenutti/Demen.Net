@@ -1,4 +1,4 @@
-namespace Demen.Application.Structs;
+namespace Demen.Common.Structs;
 
 public struct Resources
 {

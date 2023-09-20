@@ -1,7 +1,7 @@
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 using Demen.Application.Error;
 using Demen.Application.Helpers;
-using Demen.Application.Structs;
+using Demen.Common.Structs;
 using Demen.Domain.Management.Manager;
 using Ether.Outcomes;
 using MediatR;
