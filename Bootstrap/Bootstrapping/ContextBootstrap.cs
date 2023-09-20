@@ -16,7 +16,7 @@ public static class ContextBootstrap
 		var contentConnectionString = configuration
 			.GetConnectionString(name: "Content");
 
-		services.AddDbContext<ContentDbContext>(options => options
+		services.AddDbContext<IDemenContext, DemenContext>(options => options
 			.UseNpgsql(contentConnectionString)
 		);
 
@@ -31,7 +31,7 @@ public static class ContextBootstrap
 
 		using var contentContext = scope
 			.ServiceProvider
-			.GetRequiredService<ContentDbContext>();
+			.GetRequiredService<DemenContext>();
 
 		contentContext
 			.Database

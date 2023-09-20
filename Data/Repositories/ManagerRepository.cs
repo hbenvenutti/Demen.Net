@@ -8,12 +8,12 @@ namespace Demen.Data.Repositories;
 
 public class ManagerRepository : IManagerRepository
 {
-	private readonly ContentDbContext _contentDbContext;
+	private readonly IDemenContext _dbContext;
 
 	// ---- constructors ---------------------------------------------------- //
-	public ManagerRepository(ContentDbContext contentDbContext)
+	public ManagerRepository(IDemenContext dbContext)
 	{
-		_contentDbContext = contentDbContext;
+		_dbContext = dbContext;
 	}
 
 	// ---- write methods --------------------------------------------------- //
@@ -22,12 +22,9 @@ public class ManagerRepository : IManagerRepository
 	{
 		var managerEntity = (ManagerEntity)managerDomain!;
 
-		await _contentDbContext
+		await _dbContext
 			.Managers
 			.AddAsync(managerEntity);
-
-		await _contentDbContext
-			.SaveChangesAsync();
 
 		return (ManagerDomain)managerEntity!;
 	}
@@ -39,11 +36,11 @@ public class ManagerRepository : IManagerRepository
 		managerEntity.Status = Status.Deleted;
 		managerEntity.DeletedAt = DateTime.UtcNow;
 
-		_contentDbContext
+		_dbContext
 			.Managers
 			.Update(managerEntity);
 
-		await _contentDbContext
+		await _dbContext
 			.SaveChangesAsync();
 
 		return;
@@ -53,7 +50,7 @@ public class ManagerRepository : IManagerRepository
 
 	public async Task<ManagerDomain?> FindByIdAsync(Guid id)
 	{
-		var managerEntity = await _contentDbContext
+		var managerEntity = await _dbContext
 			.Managers
 			.AsNoTracking()
 			.SingleOrDefaultAsync(manager => manager.ExternalId == id);

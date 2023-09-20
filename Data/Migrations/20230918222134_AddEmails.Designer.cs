@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Demen.Content.Data.Migrations
 {
-    [DbContext(typeof(ContentDbContext))]
+    [DbContext(typeof(DemenContext))]
     [Migration("20230918222134_AddEmails")]
     partial class AddEmails
     {

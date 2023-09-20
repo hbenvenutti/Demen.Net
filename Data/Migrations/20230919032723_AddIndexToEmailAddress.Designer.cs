@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Demen.Content.Data.Migrations
 {
-    [DbContext(typeof(ContentDbContext))]
+    [DbContext(typeof(DemenContext))]
     [Migration("20230919032723_AddIndexToEmailAddress")]
     partial class AddIndexToEmailAddress
     {

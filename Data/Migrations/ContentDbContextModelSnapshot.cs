@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Demen.Content.Data.Migrations
 {
-    [DbContext(typeof(ContentDbContext))]
+    [DbContext(typeof(DemenContext))]
     partial class ContentDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

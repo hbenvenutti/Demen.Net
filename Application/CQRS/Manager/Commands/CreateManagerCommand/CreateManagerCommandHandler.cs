@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Application.Error;
 using Demen.Application.Helpers;
+using Demen.Application.Utils;
 using Demen.Common.Enums;
 using Demen.Common.Helpers;
 using Demen.Domain.Management.Email;
@@ -19,17 +20,20 @@ public class CreateManagerCommandHandler
 	// ---- fields ---------------------------------------------------------- //
 	private readonly IManagerRepository _managerRepository;
 	private readonly IEmailRepository _emailRepository;
+	private readonly IUnityOfWork _unityOfWork;
 	private readonly OutcomeErrorHelper<CreateManagerResponseDto>
 		_outcomeErrorHelper;
 
 	// ---- constructors ---------------------------------------------------- //
 	public CreateManagerCommandHandler(
 		IManagerRepository managerRepository,
-		IEmailRepository emailRepository
+		IEmailRepository emailRepository,
+		IUnityOfWork unityOfWork
 	)
 	{
 		_managerRepository = managerRepository;
 		_emailRepository = emailRepository;
+		_unityOfWork = unityOfWork;
 
 		_outcomeErrorHelper =
 			new OutcomeErrorHelper<CreateManagerResponseDto>();
@@ -58,6 +62,9 @@ public class CreateManagerCommandHandler
 
 		var responseDto = (CreateManagerResponseDto) await _managerRepository
 			.CreateAsync(managerDomain);
+
+		await _unityOfWork
+			.CommitAsync(cancellationToken);
 
 		return new CreateManagerResponse(
 			outcome: Outcomes

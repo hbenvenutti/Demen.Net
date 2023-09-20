@@ -2,11 +2,11 @@ namespace Demen.Application.Helpers;
 
 public static class ResourceFromDomainHelper
 {
-	private const int _removableLength = 6;
+	private const int RemovableLength = 6;
 
 	public static string GetResource(this string domainString)
 	{
-		var resource = domainString[..^_removableLength];
+		var resource = domainString[..^RemovableLength];
 
 		return resource;
 	}

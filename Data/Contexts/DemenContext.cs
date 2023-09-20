@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Demen.Data.Contexts;
 
 [ExcludeFromCodeCoverage]
-public class ContentDbContext : DbContext
+public class DemenContext : DbContext, IDemenContext
 {
 	public required DbSet<ManagerEntity> Managers { get; set; }
 	public required DbSet<EmailEntity> Emails { get; set; }
 
-	public ContentDbContext(DbContextOptions<ContentDbContext> options)
+	public DemenContext(DbContextOptions<DemenContext> options)
 		: base(options) {}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,9 +6,9 @@ namespace Demen.Data.Repositories;
 
 public class EmailRepository : IEmailRepository
 {
-	private readonly ContentDbContext _dbContext;
+	private readonly IDemenContext _dbContext;
 
-	public EmailRepository(ContentDbContext dbContext)
+	public EmailRepository(IDemenContext dbContext)
 	{
 		_dbContext = dbContext;
 	}

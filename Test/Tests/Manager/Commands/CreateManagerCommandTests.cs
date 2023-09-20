@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Common.Enums;
+using Demen.Data.Utils;
+using Demen.Test.Mocks.Contexts;
 using Demen.Test.Mocks.Repositories;
 
 namespace Demen.Test.Tests.Manager.Commands;
@@ -11,6 +13,7 @@ public class CreateManagerCommandTests
 {
 	private readonly ManagerRepositoryMock _managerRepository = new ();
 	private readonly EmailRepositoryMock _emailRepository = new();
+	private readonly UnityOfWork _unityOfWork;
 	private readonly CancellationToken _cancellationToken = new();
 
 	private const string ExistentEmail = "existent@email";
@@ -20,6 +23,8 @@ public class CreateManagerCommandTests
 
 	public CreateManagerCommandTests()
 	{
+		_unityOfWork = new UnityOfWork(new DbContextMock());
+
 		Seed();
 	}
 
@@ -27,7 +32,8 @@ public class CreateManagerCommandTests
 
 	private async void Seed()
 	{
-		await _emailRepository.Seed(ExistentEmail);
+		await _emailRepository
+			.Seed(ExistentEmail);
 	}
 
 	// ---- tests ----------------------------------------------------------- //
@@ -62,8 +68,9 @@ public class CreateManagerCommandTests
 		var request = new CreateManagerRequest(requestDto);
 
 		var handler = new CreateManagerCommandHandler(
-			_managerRepository,
-			_emailRepository
+			managerRepository: _managerRepository,
+			emailRepository: _emailRepository,
+			unityOfWork: _unityOfWork
 		);
 
 		// ---- Act --------------------------------------------------------- //
