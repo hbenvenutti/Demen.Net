@@ -4,23 +4,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{507D98C4-5BF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-infra", "3-infra", "{7CCF9403-46C0-4569-8037-239F45EED600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.API", "Content.API\Content.API.csproj", "{0B741A4D-F5F6-451E-9BEF-129640513FBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{0B741A4D-F5F6-451E-9BEF-129640513FBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-entrypoint", "1-entrypoint", "{E86D0DFF-EE9E-410E-B089-9201BA59C888}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-core", "2-core", "{482958AB-161D-4BE6-A9A0-80290647265A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Data", "Content.Data\Content.Data.csproj", "{FDD38110-F4BF-4F62-9635-5A08C78D99EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{FDD38110-F4BF-4F62-9635-5A08C78D99EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Bootstrap", "Content.Bootstrap\Content.Bootstrap.csproj", "{92E017C3-8CF4-4685-967E-1D819DB7018B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap", "Bootstrap\Bootstrap.csproj", "{92E017C3-8CF4-4685-967E-1D819DB7018B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Common", "Content.Common\Content.Common.csproj", "{13ED4B7A-24B8-4919-A6AE-7626C835227B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{13ED4B7A-24B8-4919-A6AE-7626C835227B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Application", "Content.Application\Content.Application.csproj", "{0EB66308-2D72-44BB-A5FA-AFCAD936AC29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{0EB66308-2D72-44BB-A5FA-AFCAD936AC29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.UnitTests", "Content.UnitTests\Content.UnitTests.csproj", "{4DD27647-6D7E-4107-8020-AB34DA959AE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{4DD27647-6D7E-4107-8020-AB34DA959AE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Domain", "Content.Domain\Content.Domain.csproj", "{76541F1D-D6B7-4A27-8F88-D71F88702001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{76541F1D-D6B7-4A27-8F88-D71F88702001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
