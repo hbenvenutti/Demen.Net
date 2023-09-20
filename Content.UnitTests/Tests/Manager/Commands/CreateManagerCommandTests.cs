@@ -34,7 +34,9 @@ public class CreateManagerCommandTests
 	[Theory]
 	[InlineData(false)]
 	[InlineData(true)]
-	public async void CreateManager(bool emailInUse)
+	[InlineData(false, "Personal")]
+	[InlineData(false, "InvalidType")]
+	public async void CreateManager(bool emailInUse, string? emailType = null)
 	{
 		// ---- Arrange ----------------------------------------------------- //
 
@@ -45,7 +47,8 @@ public class CreateManagerCommandTests
 			Password = "password",
 			Email = !emailInUse
 				? "johndoe@email.com"
-				: ExistentEmail
+				: ExistentEmail,
+			EmailType = emailType
 		};
 
 		var request = new CreateManagerRequest(requestDto);
