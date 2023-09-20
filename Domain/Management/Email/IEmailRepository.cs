@@ -1,4 +1,4 @@
-namespace Demen.Domain.Email;
+namespace Demen.Domain.Management.Email;
 
 public interface IEmailRepository
 {

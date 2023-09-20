@@ -1,5 +1,5 @@
 using Demen.Data.Contexts;
-using Demen.Domain.Email;
+using Demen.Domain.Management.Email;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demen.Data.Repositories;

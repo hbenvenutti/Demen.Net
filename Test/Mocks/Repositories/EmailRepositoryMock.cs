@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Domain.Email;
+using Demen.Domain.Management.Email;
 
 namespace Demen.Test.Mocks.Repositories;
 

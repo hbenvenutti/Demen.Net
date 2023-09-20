@@ -1,6 +1,6 @@
 using Demen.Common.Enums;
 using Demen.Domain.Base;
-using Demen.Domain.Email;
+using Demen.Domain.Management.Email;
 
 namespace Demen.Domain.Management.Manager;
 

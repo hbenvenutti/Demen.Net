@@ -1,4 +1,4 @@
-using Demen.Domain.Email;
+using Demen.Domain.Management.Email;
 using Demen.Domain.Management.Manager;
 
 namespace Demen.Data.Entities;

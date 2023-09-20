@@ -4,7 +4,7 @@ using Demen.Application.Error;
 using Demen.Application.Helpers;
 using Demen.Common.Enums;
 using Demen.Common.Helpers;
-using Demen.Domain.Email;
+using Demen.Domain.Management.Email;
 using Demen.Domain.Management.Manager;
 using Ether.Outcomes;
 using MediatR;

@@ -1,5 +1,5 @@
 using Demen.Data.Repositories;
-using Demen.Domain.Email;
+using Demen.Domain.Management.Email;
 using Demen.Domain.Management.Manager;
 using Microsoft.Extensions.DependencyInjection;
 

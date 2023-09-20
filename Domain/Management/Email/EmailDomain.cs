@@ -2,7 +2,7 @@ using Demen.Common.Enums;
 using Demen.Domain.Base;
 using Demen.Domain.Management.Manager;
 
-namespace Demen.Domain.Email;
+namespace Demen.Domain.Management.Email;
 
 public class EmailDomain : BaseDomain
 {
