@@ -1,13 +1,12 @@
-using Demen.Content.Bootstrap.Bootstrapping;
+using Demen.Bootstrap.Bootstrapping;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Demen.Content.Bootstrap;
+namespace Demen.Bootstrap;
 
 public static class ApiBootstrap
 {

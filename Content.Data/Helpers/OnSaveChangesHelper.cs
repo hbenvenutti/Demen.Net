@@ -1,12 +1,12 @@
-using Demen.Content.Data.Entities;
+using Demen.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Demen.Content.Data.HashMaps;
+namespace Demen.Data.Helpers;
 
 public static class OnSaveChangesHelper
 {
-	private static IDictionary<EntityState, Action<BaseEntity>> map { get; } =
+	private static readonly IDictionary<EntityState, Action<BaseEntity>> Map =
 		new Dictionary<EntityState, Action<BaseEntity>>
 	{
 		[EntityState.Added] = entity =>
@@ -22,6 +22,6 @@ public static class OnSaveChangesHelper
 	{
 		if (entry.Entity is not BaseEntity entity) return;
 
-		map[entry.State](entity);
+		Map[entry.State](entity);
 	}
 }

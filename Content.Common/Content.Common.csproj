@@ -4,7 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Demen.Content.Common</RootNamespace>
+        <RootNamespace>Demen.Common</RootNamespace>
+        <AssemblyName>Demen.Common</AssemblyName>
     </PropertyGroup>
 
 </Project>

@@ -1,9 +1,9 @@
-using Demen.Content.Data.Repositories;
 using Demen.Content.Domain.Email;
 using Demen.Content.Domain.Manager;
+using Demen.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Demen.Content.Bootstrap.Bootstrapping;
+namespace Demen.Bootstrap.Bootstrapping;
 
 public static class RepositoryBootstrap
 {

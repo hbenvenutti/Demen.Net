@@ -1,9 +1,9 @@
 using System.Net;
-using Demen.Content.Common.Errors;
-using Demen.Content.Common.Helpers;
+using Demen.Common.Errors;
+using Demen.Common.Helpers;
 using Microsoft.AspNetCore.Http;
 
-namespace Demen.Content.Bootstrap.Middlewares;
+namespace Demen.Bootstrap.Middlewares;
 
 public class GlobalExceptionHandlerMiddleware
 {

@@ -4,7 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Demen.Content.API</RootNamespace>
+        <RootNamespace>Demen.API</RootNamespace>
+        <AssemblyName>Demen.API</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

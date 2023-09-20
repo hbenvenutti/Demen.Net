@@ -1,7 +1,7 @@
 using Demen.Content.Domain.Email;
 using Demen.Content.Domain.Manager;
 
-namespace Demen.Content.Data.Entities;
+namespace Demen.Data.Entities;
 
 public class ManagerEntity : BaseEntity
 {

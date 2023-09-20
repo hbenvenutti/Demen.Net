@@ -1,10 +1,10 @@
-using Demen.Content.Data.Contexts;
+using Demen.Data.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Demen.Content.Bootstrap.Bootstrapping;
+namespace Demen.Bootstrap.Bootstrapping;
 
 public static class ContextBootstrap
 {

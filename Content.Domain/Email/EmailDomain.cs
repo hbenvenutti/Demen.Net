@@ -1,4 +1,4 @@
-using Demen.Content.Common.Enums;
+using Demen.Common.Enums;
 using Demen.Content.Domain.Base;
 using Demen.Content.Domain.Manager;
 

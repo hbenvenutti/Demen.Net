@@ -1,8 +1,8 @@
+using Demen.Application.CQRS.Base;
+using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 using Ether.Outcomes;
-using Demen.Content.Application.CQRS.Base;
-using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 
-namespace Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery;
+namespace Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
 
 public class GetManagerResponse : IBaseCommandResponse<GetManagerResponseDto>
 {

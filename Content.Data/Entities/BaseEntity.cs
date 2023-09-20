@@ -1,6 +1,6 @@
-using Demen.Content.Common.Enums;
+using Demen.Common.Enums;
 
-namespace Demen.Content.Data.Entities;
+namespace Demen.Data.Entities;
 
 public abstract class BaseEntity
 {

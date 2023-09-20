@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Demen.Content.Application.CQRS.Base;
+namespace Demen.Application.CQRS.Base;
 
 public interface IBaseCommandRequest<T, TDto> : IRequest<T>
 {

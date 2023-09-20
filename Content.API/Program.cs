@@ -1,4 +1,4 @@
-using Demen.Content.Bootstrap;
+using Demen.Bootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 

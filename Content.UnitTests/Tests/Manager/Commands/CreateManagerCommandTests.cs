@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Demen.Content.Common.Enums;
-using Demen.Content.UnitTests.Mocks.Repositories;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Common.Enums;
+using Demen.Test.Mocks.Repositories;
 
-namespace Demen.Content.UnitTests.Tests.Manager.Commands;
+namespace Demen.Test.Tests.Manager.Commands;
 
 [ExcludeFromCodeCoverage]
 public class CreateManagerCommandTests

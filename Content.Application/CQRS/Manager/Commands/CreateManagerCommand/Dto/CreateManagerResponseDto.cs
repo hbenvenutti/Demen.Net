@@ -1,6 +1,6 @@
 using Demen.Content.Domain.Manager;
 
-namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 
 public class CreateManagerResponseDto
 {

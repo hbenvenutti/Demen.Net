@@ -1,6 +1,6 @@
-using Demen.Content.Common.Exceptions;
+using Demen.Common.Exceptions;
 
-namespace Demen.Content.Common.Helpers;
+namespace Demen.Common.Helpers;
 
 public static class EnumConverterHelper
 {

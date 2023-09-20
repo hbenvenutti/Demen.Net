@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Demen.Content.Domain.Email;
 
-namespace Demen.Content.UnitTests.Mocks.Repositories;
+namespace Demen.Test.Mocks.Repositories;
 
 [ExcludeFromCodeCoverage]
 public class EmailRepositoryMock : IEmailRepository

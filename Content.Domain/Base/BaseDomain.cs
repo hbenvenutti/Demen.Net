@@ -1,4 +1,4 @@
-using Demen.Content.Common.Enums;
+using Demen.Common.Enums;
 
 namespace Demen.Content.Domain.Base;
 

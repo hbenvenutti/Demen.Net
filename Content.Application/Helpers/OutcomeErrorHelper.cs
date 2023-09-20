@@ -1,8 +1,8 @@
+using Demen.Application.Error;
 using Ether.Outcomes;
 using Ether.Outcomes.Builder;
-using Demen.Content.Application.Error;
 
-namespace Demen.Content.Application.Helpers;
+namespace Demen.Application.Helpers;
 
 public class OutcomeErrorHelper<T>
 {

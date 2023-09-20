@@ -1,8 +1,8 @@
-using Demen.Content.Common.Enums;
-using Demen.Content.Common.Helpers;
+using Demen.Common.Enums;
+using Demen.Common.Helpers;
 using Demen.Content.Domain.Manager;
 
-namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 
 public class CreateManagerRequestDto
 {

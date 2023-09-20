@@ -1,13 +1,13 @@
-using Demen.Content.API.Handlers;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery;
-using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
-using Demen.Content.Common.Errors;
+using Demen.API.Handlers;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
+using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
+using Demen.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Demen.Content.API.Controllers;
+namespace Demen.API.Controllers;
 
 [ApiController]
 [Route(template: "api/v1/managers")]

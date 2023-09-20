@@ -1,4 +1,4 @@
-namespace Demen.Content.Common.Enums;
+namespace Demen.Common.Enums;
 
 public enum ErrorCode
 {

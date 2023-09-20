@@ -1,7 +1,7 @@
-using Demen.Content.Bootstrap.Middlewares;
+using Demen.Bootstrap.Middlewares;
 using Microsoft.AspNetCore.Builder;
 
-namespace Demen.Content.Bootstrap.Bootstrapping;
+namespace Demen.Bootstrap.Bootstrapping;
 
 public static class GlobalMiddlewareBootstrap
 {

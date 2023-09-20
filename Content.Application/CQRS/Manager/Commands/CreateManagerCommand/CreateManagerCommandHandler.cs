@@ -1,15 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Demen.Content.Application.Error;
-using Demen.Content.Application.Helpers;
-using Demen.Content.Common.Enums;
-using Demen.Content.Common.Helpers;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Application.Error;
+using Demen.Application.Helpers;
+using Demen.Common.Enums;
+using Demen.Common.Helpers;
 using Demen.Content.Domain.Email;
 using Demen.Content.Domain.Manager;
 using Ether.Outcomes;
 using MediatR;
 
-namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
+namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 [ExcludeFromCodeCoverage]
 

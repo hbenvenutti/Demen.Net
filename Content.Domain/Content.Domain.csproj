@@ -14,4 +14,9 @@
 
 
 
+    <ItemGroup>
+      <Folder Include="Content\" />
+    </ItemGroup>
+
+
 </Project>

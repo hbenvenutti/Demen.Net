@@ -1,6 +1,6 @@
 using Demen.Content.Domain.Manager;
 
-namespace Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
+namespace Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 
 public class GetManagerResponseDto
 {

@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
+using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
 using Microsoft.Extensions.DependencyInjection;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
-using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery;
 
-namespace Demen.Content.Bootstrap.Bootstrapping;
+namespace Demen.Bootstrap.Bootstrapping;
 
 [ExcludeFromCodeCoverage]
 public static class MediatorBootstrap

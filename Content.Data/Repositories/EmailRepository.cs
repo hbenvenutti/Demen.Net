@@ -1,8 +1,8 @@
-using Demen.Content.Data.Contexts;
 using Demen.Content.Domain.Email;
+using Demen.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Demen.Content.Data.Repositories;
+namespace Demen.Data.Repositories;
 
 public class EmailRepository : IEmailRepository
 {

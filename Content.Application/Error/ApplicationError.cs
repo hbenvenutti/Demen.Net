@@ -1,6 +1,6 @@
-using Demen.Content.Common.Enums;
+using Demen.Common.Enums;
 
-namespace Demen.Content.Application.Error;
+namespace Demen.Application.Error;
 
 public abstract class ApplicationError
 {

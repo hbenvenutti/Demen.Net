@@ -1,10 +1,10 @@
-using Demen.Content.Common.Enums;
-using Demen.Content.Data.Contexts;
-using Demen.Content.Data.Entities;
+using Demen.Common.Enums;
 using Demen.Content.Domain.Manager;
+using Demen.Data.Contexts;
+using Demen.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Demen.Content.Data.Repositories;
+namespace Demen.Data.Repositories;
 
 public class ManagerRepository : IManagerRepository
 {

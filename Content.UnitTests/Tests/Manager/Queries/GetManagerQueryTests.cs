@@ -1,11 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery;
-using Demen.Content.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
-using Demen.Content.Common.Enums;
+using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
+using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
+using Demen.Common.Enums;
 using Demen.Content.Domain.Manager;
-using Demen.Content.UnitTests.Mocks.Repositories;
+using Demen.Test.Mocks.Repositories;
 
-namespace Demen.Content.UnitTests.Tests.Manager.Queries;
+namespace Demen.Test.Tests.Manager.Queries;
 
 [ExcludeFromCodeCoverage]
 

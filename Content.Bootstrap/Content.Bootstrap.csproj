@@ -4,7 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Demen.Content.Bootstrap</RootNamespace>
+        <RootNamespace>Demen.Bootstrap</RootNamespace>
+        <AssemblyName>Demen.Bootstrap</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

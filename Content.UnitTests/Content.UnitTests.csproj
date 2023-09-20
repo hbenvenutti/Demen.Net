@@ -7,7 +7,9 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>Demen.Content.UnitTests</RootNamespace>
+        <RootNamespace>Demen.Test</RootNamespace>
+
+        <AssemblyName>Demen.Test</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

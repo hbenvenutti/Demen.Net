@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Content.Common.Enums;
+using Demen.Common.Enums;
 using Demen.Content.Domain.Manager;
 
-namespace Demen.Content.UnitTests.Mocks.Repositories;
+namespace Demen.Test.Mocks.Repositories;
 
 [ExcludeFromCodeCoverage]
 public class ManagerRepositoryMock : IManagerRepository

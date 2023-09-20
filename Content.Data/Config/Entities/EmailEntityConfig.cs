@@ -1,11 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Content.Common.Enums;
-using Demen.Content.Common.Helpers;
-using Demen.Content.Data.Entities;
+using Demen.Common.Enums;
+using Demen.Common.Helpers;
+using Demen.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Demen.Content.Data.Config.Entities;
+namespace Demen.Data.Config.Entities;
 
 [ExcludeFromCodeCoverage]
 public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>

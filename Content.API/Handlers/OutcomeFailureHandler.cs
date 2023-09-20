@@ -1,8 +1,8 @@
-using Demen.Content.Common.Errors;
+using Demen.Common.Errors;
 using Ether.Outcomes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Demen.Content.API.Handlers;
+namespace Demen.API.Handlers;
 
 public static class OutcomeFailureHandler
 {

@@ -1,6 +1,6 @@
 using Ether.Outcomes;
 
-namespace Demen.Content.Application.CQRS.Base;
+namespace Demen.Application.CQRS.Base;
 
 public interface IBaseCommandResponse<TResponseDto>
 {

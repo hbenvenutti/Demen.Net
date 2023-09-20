@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using Demen.Content.Data.Config.Entities;
-using Demen.Content.Data.Entities;
-using Demen.Content.Data.HashMaps;
+using Demen.Data.Config.Entities;
+using Demen.Data.Entities;
+using Demen.Data.Helpers;
 using Microsoft.EntityFrameworkCore;
 
-namespace Demen.Content.Data.Contexts;
+namespace Demen.Data.Contexts;
 
 [ExcludeFromCodeCoverage]
 public class ContentDbContext : DbContext

@@ -1,8 +1,8 @@
+using Demen.Application.CQRS.Base;
+using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Ether.Outcomes;
-using Demen.Content.Application.CQRS.Base;
-using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 
-namespace Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand;
+namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 public class CreateManagerResponse
 	: IBaseCommandResponse<CreateManagerResponseDto>

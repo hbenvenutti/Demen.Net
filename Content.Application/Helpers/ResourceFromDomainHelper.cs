@@ -1,4 +1,4 @@
-namespace Demen.Content.Application.Helpers;
+namespace Demen.Application.Helpers;
 
 public static class ResourceFromDomainHelper
 {

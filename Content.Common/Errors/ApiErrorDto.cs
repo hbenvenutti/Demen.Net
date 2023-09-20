@@ -1,6 +1,6 @@
-using Demen.Content.Common.Helpers;
+using Demen.Common.Helpers;
 
-namespace Demen.Content.Common.Errors;
+namespace Demen.Common.Errors;
 
 public class ApiErrorDto
 {
