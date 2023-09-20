@@ -16,4 +16,9 @@ public static class EnumConverterHelper
 		return (T)Enum
 			.Parse(typeof(T), enumValue);
 	}
+
+	public static bool IsEnum<T>(this string enumValue)
+	{
+		return Enum.IsDefined(typeof(T), enumValue);
+	}
 }
