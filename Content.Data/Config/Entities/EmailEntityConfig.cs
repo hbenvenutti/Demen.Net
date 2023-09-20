@@ -13,7 +13,14 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 	public void Configure(EntityTypeBuilder<EmailEntity> builder)
 	{
 		builder
-			.ToTable("emails");
+			.ToTable(
+				name: "emails",
+				buildAction: table => table
+					.HasCheckConstraint(
+						name: "CK_email_type",
+						sql: "type IN ('Personal', 'Corporate')"
+				)
+			);
 
 		// ---- keys -------------------------------------------------------- //
 
