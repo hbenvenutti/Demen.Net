@@ -1,4 +1,6 @@
+using Demen.Application.Utils;
 using Demen.Data.Contexts;
+using Demen.Data.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,14 +18,19 @@ public static class ContextBootstrap
 		var contentConnectionString = configuration
 			.GetConnectionString(name: "Content");
 
-		services.AddDbContext<IDemenContext, DemenContext>(options => options
-			.UseNpgsql(contentConnectionString)
+		services.AddDbContext<IDemenContext, DemenContext>(
+			optionsAction: options => options
+				.UseNpgsql(contentConnectionString)
 		);
+
+		services.AddScoped<IUnityOfWork, UnityOfWork>();
 
 		return services;
 	}
 
-	public static void MigrateDatabaseOnStartUp(this IApplicationBuilder builder)
+	public static void MigrateDatabaseOnStartUp(
+		this IApplicationBuilder builder
+	)
 	{
 		using var scope = builder
 			.ApplicationServices
