@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Demen.Content.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Content.Application.Error;
 using Demen.Content.Application.Helpers;
+using Demen.Content.Common.Enums;
+using Demen.Content.Common.Helpers;
 using Demen.Content.Domain.Email;
 using Demen.Content.Domain.Manager;
 using Ether.Outcomes;
@@ -39,6 +41,11 @@ public class CreateManagerCommandHandler
 		CancellationToken cancellationToken
 	)
 	{
+		if (!IsRequestDtoValid(requestDto: request.RequestDto))
+			return new CreateManagerResponse(_outcomeErrorHelper
+				.CreateOutcomeFailure(new InvalidDataError())
+			);
+
 		var managerDomain = (ManagerDomain)request.RequestDto;
 
 		var email = await _emailRepository
@@ -56,5 +63,13 @@ public class CreateManagerCommandHandler
 			outcome: Outcomes
 				.Success(responseDto)
 		);
+	}
+
+	// ---- helpers --------------------------------------------------------- //
+
+	private static bool IsRequestDtoValid(CreateManagerRequestDto requestDto)
+	{
+		return requestDto.EmailType is null
+			|| requestDto.EmailType.IsEnum<EmailType>();
 	}
 }
