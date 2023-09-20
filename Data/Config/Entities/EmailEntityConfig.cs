@@ -10,17 +10,32 @@ namespace Demen.Data.Config.Entities;
 [ExcludeFromCodeCoverage]
 public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 {
+	private readonly string _personal = EmailType.Personal.ToString();
+	private readonly string _corporate = EmailType.Corporate.ToString();
+	private readonly string _active = Status.Active.ToString();
+	private readonly string _inactive = Status.Inactive.ToString();
+	private readonly string _deleted = Status.Deleted.ToString();
+
 	public void Configure(EntityTypeBuilder<EmailEntity> builder)
 	{
+
 		builder
 			.ToTable(
 				name: "emails",
-				buildAction: table => table
-					.HasCheckConstraint(
-						name: "CK_email_type",
-						sql: "type IN ('Personal', 'Corporate')"
-				)
-			);
+				buildAction: table =>
+				{
+					table
+						.HasCheckConstraint(
+							name: "CK_email_type",
+							sql: $"type IN ('{_personal}', '{_corporate}')"
+						);
+
+					table
+						.HasCheckConstraint(
+							name: "CK_email_status",
+							sql: $"status IN ('{_active}', '{_inactive}', '{_deleted}')"
+						);
+				});
 
 		// ---- keys -------------------------------------------------------- //
 
@@ -60,6 +75,7 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 				status => status.ToString(),
 				str => str.StringToEnum<Status>()
 			)
+			.HasDefaultValue(Status.Active)
 			.IsRequired();
 
 		builder
@@ -70,6 +86,7 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 				str => str.StringToEnum<EmailType>()
 			)
 			.HasColumnType("varchar")
+			.HasDefaultValue(EmailType.Personal)
 			.IsRequired();
 
 		builder
