@@ -14,6 +14,7 @@ public class CreateManagerCommandTests
 	private readonly CancellationToken _cancellationToken = new();
 
 	private const string ExistentEmail = "existent@email";
+	private const string InvalidEmailType = "InvalidEmailType";
 
 	// ---- constructor ----------------------------------------------------- //
 
@@ -34,9 +35,14 @@ public class CreateManagerCommandTests
 	[Theory]
 	[InlineData(false)]
 	[InlineData(true)]
-	[InlineData(false, "Personal")]
-	[InlineData(false, "InvalidType")]
-	public async void CreateManager(bool emailInUse, string? emailType = null)
+	[InlineData(false, false, "Personal")]
+	[InlineData(false, false, "Corporate")]
+	[InlineData(false, true)]
+	public async void CreateManager(
+		bool emailInUse,
+		bool invalidEmailType = false,
+		string? emailType = null
+	)
 	{
 		// ---- Arrange ----------------------------------------------------- //
 
@@ -48,7 +54,9 @@ public class CreateManagerCommandTests
 			Email = !emailInUse
 				? "johndoe@email.com"
 				: ExistentEmail,
-			EmailType = emailType
+			EmailType = !invalidEmailType
+				? emailType
+				: InvalidEmailType
 		};
 
 		var request = new CreateManagerRequest(requestDto);
@@ -67,7 +75,7 @@ public class CreateManagerCommandTests
 
 		// ---- Assert ------------------------------------------------------ //
 
-		if (emailInUse)
+		if (emailInUse || invalidEmailType)
 		{
 			Assert.Equal(
 				expected: (int)ErrorCode.BadData,
