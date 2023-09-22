@@ -21,16 +21,16 @@ public class EmailDomain : BaseDomain
 	// ---- constructors ---------------------------------------------------- //
 
 	public EmailDomain(
-		int id,
 		Guid externalId,
-		Status status,
 		int managerId,
-		ManagerDomain? manager,
 		string address,
-		bool isVerified,
 		DateTime createdAt,
-		DateTime? updatedAt,
-		DateTime? deletedAt,
+		int id = 0,
+		Status status = Status.Active,
+		ManagerDomain? manager = null,
+		bool isVerified = false,
+		DateTime? updatedAt = null,
+		DateTime? deletedAt = null,
 		EmailType type = EmailType.Personal
 	)
 	{
@@ -56,16 +56,10 @@ public class EmailDomain : BaseDomain
 	)
 	{
 		return new EmailDomain(
-			id: 0,
 			externalId: Guid.Empty,
 			managerId: managerId,
-			manager: null,
 			address: address,
-			isVerified: false,
-			status: Status.Active,
 			createdAt: DateTime.Now,
-			updatedAt: null,
-			deletedAt: null,
 			type: type ?? EmailType.Personal
 		);
 	}
