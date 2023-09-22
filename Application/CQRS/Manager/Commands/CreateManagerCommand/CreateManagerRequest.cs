@@ -5,7 +5,7 @@ using MediatR;
 namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 public class CreateManagerRequest
-	: IBaseCommandRequest<CreateManagerResponse, CreateManagerRequestDto>, IRequest<CreateManagerResponse>
+	: IBaseCommandRequest<CreateManagerResponse, CreateManagerRequestDto>
 {
 	public CreateManagerRequestDto RequestDto { get; init; }
 

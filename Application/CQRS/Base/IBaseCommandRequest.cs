@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Demen.Application.CQRS.Base;
 
-public interface IBaseCommandRequest<T, TDto> : IRequest<T>
+public interface IBaseCommandRequest<out TResponse, TDto> : IRequest<TResponse>
 {
-	public TDto RequestDto { get; init; }
+	TDto RequestDto { get; init; }
 }
