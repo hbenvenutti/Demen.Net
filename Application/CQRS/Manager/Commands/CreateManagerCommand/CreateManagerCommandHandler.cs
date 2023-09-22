@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Application.Dto;
@@ -10,8 +9,6 @@ using Demen.Domain.Management.Manager;
 using MediatR;
 
 namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
-
-[ExcludeFromCodeCoverage]
 
 public class CreateManagerCommandHandler
 	: IRequestHandler<CreateManagerRequest, CreateManagerResponse>
