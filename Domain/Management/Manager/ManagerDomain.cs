@@ -1,5 +1,6 @@
 using Demen.Common.Enums;
 using Demen.Domain.Base;
+using Demen.Domain.Content;
 using Demen.Domain.Management.Email;
 
 namespace Demen.Domain.Management.Manager;
@@ -14,19 +15,22 @@ public class ManagerDomain : BaseDomain
 	// ---- relationships --------------------------------------------------- //
 
 	public ICollection<EmailDomain>? Emails { get; init; }
+	public ICollection<VideoDomain>? Videos { get; init; }
 
 	// ---- constructors ---------------------------------------------------- //
+
 	public ManagerDomain(
-		int id,
-		Guid externalId,
-		Status status,
-		DateTime createdAt,
-		DateTime? updatedAt,
-		DateTime? deletedAt,
 		string name,
 		string surname,
 		string password,
-		ICollection<EmailDomain>? emails
+		Guid externalId,
+		DateTime createdAt,
+		int id = 0,
+		Status status = Status.Active,
+		ICollection<EmailDomain>? emails = null,
+		ICollection<VideoDomain>? videos = null,
+		DateTime? updatedAt = null,
+		DateTime? deletedAt = null
 	)
 	{
 		Id = id;
@@ -39,9 +43,11 @@ public class ManagerDomain : BaseDomain
 		Surname = surname;
 		Password = password;
 		Emails = emails;
+		Videos = videos;
 	}
 
 	// ---- factories ------------------------------------------------------- //
+
 	public static ManagerDomain Create(
 		string name,
 		string surname,
@@ -64,10 +70,7 @@ public class ManagerDomain : BaseDomain
 		return new ManagerDomain(
 			id: 0,
 			externalId: Guid.Empty,
-			status: Status.Active,
 			createdAt: DateTime.UtcNow,
-			updatedAt: null,
-			deletedAt: null,
 			name: name,
 			surname: surname,
 			password: password,
