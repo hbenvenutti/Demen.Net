@@ -1,6 +1,6 @@
 namespace Demen.Application.Error;
 
-public struct ResourceNotFoundError : IApplicationError
+public struct ResourceNotFoundError
 {
 	public string Message {get; init;}
 

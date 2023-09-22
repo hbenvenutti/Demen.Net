@@ -1,11 +1,13 @@
+using System.Diagnostics.CodeAnalysis;
 using Demen.Common.Enums;
 using Demen.Common.Helpers;
 using Demen.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Demen.Data.Config;
+namespace Demen.Data.Config.Entities;
 
+[ExcludeFromCodeCoverage]
 public static class  BaseEntityConfig
 {
 	private static readonly string Active = Status.Active.ToString();

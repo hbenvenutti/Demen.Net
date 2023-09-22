@@ -77,8 +77,28 @@ public class GetManagerQueryTests
 		);
 
 		Assert.Equal(
+			expected: _managerDomain.Status.ToString(),
+			actual: responseDto.Status
+		);
+
+		Assert.Equal(
 			expected: _managerDomain.Name,
 			actual: responseDto.Name
+		);
+
+		Assert.Equal(
+			expected: _managerDomain.CreatedAt,
+			actual: responseDto.CreatedAt
+		);
+
+		Assert.Equal(
+			expected: _managerDomain.UpdatedAt,
+			actual: responseDto.UpdatedAt
+		);
+
+		Assert.Equal(
+			expected: _managerDomain.DeletedAt,
+			actual: responseDto.DeletedAt
 		);
 
 		Assert.Equal(
