@@ -1,9 +1,10 @@
+using System.Net;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
+using Demen.Application.Dto;
 using Demen.Application.Error;
-using Demen.Application.Helpers;
+using Demen.Common.Enums;
 using Demen.Common.Structs;
 using Demen.Domain.Management.Manager;
-using Ether.Outcomes;
 using MediatR;
 
 namespace Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
@@ -12,17 +13,18 @@ public class GetManagerQueryHandler :
 	IRequestHandler<GetManagerRequest, GetManagerResponse>
 {
 	// ---- fields ---------------------------------------------------------- //
+
 	private readonly IManagerRepository _managerRepository;
-	private readonly OutcomeErrorHelper<GetManagerResponseDto> _outcomeErrorHelper;
 
 	// ---- constructors ---------------------------------------------------- //
+
 	public GetManagerQueryHandler(IManagerRepository managerRepository)
 	{
 		_managerRepository = managerRepository;
-		_outcomeErrorHelper = new OutcomeErrorHelper<GetManagerResponseDto>();
 	}
 
 	// ---- methods --------------------------------------------------------- //
+
 	public async Task<GetManagerResponse> Handle(
 		GetManagerRequest request,
 		CancellationToken cancellationToken
@@ -33,16 +35,25 @@ public class GetManagerQueryHandler :
 
 		if (managerDomain is null)
 			return new GetManagerResponse(
-				_outcomeErrorHelper
-					.CreateOutcomeFailure(
-						new ResourceNotFoundError(Resources.Manager)
-					)
+				new ResponseDto<GetManagerResponseDto>(
+					httpStatusCode: (int)HttpStatusCode.NotFound,
+					statusCode: (int)StatusCode.ResourceNotFound,
+					errorDto: new ApplicationErrorDto(
+						new ResourceNotFoundError(Resources.Manager).Message
+					),
+					data: null
+				)
 			);
 
-		GetManagerResponseDto responseDto = managerDomain;
+		var responseDto = (GetManagerResponseDto)managerDomain;
 
-		return new GetManagerResponse(outcome: Outcomes
-			.Success(responseDto)
+		return new GetManagerResponse(
+			new ResponseDto<GetManagerResponseDto>(
+				isSuccess: true,
+				httpStatusCode: (int)HttpStatusCode.Accepted,
+				statusCode: (int)StatusCode.Succeeded,
+				data: responseDto
+			)
 		);
 	}
 }

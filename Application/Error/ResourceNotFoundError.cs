@@ -1,16 +1,11 @@
-using Demen.Common.Enums;
-
 namespace Demen.Application.Error;
 
-public class ResourceNotFoundError : ApplicationError
+public struct ResourceNotFoundError : IApplicationError
 {
-	private new const ErrorCode StatusCode = ErrorCode.ResourceNotFound;
+	public string Message {get; init;}
 
 	public ResourceNotFoundError(string resource)
-		: base(
-			StatusCode,
-			message: $"{resource} not found."
-		)
 	{
+		Message = $"{resource} not found.";
 	}
 }

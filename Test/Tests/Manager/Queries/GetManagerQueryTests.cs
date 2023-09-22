@@ -13,7 +13,7 @@ public class GetManagerQueryTests
 {
 	private readonly ManagerRepositoryMock _managerRepository;
 	private readonly CancellationToken _cancellationToken = new();
-	private ManagerDomain _managerDomain;
+	private ManagerDomain _managerDomain = null!;
 
 	public GetManagerQueryTests()
 	{
@@ -57,17 +57,19 @@ public class GetManagerQueryTests
 			.Handle(request, _cancellationToken);
 
 		// ---- Assert ------------------------------------------------------ //
-		var responseDto = response.Outcome.Value;
+		var responseDto = response.ResponseDto.Data;
 
 		if (!idExists)
 		{
 			Assert.Equal(
-				expected: (int)ErrorCode.ResourceNotFound,
-				actual: response.Outcome.StatusCode
+				expected: (int)StatusCode.ResourceNotFound,
+				actual: response.ResponseDto.StatusCode
 			);
 
 			return;
 		}
+
+		Assert.NotNull(responseDto);
 
 		Assert.Equal(
 			expected: _managerDomain.ExternalId,

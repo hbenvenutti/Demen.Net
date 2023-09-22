@@ -1,4 +1,3 @@
-using Demen.API.Handlers;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
@@ -52,13 +51,16 @@ public class ManagerController : ControllerBase
 		var response = await _mediator
 			.Send(request: request);
 
-		if (response.Outcome.Failure)
-			return response.Outcome.HandleFailure();
+		if (!response.ResponseDto.IsSuccess)
+			return StatusCode(
+				statusCode: response.ResponseDto.HttpStatusCode,
+				value: response.ResponseDto
+			);
 
 		return CreatedAtAction(
 			actionName: nameof(GetManagerById),
-			routeValues: new { id = response.Outcome.Value.Id },
-			value: response.Outcome.Value
+			routeValues: new { id = response.ResponseDto.Data!.Id },
+			value: response.ResponseDto
 		);
 	}
 
@@ -95,9 +97,9 @@ public class ManagerController : ControllerBase
 		var response = await _mediator
 			.Send(request: request);
 
-		if (response.Outcome.Failure)
-			return response.Outcome.HandleFailure();
-
-		return Ok(response.Outcome.Value);
+		return StatusCode(
+			statusCode: response.ResponseDto.HttpStatusCode,
+			value: response.ResponseDto
+		);
 	}
 }
