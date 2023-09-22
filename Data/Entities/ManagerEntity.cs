@@ -15,6 +15,9 @@ public class ManagerEntity : BaseEntity
 	public ICollection<EmailEntity>? Emails { get; set; } =
 		new List<EmailEntity>();
 
+	public ICollection<VideoEntity>? Videos { get; set; } =
+		new List<VideoEntity>();
+
 	// ---- factories ------------------------------------------------------- //
 	public static implicit operator ManagerDomain?(ManagerEntity? managerEntity)
 	{

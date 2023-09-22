@@ -35,7 +35,7 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 
 		builder
 			.HasKey(email => email.Id)
-			.HasName("pk_email_id");
+			.HasName("PK_email_id");
 
 		builder
 			.ConfigureBaseEntityProperties();
@@ -44,7 +44,7 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.HasOne(email => email.Manager)
 			.WithMany(manager => manager.Emails)
 			.HasForeignKey(email => email.ManagerId)
-			.HasConstraintName("fk_manager_id");
+			.HasConstraintName("FK_email_manager_id");
 
 		builder
 			.Property(email => email.ManagerId)

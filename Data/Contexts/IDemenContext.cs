@@ -7,6 +7,7 @@ public interface IDemenContext
 {
 	DbSet<ManagerEntity> Managers { get; set; }
 	DbSet<EmailEntity> Emails { get; set; }
+	DbSet<VideoEntity> Videos { get; set; }
 
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

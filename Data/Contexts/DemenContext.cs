@@ -11,6 +11,7 @@ public class DemenContext : DbContext, IDemenContext
 {
 	public required DbSet<ManagerEntity> Managers { get; set; }
 	public required DbSet<EmailEntity> Emails { get; set; }
+	public required DbSet<VideoEntity> Videos { get; set; }
 
 	public DemenContext(DbContextOptions<DemenContext> options)
 		: base(options) {}
@@ -19,6 +20,7 @@ public class DemenContext : DbContext, IDemenContext
 	{
 		modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
 		modelBuilder.ApplyConfiguration(new EmailEntityConfig());
+		modelBuilder.ApplyConfiguration(new VideoEntityConfig());
 	}
 
 	public override Task<int> SaveChangesAsync(

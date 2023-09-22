@@ -20,7 +20,7 @@ public class ManagerEntityConfig : IEntityTypeConfiguration<ManagerEntity>
 
 		builder
 			.HasKey(manager => manager.Id)
-			.HasName("pk_manager_id");
+			.HasName("PK_manager_id");
 
 		builder
 			.Property(manager => manager.Name)
