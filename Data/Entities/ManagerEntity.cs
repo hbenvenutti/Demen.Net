@@ -1,3 +1,4 @@
+using Demen.Domain.Content;
 using Demen.Domain.Management.Email;
 using Demen.Domain.Management.Manager;
 
@@ -34,6 +35,17 @@ public class ManagerEntity : BaseEntity
 				.ToList()
 			: null;
 
+		var videos = managerEntity.Videos?.Count > 0
+			? managerEntity
+				.Videos
+				.Select(video =>
+				{
+					video.Manager = null;
+					return (VideoDomain)video!;
+				})
+				.ToList()
+			: null;
+
 		return new ManagerDomain(
 			id: managerEntity.Id,
 			externalId: managerEntity.ExternalId,
@@ -44,7 +56,8 @@ public class ManagerEntity : BaseEntity
 			name: managerEntity.Name,
 			surname: managerEntity.Surname,
 			password: managerEntity.Password,
-			emails: emails
+			emails: emails,
+			videos: videos
 		);
 	}
 
@@ -66,7 +79,8 @@ public class ManagerEntity : BaseEntity
 			Password = managerDomain.Password,
 			Emails = managerDomain.Emails?
 				.Select(email => (EmailEntity) email!)
-				.ToList()
+				.ToList(),
+			Videos = null
 		};
 	}
 }
