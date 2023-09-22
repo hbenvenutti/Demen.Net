@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Application.Error;
 using Demen.Common.Enums;
 using Demen.Test.Mocks.Repositories;
 
@@ -72,44 +74,91 @@ public class CreateManagerCommandTests
 		var result = await handler
 			.Handle(request, _cancellationToken);
 
-		var responseDto = result.ResponseDto.Data;
+		var responseDtoData = result.ResponseDto.Data;
 
 		// ---- Assert ------------------------------------------------------ //
 
 		if (emailInUse)
 		{
+			Assert.False(result.ResponseDto.IsSuccess);
+
 			Assert.Equal(
 				expected: (int)StatusCode.Conflict,
 				actual: result.ResponseDto.StatusCode
 			);
+
+			Assert.Equal(
+				expected: (int)HttpStatusCode.BadRequest,
+				actual: result.ResponseDto.HttpStatusCode
+			);
+
+			Assert.NotNull(result.ResponseDto.Error);
+
+			Assert.Equal(
+				expected: EmailInUseError.Message,
+				actual: result.ResponseDto.Error.Errors.First()
+			);
+
+			Assert.Null(result.ResponseDto.Data);
+
 
 			return;
 		}
 
 		if (invalidEmailType)
 		{
+			Assert.False(result.ResponseDto.IsSuccess);
+
 			Assert.Equal(
 				expected: (int)StatusCode.InvalidData,
 				actual: result.ResponseDto.StatusCode
 			);
 
+			Assert.Equal(
+				expected: (int)HttpStatusCode.BadRequest,
+				actual: result.ResponseDto.HttpStatusCode
+			);
+
+			Assert.Null(result.ResponseDto.Data);
+
+			Assert.NotNull(result.ResponseDto.Error);
+
+			Assert.Equal(
+				expected: "EmailType is invalid.",
+				actual: result.ResponseDto.Error.Errors.First()
+			);
+
 			return;
 		}
 
-		Assert.NotNull(responseDto);
+		Assert.NotNull(responseDtoData);
+
+		Assert.Null(result.ResponseDto.Error);
+
+		Assert.True(result.ResponseDto.IsSuccess);
+
+		Assert.Equal(
+			expected: (int)HttpStatusCode.Created,
+			actual: result.ResponseDto.HttpStatusCode
+		);
+
+		Assert.Equal(
+			expected: (int)StatusCode.Succeeded,
+			actual: result.ResponseDto.StatusCode
+		);
 
 		Assert.Equal(
 			expected: requestDto.Name,
-			actual: responseDto.Name
+			actual: responseDtoData.Name
 		);
 
 		Assert.Equal(
 			expected: requestDto.Surname,
-			actual: responseDto.Surname
+			actual: responseDtoData.Surname
 		);
 
-		Assert.IsType<DateTime>(responseDto.CreatedAt);
+		Assert.IsType<DateTime>(responseDtoData.CreatedAt);
 
-		Assert.IsType<Guid>(responseDto.Id);
+		Assert.IsType<Guid>(responseDtoData.Id);
 	}
 }
