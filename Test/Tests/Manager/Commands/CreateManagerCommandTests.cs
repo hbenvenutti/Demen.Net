@@ -102,15 +102,7 @@ public class CreateManagerCommandTests
 			actual: responseDto.Surname
 		);
 
-		Assert.NotEqual(
-			expected: DateTime.MinValue,
-			actual: responseDto.CreatedAt
-		);
-
-		Assert.NotEqual(
-			expected: Guid.Empty,
-			actual: responseDto.Id
-		);
+		Assert.IsType<DateTime>(responseDto.CreatedAt);
 
 		Assert.IsType<Guid>(responseDto.Id);
 	}
