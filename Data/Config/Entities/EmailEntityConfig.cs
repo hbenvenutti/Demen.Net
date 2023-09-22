@@ -12,9 +12,6 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 {
 	private readonly string _personal = EmailType.Personal.ToString();
 	private readonly string _corporate = EmailType.Corporate.ToString();
-	private readonly string _active = Status.Active.ToString();
-	private readonly string _inactive = Status.Inactive.ToString();
-	private readonly string _deleted = Status.Deleted.ToString();
 
 	public void Configure(EntityTypeBuilder<EmailEntity> builder)
 	{
@@ -31,10 +28,7 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 						);
 
 					table
-						.HasCheckConstraint(
-							name: "CK_email_status",
-							sql: $"status IN ('{_active}', '{_inactive}', '{_deleted}')"
-						);
+						.CreateStatusConstraint(name: "CK_email_status");
 				});
 
 		// ---- keys -------------------------------------------------------- //
@@ -44,15 +38,13 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.HasName("pk_email_id");
 
 		builder
+			.ConfigureBaseEntityProperties();
+
+		builder
 			.HasOne(email => email.Manager)
 			.WithMany(manager => manager.Emails)
 			.HasForeignKey(email => email.ManagerId)
 			.HasConstraintName("fk_manager_id");
-
-		builder
-			.Property(email => email.Id)
-			.HasColumnName("id")
-			.IsRequired();
 
 		builder
 			.Property(email => email.ManagerId)
@@ -60,23 +52,6 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.IsRequired();
 
 		// ---- columns ----------------------------------------------------- //
-
-		builder
-			.Property(email => email.ExternalId)
-			.HasColumnName("external_id")
-			.HasColumnType("varchar")
-			.IsRequired();
-
-		builder
-			.Property(email => email.Status)
-			.HasColumnName("status")
-			.HasColumnType("varchar")
-			.HasConversion(
-				status => status.ToString(),
-				str => str.StringToEnum<Status>()
-			)
-			.HasDefaultValue(Status.Active)
-			.IsRequired();
 
 		builder
 			.Property(email => email.Type)
@@ -99,21 +74,6 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.Property(email => email.IsVerified)
 			.HasColumnName("is_verified")
 			.IsRequired();
-
-		builder
-			.Property(email => email.CreatedAt)
-			.HasColumnName("created_at")
-			.IsRequired();
-
-		builder
-			.Property(email => email.UpdatedAt)
-			.HasColumnName("updated_at")
-			.IsRequired(false);
-
-		builder
-			.Property(email => email.DeletedAt)
-			.HasColumnName("deleted_at")
-			.IsRequired(false);
 
 		// ---- indexes ----------------------------------------------------- //
 
