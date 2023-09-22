@@ -22,6 +22,8 @@ public static class OnSaveChangesHelper
 	{
 		if (entry.Entity is not BaseEntity entity) return;
 
+		if (!Map.ContainsKey(entry.State)) return;
+
 		Map[entry.State](entity);
 	}
 }

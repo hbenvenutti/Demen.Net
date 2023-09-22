@@ -26,6 +26,9 @@ public class ManagerRepository : IManagerRepository
 			.Managers
 			.AddAsync(managerEntity);
 
+		await _dbContext
+			.SaveChangesAsync();
+
 		return (ManagerDomain)managerEntity!;
 	}
 

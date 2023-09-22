@@ -23,6 +23,8 @@ public class EmailRepository : IEmailRepository
 
 		await _dbContext.Emails.AddAsync(emailEntity);
 
+		await _dbContext.SaveChangesAsync();
+
 		return (EmailDomain)emailEntity!;
 	}
 
