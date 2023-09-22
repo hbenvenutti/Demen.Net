@@ -29,7 +29,7 @@ public class ManagerRepository : IManagerRepository
 		return (ManagerDomain)managerEntity!;
 	}
 
-	public async Task DeleteAsync(ManagerDomain managerDomain)
+	public Task DeleteAsync(ManagerDomain managerDomain)
 	{
 		var managerEntity = (ManagerEntity)managerDomain!;
 
@@ -40,10 +40,7 @@ public class ManagerRepository : IManagerRepository
 			.Managers
 			.Update(managerEntity);
 
-		await _dbContext
-			.SaveChangesAsync();
-
-		return;
+		return Task.CompletedTask;
 	}
 
 	// ---- read methods ---------------------------------------------------- //
