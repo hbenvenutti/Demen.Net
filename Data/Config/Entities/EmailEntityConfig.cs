@@ -44,6 +44,7 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 			.HasOne(email => email.Manager)
 			.WithMany(manager => manager.Emails)
 			.HasForeignKey(email => email.ManagerId)
+			.OnDelete(DeleteBehavior.Restrict)
 			.HasConstraintName("FK_email_manager_id");
 
 		builder
