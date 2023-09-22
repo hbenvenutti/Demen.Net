@@ -45,26 +45,40 @@ public class CreateManagerCommandHandler
 		CancellationToken cancellationToken
 	)
 	{
+		// ---- validation -------------------------------------------------- //
+
 		if (!IsRequestDtoValid(requestDto: request.RequestDto))
 			return new CreateManagerResponse(_outcomeErrorHelper
 				.CreateOutcomeFailure(new InvalidDataError())
 			);
 
-		var managerDomain = (ManagerDomain)request.RequestDto;
-
-		var email = await _emailRepository
+		var storedEmail = await _emailRepository
 			.FindByAddressAsync(request.RequestDto.Email);
 
-		if (email is not null)
+		if (storedEmail is not null)
 			return new CreateManagerResponse(_outcomeErrorHelper
 				.CreateOutcomeFailure(new EmailInUseError())
 			);
 
-		var responseDto = (CreateManagerResponseDto) await _managerRepository
-			.CreateAsync(managerDomain);
+		// ---- persistence ------------------------------------------------- //
+
+		var manager = await _managerRepository
+			.CreateAsync((ManagerDomain) request.RequestDto);
+
+		var email = EmailDomain.Create(
+			managerId: manager.Id,
+			address: request.RequestDto.Email,
+			type: request.RequestDto.EmailType?.StringToEnum<EmailType>()
+		);
+
+		await _emailRepository.CreateAsync(email);
 
 		await _unityOfWork
 			.CommitAsync(cancellationToken);
+
+		// ---- response ---------------------------------------------------- //
+
+		var responseDto = (CreateManagerResponseDto)manager;
 
 		return new CreateManagerResponse(
 			outcome: Outcomes

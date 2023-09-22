@@ -1,5 +1,3 @@
-using Demen.Common.Enums;
-using Demen.Common.Helpers;
 using Demen.Domain.Management.Manager;
 
 namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
@@ -18,9 +16,7 @@ public class CreateManagerRequestDto
 		return ManagerDomain.Create(
 			name: dto.Name,
 			surname: dto.Surname,
-			password: dto.Password,
-			email: dto.Email,
-			emailType: dto.EmailType?.StringToEnum<EmailType>()
+			password: dto.Password
 		);
 	}
 }

@@ -77,9 +77,7 @@ public class ManagerEntity : BaseEntity
 			Name = managerDomain.Name,
 			Surname = managerDomain.Surname,
 			Password = managerDomain.Password,
-			Emails = managerDomain.Emails?
-				.Select(email => (EmailEntity) email!)
-				.ToList(),
+			Emails = null,
 			Videos = null
 		};
 	}
