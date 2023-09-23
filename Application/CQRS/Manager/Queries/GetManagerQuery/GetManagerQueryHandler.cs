@@ -50,7 +50,7 @@ public class GetManagerQueryHandler :
 		return new GetManagerResponse(
 			new ResponseDto<GetManagerResponseDto>(
 				isSuccess: true,
-				httpStatusCode: (int)HttpStatusCode.Accepted,
+				httpStatusCode: (int)HttpStatusCode.OK,
 				statusCode: (int)StatusCode.Succeeded,
 				data: responseDto
 			)
