@@ -102,7 +102,9 @@ public class CreateManagerCommandHandler
 				requestDto.EmailType is null ||
 				requestDto.EmailType.IsEnum<EmailType>(),
 
-			errorMessage: "EmailType is invalid."
+			errorMessage: new InvalidDataError(
+				property: nameof(requestDto.EmailType)
+			).Message
 		);
 	}
 }

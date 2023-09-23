@@ -124,7 +124,10 @@ public class CreateManagerCommandTests
 			Assert.NotNull(result.ResponseDto.Error);
 
 			Assert.Equal(
-				expected: "EmailType is invalid.",
+				expected:
+					new InvalidDataError(
+						property: nameof(requestDto.EmailType)
+					).Message,
 				actual: result.ResponseDto.Error.Errors.First()
 			);
 
