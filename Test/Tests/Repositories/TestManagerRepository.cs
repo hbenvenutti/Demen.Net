@@ -6,6 +6,7 @@ using Demen.Data.Repositories;
 using Demen.Domain.Management.Manager;
 using Demen.Test.Mocks.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Demen.Test.Tests.Repositories;
 
@@ -13,15 +14,24 @@ namespace Demen.Test.Tests.Repositories;
 public class TestManagerRepository
 {
 	private readonly DemenContext _dbContext = ContextMockBuilder.Build();
+	private readonly ManagerRepository _managerRepository;
+	private readonly ManagerDomain _managerSeed;
+
+	public TestManagerRepository()
+	{
+		_managerRepository = new ManagerRepository(_dbContext);
+		_managerSeed = Seed().Result;
+
+		_dbContext.ChangeTracker.Entries().ToList().Clear();
+
+	}
 
 	// ---- tests ----------------------------------------------------------- //
 
 	[Fact]
 	public async void CreateManagerTest()
 	{
-		var managerRepository = new ManagerRepository(_dbContext);
-
-		var manager = await managerRepository
+		var manager = await _managerRepository
 			.CreateAsync(ManagerDomain.Create(
 				name: "John",
 				surname: "Doe",
@@ -64,13 +74,9 @@ public class TestManagerRepository
 	[InlineData(false)]
 	public async void FindByIdTest(bool isIdValid = true)
 	{
-		var managerRepository = new ManagerRepository(_dbContext);
+		var id = isIdValid ? _managerSeed.ExternalId : Guid.NewGuid();
 
-		var managerSeed = await Seed(managerRepository);
-
-		var id = isIdValid ? managerSeed.ExternalId : Guid.NewGuid();
-
-		var manager = await managerRepository
+		var manager = await _managerRepository
 			.FindByIdAsync(id);
 
 		if (!isIdValid)
@@ -87,28 +93,40 @@ public class TestManagerRepository
 			actual: manager.ExternalId
 		);
 
-		Assert.NotEqual(
-			expected: 0,
+		Assert.Equal(
+			expected: _managerSeed.Id,
 			actual: manager.Id
 		);
 
 		Assert.Equal(
-			expected: "John",
+			expected: _managerSeed.Name,
 			actual: manager.Name
 		);
 
 		Assert.Equal(
-			expected: "Doe",
+			expected: _managerSeed.Surname,
 			actual: manager.Surname
 		);
 
 		Assert.Equal(
-			expected: Status.Active,
+			expected: _managerSeed.Status,
 			actual: manager.Status
 		);
 
-		Assert.Null(manager.UpdatedAt);
-		Assert.Null(manager.DeletedAt);
+		Assert.Equal(
+			expected: _managerSeed.CreatedAt,
+			actual: manager.CreatedAt
+		);
+
+		Assert.Equal(
+			expected: _managerSeed.UpdatedAt,
+			actual: manager.UpdatedAt
+		);
+
+		Assert.Equal(
+			expected: _managerSeed.DeletedAt,
+			actual: manager.DeletedAt
+		);
 	}
 
 	// ---------------------------------------------------------------------- //
@@ -116,17 +134,11 @@ public class TestManagerRepository
 	[Fact]
 	public async void DeleteManagerTest()
 	{
-		var managerRepository = new ManagerRepository(_dbContext);
+		await _managerRepository
+			.DeleteAsync(_managerSeed);
 
-		var managerSeed = await Seed(managerRepository);
-
-		// _dbContext.Entry((ManagerEntity)managerSeed!).State = EntityState.Detached;
-
-		await managerRepository
-			.DeleteAsync(managerSeed);
-
-		var manager = await managerRepository
-			.FindByIdAsync(managerSeed.ExternalId);
+		var manager = await _managerRepository
+			.FindByIdAsync(_managerSeed.ExternalId);
 
 		Assert.NotNull(manager);
 
@@ -139,25 +151,26 @@ public class TestManagerRepository
 		);
 
 		Assert.Equal(
-			expected: managerSeed.ExternalId,
+			expected: _managerSeed.ExternalId,
 			actual: manager.ExternalId
 		);
 	}
 
 	// ---- private methods ------------------------------------------------- //
 
-	private async Task<ManagerDomain> Seed(ManagerRepository repository)
+	private async Task<ManagerDomain> Seed()
 	{
-		var manager = await repository.CreateAsync(ManagerDomain.Create(
+		var manager = await _managerRepository.CreateAsync(ManagerDomain.Create(
 			name: "John",
 			surname: "Doe",
 			password: "password"
 		));
 
-		var existingEntry = _dbContext.Entry((ManagerEntity)manager!);
-
-		if (existingEntry.State != EntityState.Detached)
-			existingEntry.State = EntityState.Detached;
+		_dbContext
+			.ChangeTracker
+			.Entries()
+			.ToList()
+			.ForEach(entry => entry.State = EntityState.Detached);
 
 		return manager;
 	}
