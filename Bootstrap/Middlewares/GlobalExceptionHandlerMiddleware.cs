@@ -34,7 +34,7 @@ public class GlobalExceptionHandlerMiddleware
 	{
 		const HttpStatusCode code = HttpStatusCode.InternalServerError;
 
-		var responseDto = new ResponseDto<ApplicationErrorDto>(
+		var responseDto = new ResponseDto<EmptyDto>(
 			httpStatusCode: (int)code,
 			statusCode: (int)Common.Enums.StatusCode.Unexpected,
 			errorDto: new ApplicationErrorDto(exception.Message)
