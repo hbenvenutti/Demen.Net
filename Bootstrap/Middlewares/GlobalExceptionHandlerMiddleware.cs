@@ -37,9 +37,9 @@ public class GlobalExceptionHandlerMiddleware
 		var responseDto = new ResponseDto<ApplicationErrorDto>(
 			httpStatusCode: (int)code,
 			statusCode: (int)Common.Enums.StatusCode.Unexpected,
-			errorDto: new ApplicationErrorDto(exception.Message),
-			data: null
+			errorDto: new ApplicationErrorDto(exception.Message)
 		);
+
 		var jsonDto = JsonHelper.ToJson(responseDto);
 
 		context.Response.ContentType = "application/json";

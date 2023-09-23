@@ -1,6 +1,6 @@
 namespace Demen.Application.Dto;
 
-public class ResponseDto<T>
+public class ResponseDto<T> where T : class
 {
 	public bool IsSuccess { get; }
 	public int HttpStatusCode { get; }
@@ -13,7 +13,7 @@ public class ResponseDto<T>
 	public ResponseDto(
 		int httpStatusCode,
 		int statusCode,
-		T? data,
+		T? data = null,
 		bool isSuccess = false,
 		ApplicationErrorDto? errorDto = null
 	)
