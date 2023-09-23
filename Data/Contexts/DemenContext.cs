@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Demen.Data.Config.Entities;
 using Demen.Data.Entities;
 using Demen.Data.Helpers;
@@ -6,15 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Demen.Data.Contexts;
 
-[ExcludeFromCodeCoverage]
-public class DemenContext : DbContext, IDemenContext
+public sealed class DemenContext : DbContext, IDemenContext
 {
-	public required DbSet<ManagerEntity> Managers { get; set; }
-	public required DbSet<EmailEntity> Emails { get; set; }
-	public required DbSet<VideoEntity> Videos { get; set; }
+	public DbSet<ManagerEntity> Managers { get; set; }
+	public DbSet<EmailEntity> Emails { get; set; }
+	public DbSet<VideoEntity> Videos { get; set; }
 
 	public DemenContext(DbContextOptions<DemenContext> options)
-		: base(options) {}
+		: base(options)
+	{
+		Managers = Set<ManagerEntity>();
+		Emails = Set<EmailEntity>();
+		Videos = Set<VideoEntity>();
+	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

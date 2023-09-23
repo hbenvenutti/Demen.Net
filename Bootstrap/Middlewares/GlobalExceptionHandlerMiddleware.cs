@@ -1,5 +1,5 @@
 using System.Net;
-using Demen.Common.Errors;
+using Demen.Application.Dto;
 using Demen.Common.Helpers;
 using Microsoft.AspNetCore.Http;
 
@@ -34,11 +34,16 @@ public class GlobalExceptionHandlerMiddleware
 	{
 		const HttpStatusCode code = HttpStatusCode.InternalServerError;
 
-		var errorDto = new ApiErrorDto(exception.Message);
-		var jsonDto = JsonHelper.ToJson(errorDto);
+		var responseDto = new ResponseDto<EmptyDto>(
+			httpStatusCode: (int)code,
+			statusCode: (int)Common.Enums.StatusCode.Unexpected,
+			errorDto: new ApplicationErrorDto(exception.Message)
+		);
+
+		var jsonDto = JsonHelper.ToJson(responseDto);
 
 		context.Response.ContentType = "application/json";
-		context.Response.StatusCode = (int) code;
+		context.Response.StatusCode = (int)code;
 
 		return context.Response.WriteAsync(jsonDto);
 	}

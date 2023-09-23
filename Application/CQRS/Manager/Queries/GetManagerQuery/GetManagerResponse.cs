@@ -1,16 +1,16 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
-using Ether.Outcomes;
+using Demen.Application.Dto;
 
 namespace Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
 
 public class GetManagerResponse : IBaseCommandResponse<GetManagerResponseDto>
 {
-	public IOutcome<GetManagerResponseDto> Outcome { get; init; }
+	public ResponseDto<GetManagerResponseDto> ResponseDto { get; init; }
 
 	// ---- constructors ---------------------------------------------------- //
-	public GetManagerResponse(IOutcome<GetManagerResponseDto> outcome)
+	public GetManagerResponse(ResponseDto<GetManagerResponseDto> responseDto)
 	{
-		Outcome = outcome;
+		ResponseDto = responseDto;
 	}
 }

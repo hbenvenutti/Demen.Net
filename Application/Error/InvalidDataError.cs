@@ -1,14 +1,11 @@
-using Demen.Common.Enums;
-
 namespace Demen.Application.Error;
 
-public class InvalidDataError : ApplicationError
+public class InvalidDataError
 {
-	private new const ErrorCode StatusCode = ErrorCode.BadData;
-	private new const string Message = "Invalid data.";
+	public string Message { get; init; }
 
-	public InvalidDataError()
-		: base(StatusCode, Message)
+	public InvalidDataError(string property)
 	{
+		Message = $"{property} is invalid.";
 	}
 }

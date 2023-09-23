@@ -1,16 +1,16 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Ether.Outcomes;
+using Demen.Application.Dto;
 
 namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 public class CreateManagerResponse
 	: IBaseCommandResponse<CreateManagerResponseDto>
 {
-	public IOutcome<CreateManagerResponseDto> Outcome { get; init; }
+	public ResponseDto<CreateManagerResponseDto> ResponseDto { get; init; }
 
-	public CreateManagerResponse(IOutcome<CreateManagerResponseDto> outcome)
+	public CreateManagerResponse(ResponseDto<CreateManagerResponseDto> responseDto)
 	{
-		Outcome = outcome;
+		ResponseDto = responseDto;
 	}
 }

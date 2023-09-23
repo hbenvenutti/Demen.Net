@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Ether.Outcomes" Version="2.9.5" />
       <PackageReference Include="MediatR" Version="12.1.1" />
     </ItemGroup>
 
