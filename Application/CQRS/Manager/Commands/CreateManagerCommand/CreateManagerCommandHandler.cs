@@ -46,8 +46,7 @@ public class CreateManagerCommandHandler
 					statusCode: (int)StatusCode.InvalidData,
 					errorDto: new ApplicationErrorDto(
 						dataValidationResult.errorMessage
-					),
-					data: null
+					)
 				)
 			);
 
@@ -61,8 +60,7 @@ public class CreateManagerCommandHandler
 					statusCode: (int)StatusCode.Conflict,
 					errorDto: new ApplicationErrorDto(
 						EmailInUseError.Message
-					),
-					data: null
+					)
 				)
 			);
 

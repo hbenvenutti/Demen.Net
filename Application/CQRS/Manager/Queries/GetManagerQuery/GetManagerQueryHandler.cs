@@ -40,8 +40,7 @@ public class GetManagerQueryHandler :
 					statusCode: (int)StatusCode.ResourceNotFound,
 					errorDto: new ApplicationErrorDto(
 						new ResourceNotFoundError(Resources.Manager).Message
-					),
-					data: null
+					)
 				)
 			);
 
