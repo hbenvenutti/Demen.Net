@@ -31,7 +31,7 @@ public class ManagerController : ControllerBase
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status201Created,
-		type: typeof(CreateManagerResponseDto)
+		type: typeof(ResponseDto<CreateManagerResponseDto>)
 	)]
 
 	[ProducesResponseType(
