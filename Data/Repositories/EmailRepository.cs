@@ -1,6 +1,7 @@
 using Demen.Common.Enums;
 using Demen.Data.Contexts;
 using Demen.Data.Entities;
+using Demen.Data.Helpers;
 using Demen.Domain.Management.Email;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,8 +33,7 @@ public class EmailRepository : IEmailRepository
 	{
 		var emailEntity = (EmailEntity)emailDomain;
 
-		emailEntity.Status = Status.Deleted;
-		emailEntity.DeletedAt = DateTime.UtcNow;
+		emailEntity.DeleteEntity();
 
 		_dbContext.Emails.Update(emailEntity);
 

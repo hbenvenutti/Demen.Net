@@ -1,6 +1,7 @@
 using Demen.Common.Enums;
 using Demen.Data.Contexts;
 using Demen.Data.Entities;
+using Demen.Data.Helpers;
 using Demen.Domain.Management.Manager;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,8 +37,7 @@ public class ManagerRepository : IManagerRepository
 	{
 		var managerEntity = (ManagerEntity)managerDomain;
 
-		managerEntity.Status = Status.Deleted;
-		managerEntity.DeletedAt = DateTime.UtcNow;
+		managerEntity.DeleteEntity();
 
 		_dbContext
 			.Managers
