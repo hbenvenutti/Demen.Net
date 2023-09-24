@@ -30,7 +30,8 @@ public class YoutubeProvider : IContentProvider
 		if (video is null) return null;
 
 		var publishedAt = DateTime
-			.Parse(video.Snippet.PublishedAtRaw);
+			.Parse(video.Snippet.PublishedAtRaw)
+			.ToUniversalTime();
 
 		return new ExternalVideoDto()
 		{
