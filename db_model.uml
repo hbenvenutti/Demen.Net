@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>98db0d2c-74f0-4a7b-983a-be8504b7cc81</OriginalElement>
+  <nodes>
+    <node x="-13.0" y="-147.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.managers</node>
+    <node x="131.0" y="161.5">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.emails</node>
+    <node x="-157.0" y="488.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.__EFMigrationsHistory</node>
+    <node x="-157.0" y="150.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.videos</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.videos" target="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.managers" relationship="REFERENCES">
+      <point x="0.0" y="-146.5" />
+      <point x="-23.0" y="125.0" />
+      <point x="121.0" y="125.0" />
+      <point x="0.0" y="123.5" />
+    </edge>
+    <edge source="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.emails" target="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.managers" relationship="REFERENCES">
+      <point x="0.0" y="-135.0" />
+      <point x="265.0" y="125.0" />
+      <point x="121.0" y="125.0" />
+      <point x="0.0" y="123.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.9867746288798923" showDependencies="false" x="216.0244803063456" y="281.81838074398246" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
