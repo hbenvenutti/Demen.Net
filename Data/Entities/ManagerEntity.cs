@@ -1,4 +1,4 @@
-using Demen.Domain.Content;
+using Demen.Domain.Content.Video;
 using Demen.Domain.Management.Email;
 using Demen.Domain.Management.Manager;
 
