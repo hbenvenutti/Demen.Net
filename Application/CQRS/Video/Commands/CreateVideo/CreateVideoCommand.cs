@@ -38,6 +38,23 @@ public class CreateVideoCommand
 	{
 		// ? ---- external -------------------------------------------------- //
 
+		var videoExists = await _videoRepository
+			.ExistsByYoutubeIdAsync(request.RequestDto.YoutubeId);
+
+		if (videoExists)
+			return new CreateVideoResponse()
+			{
+				ResponseDto = new ResponseDto<CreateVideoResponseDto>(
+					httpStatusCode: (int)HttpStatusCode.Conflict,
+					statusCode: (int)StatusCode.Conflict,
+
+					errorDto: new ApplicationErrorDto(
+						new ResourceAlreadyExistsError(Resources.Video)
+							.Message
+					)
+				)
+			};
+
 		var videoDto = await _contentProvider
 			.FetchVideoInfo(request.RequestDto.YoutubeId);
 
@@ -55,32 +72,33 @@ public class CreateVideoCommand
 				)
 			};
 
-		var channelDto = await _contentProvider
-			.FetchChannelInfo(videoDto.ChannelId);
-
-		if (channelDto is null)
-			return new CreateVideoResponse()
-			{
-				ResponseDto = new ResponseDto<CreateVideoResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.NotFound,
-					statusCode: (int)StatusCode.ExternalResourceNotFound,
-
-					errorDto: new ApplicationErrorDto(
-						new ResourceNotFoundError(Resources.ExternalChannel)
-							.Message
-					)
-				)
-			};
-
-		// ? ---- internal -------------------------------------------------- //
+		// ? ---- channel --------------------------------------------------- //
 
 		var channelDomain = await _channelRepository
-			.CreateAsync(ChannelDomain.Create(
-				youtubeId: channelDto.YoutubeId,
-				name: channelDto.Name,
-				description: channelDto.Description,
-				thumbnailUrl: channelDto.ThumbnailUrl
-			));
+			.FindByYoutubeIdAsync(videoDto.ChannelId);
+
+		if (channelDomain is null)
+		{
+			var result = await HandleChannelCreation(videoDto.ChannelId);
+
+			if (!result.isSuccess)
+				return new CreateVideoResponse()
+				{
+					ResponseDto = new ResponseDto<CreateVideoResponseDto>(
+						httpStatusCode: (int)HttpStatusCode.NotFound,
+						statusCode: (int)StatusCode.ExternalResourceNotFound,
+
+						errorDto: new ApplicationErrorDto(
+							new ResourceNotFoundError(Resources.ExternalChannel)
+								.Message
+						)
+					)
+				};
+
+			channelDomain = result.channel;
+		}
+
+		// ? ---- internal -------------------------------------------------- //
 
 		var videoDomain = await _videoRepository
 			.CreateAsync(VideoDomain.Create(
@@ -89,8 +107,8 @@ public class CreateVideoCommand
 				description: videoDto.Description,
 				thumbnailUrl: videoDto.ThumbnailUrl,
 				publishedAt: videoDto.PublishedAt,
-				channelId: channelDomain.Id,
-				managerId: 0 // todo: implement authentication
+				channelId: channelDomain!.Id,
+				managerId: 1 // todo: implement authentication
 			));
 
 		// ------------------------------------------------------------------ //
@@ -104,5 +122,27 @@ public class CreateVideoCommand
 				data: (CreateVideoResponseDto)videoDomain
 			)
 		};
+	}
+
+	// ---------------------------------------------------------------------- //
+
+	private async Task<(ChannelDomain? channel, bool isSuccess)>
+		HandleChannelCreation(string channelId)
+	{
+		var channelDto = await _contentProvider
+			.FetchChannelInfo(channelId);
+
+		if (channelDto is null)
+			return (channel: null, isSuccess: false);
+
+		var channel = await _channelRepository
+			.CreateAsync(ChannelDomain.Create(
+				youtubeId: channelDto.YoutubeId,
+				name: channelDto.Name,
+				description: channelDto.Description,
+				thumbnailUrl: channelDto.ThumbnailUrl
+			));
+
+		return (channel, isSuccess: true);
 	}
 }
