@@ -6,6 +6,7 @@ public class CreateVideoResponseDto
 {
 	public required Guid Id { get; init; }
 	public required string YoutubeId { get; init; }
+	public required Guid? ChannelId { get; init; }
 	public required string Title { get; init; }
 	public required string Description { get; init; }
 	public required string ThumbnailUrl { get; init; }
@@ -23,6 +24,7 @@ public class CreateVideoResponseDto
 			Description = domain.Description,
 			ThumbnailUrl = domain.ThumbnailUrl,
 			PublishedAt = domain.PublishedAt,
-			CreatedAt = domain.CreatedAt
+			CreatedAt = domain.CreatedAt,
+			ChannelId = domain.Channel?.ExternalId ?? null
 		};
 }
