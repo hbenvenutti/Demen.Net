@@ -21,10 +21,8 @@ public class VideoEntity : BaseEntity
 
 	// ---- operators ------------------------------------------------------- //
 
-	public static implicit operator VideoEntity?(VideoDomain? domain)
+	public static implicit operator VideoEntity(VideoDomain domain)
 	{
-		if (domain is null)
-			return null;
 
 		return new VideoEntity()
 		{
