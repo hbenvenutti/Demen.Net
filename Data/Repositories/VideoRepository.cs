@@ -56,4 +56,11 @@ public class VideoRepository : IVideoRepository
 			.AsNoTracking()
 			.FirstOrDefaultAsync(video => video.YoutubeId == youtubeId);
 	}
+
+	public async Task<bool> ExistsByYoutubeIdAsync(string youtubeId)
+	{
+		return await _dbContext.Videos
+			.AsNoTracking()
+			.AnyAsync(video => video.YoutubeId == youtubeId);
+	}
 }
