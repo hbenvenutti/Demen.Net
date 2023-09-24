@@ -14,7 +14,7 @@ public class YoutubeProvider : IContentProvider
 		_youTubeService = new YouTubeService(new BaseClientService.Initializer()
 		{
 			ApiKey = configuration["Youtube:ApiKey"],
-			ApplicationName = "Demen"
+			ApplicationName = configuration["Youtube:ApplicationName"]
 		});
 	}
 
@@ -42,7 +42,7 @@ public class YoutubeProvider : IContentProvider
 		};
 	}
 
-	public async void FetchChannelInfo(string channelId)
+	public async Task<ExternalChannelDto?> FetchChannelInfo(string channelId)
 	{
 		var request = _youTubeService.Channels.List(part: "snippet");
 		request.Id = channelId;
@@ -51,8 +51,14 @@ public class YoutubeProvider : IContentProvider
 
 		var channel = response.Items.FirstOrDefault();
 
-		var publishedAt = DateTime.Parse(channel.Snippet.PublishedAtRaw);
+		if (channel is null) return null;
 
-		// return channel;
+		return new ExternalChannelDto()
+		{
+			YoutubeId = channel.Id,
+			Name = channel.Snippet.Title,
+			ThumbnailUrl = channel.Snippet.Thumbnails.Default__.Url,
+			Description = channel.Snippet.Description,
+		};
 	}
 }
