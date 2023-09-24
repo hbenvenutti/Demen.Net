@@ -79,5 +79,12 @@ public class VideoEntityConfig : IEntityTypeConfiguration<VideoEntity>
 			.Property(video => video.PublishedAt)
 			.HasColumnName("published_at")
 			.IsRequired();
+
+		// ---- indexes ----------------------------------------------------- //
+
+		builder
+			.HasIndex(video => video.YoutubeId)
+			.HasDatabaseName("IX_video_youtube_id")
+			.IsUnique();
 	}
 }

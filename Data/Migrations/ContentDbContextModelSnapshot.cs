@@ -79,6 +79,10 @@ partial class ContentDbContextModelSnapshot : ModelSnapshot
 			b.HasKey("Id")
 				.HasName("PK_channel_id");
 
+			b.HasIndex("YoutubeId")
+				.IsUnique()
+				.HasDatabaseName("IX_channel_youtube_id");
+
 			b.ToTable("channels", null, t =>
 			{
 				t.HasCheckConstraint("CK_channel_status", "status IN ('Active', 'Inactive', 'Deleted')");
@@ -282,6 +286,10 @@ partial class ContentDbContextModelSnapshot : ModelSnapshot
 			b.HasIndex("ChannelId");
 
 			b.HasIndex("ManagerId");
+
+			b.HasIndex("YoutubeId")
+				.IsUnique()
+				.HasDatabaseName("IX_video_youtube_id");
 
 			b.ToTable("videos", null, t =>
 			{

@@ -48,5 +48,12 @@ public class ChannelEntityConfig : IEntityTypeConfiguration<ChannelEntity>
 			.HasColumnName("thumbnail_url")
 			.HasColumnType("varchar")
 			.IsRequired();
+
+		// ---- indexes ----------------------------------------------------- //
+
+		builder
+			.HasIndex(channel => channel.YoutubeId)
+			.HasDatabaseName("IX_channel_youtube_id")
+			.IsUnique();
 	}
 }
