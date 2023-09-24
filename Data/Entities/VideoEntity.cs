@@ -14,8 +14,8 @@ public class VideoEntity : BaseEntity
 
 	// ---- relationships --------------------------------------------------- //
 
-	public int ManagerId { get; set; }
-	public ManagerEntity? Manager { get; set; }
+	public required int ManagerId { get; set; }
+	public required ManagerEntity? Manager { get; set; }
 
 	// ---- operators ------------------------------------------------------- //
 
@@ -37,7 +37,8 @@ public class VideoEntity : BaseEntity
 			UpdatedAt = domain.UpdatedAt,
 			DeletedAt = domain.DeletedAt,
 			PublishedAt = domain.PublishedAt,
-			Manager = null
+			Manager = null,
+			Status = domain.Status
 		};
 	}
 
@@ -49,19 +50,21 @@ public class VideoEntity : BaseEntity
 		if(entity.Manager is not null)
 			entity.Manager.Videos = null;
 
-		return new VideoDomain(
-			id: entity.Id,
-			title: entity.Title,
-			description: entity.Description,
-			thumbnailUrl: entity.ThumbnailUrl,
-			youtubeId: entity.YoutubeId,
-			managerId: entity.ManagerId,
-			externalId: entity.ExternalId,
-			createdAt: entity.CreatedAt,
-			updatedAt: entity.UpdatedAt,
-			deletedAt: entity.DeletedAt,
-			manager: entity.Manager,
-			publishedAt: entity.PublishedAt
-		);
+		return new VideoDomain()
+		{
+			Id = entity.Id,
+			Title = entity.Title,
+			Description = entity.Description,
+			ThumbnailUrl = entity.ThumbnailUrl,
+			YoutubeId = entity.YoutubeId,
+			ManagerId = entity.ManagerId,
+			ExternalId = entity.ExternalId,
+			CreatedAt = entity.CreatedAt,
+			UpdatedAt = entity.UpdatedAt,
+			DeletedAt = entity.DeletedAt,
+			Manager = entity.Manager,
+			PublishedAt = entity.PublishedAt,
+			Status = entity.Status
+		};
 	}
 }

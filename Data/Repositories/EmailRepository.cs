@@ -19,7 +19,7 @@ public class EmailRepository : IEmailRepository
 
 	public async Task<EmailDomain> CreateAsync(EmailDomain emailDomain)
 	{
-		var emailEntity = (EmailEntity)emailDomain!;
+		var emailEntity = (EmailEntity)emailDomain;
 
 		await _dbContext.Emails.AddAsync(emailEntity);
 
@@ -30,7 +30,7 @@ public class EmailRepository : IEmailRepository
 
 	public Task DeleteAsync(EmailDomain emailDomain)
 	{
-		var emailEntity = (EmailEntity)emailDomain!;
+		var emailEntity = (EmailEntity)emailDomain;
 
 		emailEntity.Status = Status.Deleted;
 		emailEntity.DeletedAt = DateTime.UtcNow;

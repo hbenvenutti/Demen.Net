@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Demen.Common.Enums;
 using Demen.Domain.Management.Email;
 
 namespace Demen.Test.Mocks.Repositories;
@@ -6,21 +7,29 @@ namespace Demen.Test.Mocks.Repositories;
 [ExcludeFromCodeCoverage]
 public class EmailRepositoryMock : IEmailRepository
 {
+	private static int _id = 1;
 	private readonly ICollection<EmailDomain> _emails = new List<EmailDomain>();
 
 	// ---- write methods --------------------------------------------------- //
 
 	public Task<EmailDomain> CreateAsync(EmailDomain domain)
 	{
-		_emails
-			.Add(
-				item: new EmailDomain(
-					externalId: Guid.NewGuid(),
-					managerId: domain.ManagerId,
-					address: domain.Address,
-					createdAt: DateTime.UtcNow
-				)
-			);
+		_emails.Add(
+			item: new EmailDomain()
+			{
+				Id = _id++,
+				ExternalId = Guid.NewGuid(),
+				ManagerId = domain.ManagerId,
+				Address = domain.Address,
+				CreatedAt = DateTime.UtcNow,
+				Type = domain.Type,
+				Status = Status.Active,
+				IsVerified = false,
+				DeletedAt = null,
+				UpdatedAt = null,
+				Manager = null
+			}
+		);
 
 		return Task.FromResult(domain);
 	}

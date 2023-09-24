@@ -20,7 +20,7 @@ public class ManagerRepository : IManagerRepository
 
 	public async Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
 	{
-		var managerEntity = (ManagerEntity)managerDomain!;
+		var managerEntity = (ManagerEntity)managerDomain;
 
 		await _dbContext
 			.Managers
@@ -34,7 +34,7 @@ public class ManagerRepository : IManagerRepository
 
 	public async Task DeleteAsync(ManagerDomain managerDomain)
 	{
-		var managerEntity = (ManagerEntity)managerDomain!;
+		var managerEntity = (ManagerEntity)managerDomain;
 
 		managerEntity.Status = Status.Deleted;
 		managerEntity.DeletedAt = DateTime.UtcNow;

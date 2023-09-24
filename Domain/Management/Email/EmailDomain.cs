@@ -8,44 +8,14 @@ public class EmailDomain : BaseDomain
 {
 	// ---- properties ------------------------------------------------------ //
 
-	public string Address { get; init; }
-	public bool IsVerified { get; init; }
-
-	public EmailType Type { get; init; }
+	public required string Address { get; init; }
+	public required bool IsVerified { get; init; } = false;
+	public required EmailType Type { get; init; }
 
 	// ---- relationships --------------------------------------------------- //
 
-	public int ManagerId { get; init; }
-	public ManagerDomain? Manager { get; init; }
-
-	// ---- constructors ---------------------------------------------------- //
-
-	public EmailDomain(
-		Guid externalId,
-		int managerId,
-		string address,
-		DateTime createdAt,
-		int id = 0,
-		Status status = Status.Active,
-		ManagerDomain? manager = null,
-		bool isVerified = false,
-		DateTime? updatedAt = null,
-		DateTime? deletedAt = null,
-		EmailType type = EmailType.Personal
-	)
-	{
-		Id = id;
-		ExternalId = externalId;
-		Status = status;
-		ManagerId = managerId;
-		Manager = manager;
-		Address = address;
-		IsVerified = isVerified;
-		Type = type;
-		CreatedAt = createdAt;
-		UpdatedAt = updatedAt;
-		DeletedAt = deletedAt;
-	}
+	public required int ManagerId { get; init; }
+	public required ManagerDomain? Manager { get; init; }
 
 	// ---- factories ------------------------------------------------------- //
 
@@ -53,14 +23,19 @@ public class EmailDomain : BaseDomain
 		int managerId,
 		string address,
 		EmailType? type = null
-	)
-	{
-		return new EmailDomain(
-			externalId: Guid.Empty,
-			managerId: managerId,
-			address: address,
-			createdAt: DateTime.Now,
-			type: type ?? EmailType.Personal
-		);
-	}
+	) =>
+		new()
+		{
+			Id = 0,
+			ExternalId = Guid.Empty,
+			ManagerId = managerId,
+			Address = address,
+			CreatedAt = DateTime.Now,
+			Type = type ?? EmailType.Personal,
+			Status = Status.Active,
+			Manager = null,
+			UpdatedAt = null,
+			DeletedAt = null,
+			IsVerified = false,
+		};
 }

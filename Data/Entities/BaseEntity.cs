@@ -4,10 +4,10 @@ namespace Demen.Data.Entities;
 
 public abstract class BaseEntity
 {
-	public int Id { get; set; }
-	public Guid ExternalId { get; set; }
-	public DateTime CreatedAt { get; set; }
-	public DateTime? UpdatedAt { get; set; }
-	public DateTime? DeletedAt { get; set; }
-	public Status Status { get; set;}
+	public required int Id { get; set; }
+	public required Guid ExternalId { get; set; }
+	public required DateTime CreatedAt { get; set; }
+	public required DateTime? UpdatedAt { get; set; }
+	public required DateTime? DeletedAt { get; set; }
+	public required Status Status { get; set;}
 }

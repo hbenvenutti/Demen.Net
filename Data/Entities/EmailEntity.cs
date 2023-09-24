@@ -8,22 +8,18 @@ public class EmailEntity : BaseEntity
 	// ---- properties ------------------------------------------------------ //
 
 	public required string Address { get; set; }
-	public bool IsVerified { get; set; }
+	public required bool IsVerified { get; set; }
 	public required EmailType Type { get; set; }
 
 	// ---- relationships --------------------------------------------------- //
 
-	public int ManagerId { get; set; }
-	public ManagerEntity? Manager { get; set; }
+	public required int ManagerId { get; set; }
+	public required ManagerEntity? Manager { get; set; }
 
 	// ---- operators ------------------------------------------------------- //
 
-	public static implicit operator EmailEntity?(EmailDomain? emailDomain)
-	{
-		if (emailDomain is null)
-			return null;
-
-		return new EmailEntity()
+	public static implicit operator EmailEntity(EmailDomain emailDomain) =>
+		new ()
 		{
 			Id = emailDomain.Id,
 			ExternalId = emailDomain.ExternalId,
@@ -32,29 +28,30 @@ public class EmailEntity : BaseEntity
 			Status = emailDomain.Status,
 			Type = emailDomain.Type,
 			ManagerId = emailDomain.ManagerId,
-			Manager = emailDomain.Manager,
+			Manager = null,
 			CreatedAt = emailDomain.CreatedAt,
 			UpdatedAt = emailDomain.UpdatedAt,
 			DeletedAt = emailDomain.DeletedAt
 		};
-	}
 
 	public static implicit operator EmailDomain?(EmailEntity? emailEntity)
 	{
 		if (emailEntity is null)
 			return null;
 
-		return new EmailDomain(
-			id: emailEntity.Id,
-			externalId: emailEntity.ExternalId,
-			managerId: emailEntity.ManagerId,
-			manager: emailEntity.Manager,
-			address: emailEntity.Address,
-			isVerified: emailEntity.IsVerified,
-			status: emailEntity.Status,
-			createdAt: emailEntity.CreatedAt,
-			updatedAt: emailEntity.UpdatedAt,
-			deletedAt: emailEntity.DeletedAt
-		);
+		return new EmailDomain()
+		{
+			Id = emailEntity.Id,
+			ExternalId = emailEntity.ExternalId,
+			ManagerId = emailEntity.ManagerId,
+			Manager = emailEntity.Manager,
+			Address = emailEntity.Address,
+			IsVerified = emailEntity.IsVerified,
+			Status = emailEntity.Status,
+			CreatedAt = emailEntity.CreatedAt,
+			UpdatedAt = emailEntity.UpdatedAt,
+			DeletedAt = emailEntity.DeletedAt,
+			Type = emailEntity.Type
+		};
 	}
 }

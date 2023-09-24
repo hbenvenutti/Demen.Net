@@ -8,49 +8,20 @@ public class VideoDomain : BaseDomain
 {
 	// ---- properties ------------------------------------------------------ //
 
-	public string Title { get; set; }
-	public string Description { get; set; }
-	public string ThumbnailUrl { get; set; }
-	public string YoutubeId { get; set; }
+	public required string Title { get; set; }
+	public required string Description { get; set; }
+	public required string ThumbnailUrl { get; set; }
+	public required string YoutubeId { get; set; }
 	public DateTime PublishedAt { get; set; }
 
 	// ---- relationships --------------------------------------------------- //
 
-	public int ManagerId { get; set; }
-	public ManagerDomain? Manager { get; set; }
+	public required int ManagerId { get; set; }
+	public required ManagerDomain? Manager { get; set; }
 
 	// ---- constructors ---------------------------------------------------- //
 
-	public VideoDomain(
-		string title,
-		string description,
-		string thumbnailUrl,
-		string youtubeId,
-		DateTime createdAt,
-		DateTime publishedAt,
-		Guid externalId,
-		int id = 0,
-		int managerId = 0,
-		Status status = Status.Active,
-		ManagerDomain? manager = null,
-		DateTime? updatedAt = null,
-		DateTime? deletedAt = null
-	)
-	{
-		Id = id;
-		ExternalId = externalId;
-		Status = status;
-		PublishedAt = publishedAt;
-		CreatedAt = createdAt;
-		UpdatedAt = updatedAt;
-		DeletedAt = deletedAt;
-		Title = title;
-		Description = description;
-		ThumbnailUrl = thumbnailUrl;
-		YoutubeId = youtubeId;
-		ManagerId = managerId;
-		Manager = manager;
-	}
+
 
 	// ---- factories ------------------------------------------------------- //
 
@@ -61,17 +32,21 @@ public class VideoDomain : BaseDomain
 		string youtubeId,
 		int managerId,
 		DateTime publishedAt
-	)
-	{
-		return new VideoDomain(
-			title: title,
-			description: description,
-			thumbnailUrl: thumbnailUrl,
-			youtubeId: youtubeId,
-			publishedAt: publishedAt,
-			createdAt: DateTime.UtcNow,
-			externalId: Guid.NewGuid(),
-			managerId: managerId
-		);
-	}
+	) =>
+		new()
+		{
+			Id = 0,
+			ExternalId = Guid.Empty,
+			Title = title,
+			Description = description,
+			ThumbnailUrl = thumbnailUrl,
+			YoutubeId = youtubeId,
+			PublishedAt = publishedAt,
+			ManagerId = managerId,
+			Manager = null,
+			CreatedAt = DateTime.UtcNow,
+			UpdatedAt = null,
+			DeletedAt = null,
+			Status = Status.Active
+		};
 }

@@ -13,18 +13,19 @@ public class ManagerRepositoryMock : IManagerRepository
 
 	public Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
 	{
-		var newDomain = new ManagerDomain(
-			id: _id++,
-			externalId: Guid.NewGuid(),
-			status: Status.Active,
-			name: managerDomain.Name,
-			surname: managerDomain.Surname,
-			password: managerDomain.Password,
-			createdAt: DateTime.Now,
-			updatedAt: null,
-			deletedAt: null,
-			emails: null
-		);
+		var newDomain = new ManagerDomain()
+		{
+			Id = _id++,
+			ExternalId = Guid.NewGuid(),
+			Status = Status.Active,
+			Name = managerDomain.Name,
+			Surname = managerDomain.Surname,
+			Password = managerDomain.Password,
+			CreatedAt = DateTime.Now,
+			UpdatedAt = null,
+			DeletedAt = null,
+			Emails = null
+		};
 
 		_managers.Add(newDomain);
 

@@ -13,10 +13,10 @@ public class ManagerEntity : BaseEntity
 
 	// ---- relationships --------------------------------------------------- //
 
-	public ICollection<EmailEntity>? Emails { get; set; } =
+	public required ICollection<EmailEntity>? Emails { get; set; } =
 		new List<EmailEntity>();
 
-	public ICollection<VideoEntity>? Videos { get; set; } =
+	public required ICollection<VideoEntity>? Videos { get; set; } =
 		new List<VideoEntity>();
 
 	// ---- factories ------------------------------------------------------- //
@@ -24,9 +24,8 @@ public class ManagerEntity : BaseEntity
 	{
 		if (managerEntity is null) return null;
 
-		var emails = managerEntity.Emails?.Count > 0
-			? managerEntity
-				.Emails
+		var emails = managerEntity.Emails?.Any() ?? false
+			? managerEntity.Emails
 				.Select(email =>
 				{
 					email.Manager = null;
@@ -35,38 +34,36 @@ public class ManagerEntity : BaseEntity
 				.ToList()
 			: null;
 
-		var videos = managerEntity.Videos?.Count > 0
-			? managerEntity
-				.Videos
+		var videos = managerEntity.Videos?.Any() ?? false
+
+			? managerEntity.Videos
 				.Select(video =>
 				{
 					video.Manager = null;
 					return (VideoDomain)video!;
 				})
 				.ToList()
+
 			: null;
 
-		return new ManagerDomain(
-			id: managerEntity.Id,
-			externalId: managerEntity.ExternalId,
-			status: managerEntity.Status,
-			createdAt: managerEntity.CreatedAt,
-			updatedAt: managerEntity.UpdatedAt,
-			deletedAt: managerEntity.DeletedAt,
-			name: managerEntity.Name,
-			surname: managerEntity.Surname,
-			password: managerEntity.Password,
-			emails: emails,
-			videos: videos
-		);
+		return new ManagerDomain()
+		{
+			Id = managerEntity.Id,
+			ExternalId = managerEntity.ExternalId,
+			Status = managerEntity.Status,
+			CreatedAt = managerEntity.CreatedAt,
+			UpdatedAt = managerEntity.UpdatedAt,
+			DeletedAt = managerEntity.DeletedAt,
+			Name = managerEntity.Name,
+			Surname = managerEntity.Surname,
+			Password = managerEntity.Password,
+			Emails = emails,
+			Videos = videos
+		};
 	}
 
-	public static implicit operator ManagerEntity?(ManagerDomain? managerDomain)
-	{
-		if (managerDomain is null)
-			return null;
-
-		return new ManagerEntity
+	public static implicit operator ManagerEntity(ManagerDomain managerDomain)
+		=> new()
 		{
 			Id = managerDomain.Id,
 			ExternalId = managerDomain.ExternalId,
@@ -80,5 +77,4 @@ public class ManagerEntity : BaseEntity
 			Emails = null,
 			Videos = null
 		};
-	}
 }
