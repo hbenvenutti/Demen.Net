@@ -34,10 +34,18 @@ public class GlobalExceptionHandlerMiddleware
 	{
 		const HttpStatusCode code = HttpStatusCode.InternalServerError;
 
+		var messages = exception.InnerException is null
+			? new List<string>() { exception.Message }
+
+			: new List<string>()
+			{
+				exception.Message, exception.InnerException.Message
+			};
+
 		var responseDto = new ResponseDto<EmptyDto>(
 			httpStatusCode: (int)code,
 			statusCode: (int)Common.Enums.StatusCode.Unexpected,
-			errorDto: new ApplicationErrorDto(exception.Message)
+			errorDto: new ApplicationErrorDto(messages)
 		);
 
 		var jsonDto = JsonHelper.ToJson(responseDto);
