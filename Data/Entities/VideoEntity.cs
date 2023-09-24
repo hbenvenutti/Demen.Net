@@ -52,6 +52,9 @@ public class VideoEntity : BaseEntity
 		if(entity.Manager is not null)
 			entity.Manager.Videos = null;
 
+		if (entity.Channel is not null)
+			entity.Channel.Videos = null;
+
 		return new VideoDomain()
 		{
 			Id = entity.Id,
