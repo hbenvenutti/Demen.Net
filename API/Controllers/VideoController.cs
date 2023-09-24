@@ -1,4 +1,5 @@
-using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Application.CQRS.Video.Commands.CreateVideo;
+using Demen.Application.CQRS.Video.Commands.CreateVideo.Dto;
 using Demen.Application.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,12 +37,25 @@ namespace Demen.API.Controllers
 		    type: typeof(ResponseDto<EmptyDto>)
 	    )]
 
-	    public async Task<IActionResult> CreateVideo(string youtubeId)
+	    public async Task<IActionResult> CreateVideo(CreateVideoRequestDto requestDto)
 	    {
+		    var request = new CreateVideoRequest()
+		    {
+			    RequestDto = requestDto
+		    };
+
+		    var response = await _mediator.Send(request);
+
+		    if (!response.ResponseDto.IsSuccess)
+				return StatusCode(
+					statusCode: response.ResponseDto.HttpStatusCode,
+					value: response.ResponseDto
+				);
+
 		    return CreatedAtAction(
 			    actionName: nameof(GetVideoById),
-			    routeValues: new { id = 1 },
-			    value: new { }
+			    routeValues: new { id = response.ResponseDto.Data!.Id },
+			    value: response.ResponseDto
 		    );
 	    }
 
