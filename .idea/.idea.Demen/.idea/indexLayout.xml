@@ -4,6 +4,7 @@
     <attachedFolders />
     <explicitIncludes>
       <Path>.gitignore</Path>
+      <Path>db_model.drawio</Path>
     </explicitIncludes>
     <explicitExcludes />
   </component>
