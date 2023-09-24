@@ -1,4 +1,4 @@
-using Demen.Domain.Content;
+using Demen.Domain.Content.Video;
 
 namespace Demen.Data.Entities;
 
@@ -10,6 +10,7 @@ public class VideoEntity : BaseEntity
 	public required string Description { get; set; }
 	public required string ThumbnailUrl { get; set; }
 	public required string YoutubeId { get; set; }
+	public required DateTime PublishedAt { get; set; }
 
 	// ---- relationships --------------------------------------------------- //
 
@@ -35,6 +36,7 @@ public class VideoEntity : BaseEntity
 			CreatedAt = domain.CreatedAt,
 			UpdatedAt = domain.UpdatedAt,
 			DeletedAt = domain.DeletedAt,
+			PublishedAt = domain.PublishedAt,
 			Manager = null
 		};
 	}
@@ -58,7 +60,8 @@ public class VideoEntity : BaseEntity
 			createdAt: entity.CreatedAt,
 			updatedAt: entity.UpdatedAt,
 			deletedAt: entity.DeletedAt,
-			manager: entity.Manager
+			manager: entity.Manager,
+			publishedAt: entity.PublishedAt
 		);
 	}
 }

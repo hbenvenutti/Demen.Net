@@ -63,5 +63,10 @@ public class VideoEntityConfig : IEntityTypeConfiguration<VideoEntity>
 			.HasColumnName("youtube_id")
 			.HasColumnType("varchar")
 			.IsRequired();
+
+		builder
+			.Property(video => video.PublishedAt)
+			.HasColumnName("published_at")
+			.IsRequired();
 	}
 }

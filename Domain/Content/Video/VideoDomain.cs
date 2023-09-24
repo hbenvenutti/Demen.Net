@@ -2,7 +2,7 @@ using Demen.Common.Enums;
 using Demen.Domain.Base;
 using Demen.Domain.Management.Manager;
 
-namespace Demen.Domain.Content;
+namespace Demen.Domain.Content.Video;
 
 public class VideoDomain : BaseDomain
 {
@@ -12,6 +12,7 @@ public class VideoDomain : BaseDomain
 	public string Description { get; set; }
 	public string ThumbnailUrl { get; set; }
 	public string YoutubeId { get; set; }
+	public DateTime PublishedAt { get; set; }
 
 	// ---- relationships --------------------------------------------------- //
 
@@ -26,6 +27,7 @@ public class VideoDomain : BaseDomain
 		string thumbnailUrl,
 		string youtubeId,
 		DateTime createdAt,
+		DateTime publishedAt,
 		Guid externalId,
 		int id = 0,
 		int managerId = 0,
@@ -38,6 +40,7 @@ public class VideoDomain : BaseDomain
 		Id = id;
 		ExternalId = externalId;
 		Status = status;
+		PublishedAt = publishedAt;
 		CreatedAt = createdAt;
 		UpdatedAt = updatedAt;
 		DeletedAt = deletedAt;
@@ -56,14 +59,16 @@ public class VideoDomain : BaseDomain
 		string description,
 		string thumbnailUrl,
 		string youtubeId,
-		int managerId
+		int managerId,
+		DateTime publishedAt
 	)
 	{
-		return new(
+		return new VideoDomain(
 			title: title,
 			description: description,
 			thumbnailUrl: thumbnailUrl,
 			youtubeId: youtubeId,
+			publishedAt: publishedAt,
 			createdAt: DateTime.UtcNow,
 			externalId: Guid.NewGuid(),
 			managerId: managerId
