@@ -1,5 +1,6 @@
 using Demen.Common.Enums;
 using Demen.Domain.Base;
+using Demen.Domain.Content.Channel;
 using Demen.Domain.Management.Manager;
 
 namespace Demen.Domain.Content.Video;
@@ -17,7 +18,9 @@ public class VideoDomain : BaseDomain
 	// ---- relationships --------------------------------------------------- //
 
 	public required int ManagerId { get; set; }
+	public required int ChannelId { get; set; }
 	public required ManagerDomain? Manager { get; set; }
+	public required ChannelDomain? Channel { get; set; }
 
 	// ---- constructors ---------------------------------------------------- //
 
@@ -31,7 +34,8 @@ public class VideoDomain : BaseDomain
 		string thumbnailUrl,
 		string youtubeId,
 		int managerId,
-		DateTime publishedAt
+		DateTime publishedAt,
+		int channelId
 	) =>
 		new()
 		{
@@ -47,6 +51,8 @@ public class VideoDomain : BaseDomain
 			CreatedAt = DateTime.UtcNow,
 			UpdatedAt = null,
 			DeletedAt = null,
-			Status = Status.Active
+			Status = Status.Active,
+			ChannelId = channelId,
+			Channel = null
 		};
 }

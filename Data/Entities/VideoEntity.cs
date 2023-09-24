@@ -15,7 +15,9 @@ public class VideoEntity : BaseEntity
 	// ---- relationships --------------------------------------------------- //
 
 	public required int ManagerId { get; set; }
+	public required int ChannelId { get; set; }
 	public required ManagerEntity? Manager { get; set; }
+	public required ChannelEntity? Channel { get; set; }
 
 	// ---- operators ------------------------------------------------------- //
 
@@ -38,7 +40,9 @@ public class VideoEntity : BaseEntity
 			DeletedAt = domain.DeletedAt,
 			PublishedAt = domain.PublishedAt,
 			Manager = null,
-			Status = domain.Status
+			Status = domain.Status,
+			ChannelId = domain.ChannelId,
+			Channel = null
 		};
 	}
 
@@ -64,7 +68,9 @@ public class VideoEntity : BaseEntity
 			DeletedAt = entity.DeletedAt,
 			Manager = entity.Manager,
 			PublishedAt = entity.PublishedAt,
-			Status = entity.Status
+			Status = entity.Status,
+			ChannelId = entity.ChannelId,
+			Channel = entity.Channel
 		};
 	}
 }
