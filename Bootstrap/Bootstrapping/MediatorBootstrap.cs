@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Application.CQRS.Manager.Commands.DeleteManager;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
+using Demen.Application.CQRS.Video.Commands.CreateVideo;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demen.Bootstrap.Bootstrapping;
@@ -9,7 +10,7 @@ namespace Demen.Bootstrap.Bootstrapping;
 [ExcludeFromCodeCoverage]
 public static class MediatorBootstrap
 {
-	public static IServiceCollection ConfigureMediatorServices(
+	public static void ConfigureMediatorServices(
 		this IServiceCollection services
 	)
 	{
@@ -31,6 +32,12 @@ public static class MediatorBootstrap
 			)
 		);
 
-		return services;
+		services.AddMediatR(config => config
+			.RegisterServicesFromAssemblies(
+				typeof(CreateVideoCommand).Assembly
+			)
+		);
+
+		return;
 	}
 }

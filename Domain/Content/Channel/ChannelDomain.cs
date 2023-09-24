@@ -22,7 +22,7 @@ public class ChannelDomain : BaseDomain
 	public static ChannelDomain Create(
 		string youtubeId,
 		string name,
-		string thumbnail,
+		string thumbnailUrl,
 		string? description = null
 	) => new()
 		{
@@ -30,7 +30,7 @@ public class ChannelDomain : BaseDomain
 			ExternalId = Guid.Empty,
 			YoutubeId = youtubeId,
 			Name = name,
-			ThumbnailUrl = thumbnail,
+			ThumbnailUrl = thumbnailUrl,
 			Description = description,
 			Status = Status.Active,
 			Videos = null,

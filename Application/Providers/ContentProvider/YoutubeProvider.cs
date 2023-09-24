@@ -38,6 +38,7 @@ public class YoutubeProvider : IContentProvider
 			Title = video.Snippet.Title,
 			Description = video.Snippet.Description,
 			ThumbnailUrl = video.Snippet.Thumbnails.Default__.Url,
+			ChannelId = video.Snippet.ChannelId,
 			PublishedAt = publishedAt,
 		};
 	}

@@ -22,10 +22,6 @@ public class VideoDomain : BaseDomain
 	public required ManagerDomain? Manager { get; set; }
 	public required ChannelDomain? Channel { get; set; }
 
-	// ---- constructors ---------------------------------------------------- //
-
-
-
 	// ---- factories ------------------------------------------------------- //
 
 	public static VideoDomain Create(
