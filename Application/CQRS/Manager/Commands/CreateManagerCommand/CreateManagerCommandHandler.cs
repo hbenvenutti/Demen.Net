@@ -56,7 +56,7 @@ public class CreateManagerCommandHandler
 		if (storedEmail is not null)
 			return new CreateManagerResponse(
 				new ResponseDto<CreateManagerResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.BadRequest,
+					httpStatusCode: (int)HttpStatusCode.Conflict,
 					statusCode: (int)StatusCode.Conflict,
 					errorDto: new ApplicationErrorDto(
 						EmailInUseError.Message
