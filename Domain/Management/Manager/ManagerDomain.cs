@@ -1,6 +1,6 @@
 using Demen.Common.Enums;
 using Demen.Domain.Base;
-using Demen.Domain.Content;
+using Demen.Domain.Content.Video;
 using Demen.Domain.Management.Email;
 
 namespace Demen.Domain.Management.Manager;
