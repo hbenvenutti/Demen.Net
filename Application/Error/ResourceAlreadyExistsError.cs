@@ -6,6 +6,6 @@ public class ResourceAlreadyExistsError
 
 	public ResourceAlreadyExistsError(string resource)
 	{
-		Message = $"{resource} not found.";
+		Message = $"{resource} already exists.";
 	}
 }
