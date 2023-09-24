@@ -1,6 +1,7 @@
 using Demen.Data.Contexts;
 using Demen.Data.Entities;
 using Demen.Domain.Content.Channel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demen.Data.Repositories;
 
@@ -21,6 +22,8 @@ public class ChannelRepository : IChannelRepository
 
 		await _dbContext.Channels.AddAsync(entity);
 
+		await _dbContext.SaveChangesAsync();
+
 		return (ChannelDomain)entity!;
 	}
 
@@ -36,8 +39,10 @@ public class ChannelRepository : IChannelRepository
 		throw new NotImplementedException();
 	}
 
-	public async Task<ChannelDomain?> GetByYoutubeIdAsync(string youtubeId)
+	public async Task<ChannelDomain?> FindByYoutubeIdAsync(string youtubeId)
 	{
-		throw new NotImplementedException();
+		return (ChannelDomain?) await _dbContext.Channels
+			.AsNoTracking()
+			.FirstOrDefaultAsync(channel => channel.YoutubeId == youtubeId);
 	}
 }
