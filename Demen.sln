@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-files", "solution-
 		db_model.uml = db_model.uml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{094BDAF9-37E1-4918-BC85-0C166BA4A6D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,7 @@ Global
 		{13ED4B7A-24B8-4919-A6AE-7626C835227B} = {482958AB-161D-4BE6-A9A0-80290647265A}
 		{4DD27647-6D7E-4107-8020-AB34DA959AE9} = {7CCF9403-46C0-4569-8037-239F45EED600}
 		{76541F1D-D6B7-4A27-8F88-D71F88702001} = {482958AB-161D-4BE6-A9A0-80290647265A}
+		{094BDAF9-37E1-4918-BC85-0C166BA4A6D1} = {E86D0DFF-EE9E-410E-B089-9201BA59C888}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B741A4D-F5F6-451E-9BEF-129640513FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -77,5 +80,9 @@ Global
 		{76541F1D-D6B7-4A27-8F88-D71F88702001}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76541F1D-D6B7-4A27-8F88-D71F88702001}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76541F1D-D6B7-4A27-8F88-D71F88702001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{094BDAF9-37E1-4918-BC85-0C166BA4A6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{094BDAF9-37E1-4918-BC85-0C166BA4A6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{094BDAF9-37E1-4918-BC85-0C166BA4A6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{094BDAF9-37E1-4918-BC85-0C166BA4A6D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
