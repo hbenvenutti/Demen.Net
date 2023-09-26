@@ -1,5 +1,5 @@
+using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Video.Commands.CreateVideo;
-using Demen.Application.CQRS.Video.Commands.CreateVideo.Dto;
 using Demen.Application.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,38 +24,34 @@ namespace Demen.API.Controllers
 	    [HttpPost]
 	    [ProducesResponseType(
 		    statusCode: StatusCodes.Status201Created,
-		    type: typeof(ResponseDto<>)
+		    type: typeof(Response<>)
 	    )]
 
 	    [ProducesResponseType(
 		    statusCode: StatusCodes.Status400BadRequest,
-		    type: typeof(ResponseDto<>)
+		    type: typeof(Response<>)
 	    )]
 
 	    [ProducesResponseType(
 		    statusCode: StatusCodes.Status500InternalServerError,
-		    type: typeof(ResponseDto<EmptyDto>)
+		    type: typeof(Response<EmptyDto>)
 	    )]
 
-	    public async Task<IActionResult> CreateVideo(CreateVideoRequestDto requestDto)
+	    public async Task<IActionResult> CreateVideo(CreateVideoRequest request)
 	    {
-		    var request = new CreateVideoRequest()
-		    {
-			    RequestDto = requestDto
-		    };
 
 		    var response = await _mediator.Send(request);
 
-		    if (!response.ResponseDto.IsSuccess)
+		    if (!response.IsSuccess)
 				return StatusCode(
-					statusCode: response.ResponseDto.HttpStatusCode,
-					value: response.ResponseDto
+					statusCode: response.HttpStatusCode,
+					value: response
 				);
 
 		    return CreatedAtAction(
 			    actionName: nameof(GetVideoById),
-			    routeValues: new { id = response.ResponseDto.Data!.Id },
-			    value: response.ResponseDto
+			    routeValues: new { id = response.Data!.Id },
+			    value: response
 		    );
 	    }
 

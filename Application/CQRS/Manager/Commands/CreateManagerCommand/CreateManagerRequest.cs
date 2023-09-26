@@ -1,16 +1,27 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
+using Demen.Application.Dto;
+using Demen.Domain.Management.Manager;
 using MediatR;
 
 namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 public class CreateManagerRequest
-	: IBaseCommandRequest<CreateManagerResponse, CreateManagerRequestDto>
+	: IRequest<Response<CreateManagerResponseDto>>
 {
-	public CreateManagerRequestDto RequestDto { get; init; }
+	public required string Name { get; init; }
+	public required string Surname { get; init; }
+	public required string Password { get; init; }
+	public required string Email { get; init; }
+	public string? EmailType { get; init; }
 
-	public CreateManagerRequest(CreateManagerRequestDto requestDto)
+	// ---- operators ------------------------------------------------------- //
+	public static implicit operator ManagerDomain(CreateManagerRequest dto)
 	{
-		RequestDto = requestDto;
+		return ManagerDomain.Create(
+			name: dto.Name,
+			surname: dto.Surname,
+			password: dto.Password
+		);
 	}
 }

@@ -1,4 +1,4 @@
-.header {
+header {
     background-color: var(--yellow-500);
     display: flex;
     width: 100%;
@@ -28,4 +28,8 @@
         gap: 1rem;
         font-size: 2rem;
     }
+
+	.logo strong {
+		font-weight: 700;
+	}
 }

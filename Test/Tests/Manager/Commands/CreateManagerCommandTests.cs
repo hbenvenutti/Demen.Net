@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
-using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Application.Error;
 using Demen.Common.Enums;
 using Demen.Test.Mocks.Repositories;
@@ -49,7 +48,7 @@ public class CreateManagerCommandTests
 	{
 		// ---- Arrange ----------------------------------------------------- //
 
-		var requestDto = new CreateManagerRequestDto()
+		var request = new CreateManagerRequest()
 		{
 			Name = "John",
 			Surname = "Doe",
@@ -62,8 +61,6 @@ public class CreateManagerCommandTests
 				: InvalidEmailType
 		};
 
-		var request = new CreateManagerRequest(requestDto);
-
 		var handler = new CreateManagerCommandHandler(
 			managerRepository: _managerRepository,
 			emailRepository: _emailRepository
@@ -74,32 +71,32 @@ public class CreateManagerCommandTests
 		var result = await handler
 			.Handle(request, _cancellationToken);
 
-		var responseDtoData = result.ResponseDto.Data;
+		var responseDtoData = result.Data;
 
 		// ---- Assert ------------------------------------------------------ //
 
 		if (emailInUse)
 		{
-			Assert.False(result.ResponseDto.IsSuccess);
+			Assert.False(result.IsSuccess);
 
 			Assert.Equal(
 				expected: (int)StatusCode.Conflict,
-				actual: result.ResponseDto.StatusCode
+				actual: result.StatusCode
 			);
 
 			Assert.Equal(
-				expected: (int)HttpStatusCode.BadRequest,
-				actual: result.ResponseDto.HttpStatusCode
+				expected: (int)HttpStatusCode.Conflict,
+				actual: result.HttpStatusCode
 			);
 
-			Assert.NotNull(result.ResponseDto.Error);
+			Assert.NotNull(result.Error);
 
 			Assert.Equal(
 				expected: EmailInUseError.Message,
-				actual: result.ResponseDto.Error.Errors.First()
+				actual: result.Error.Errors.First()
 			);
 
-			Assert.Null(result.ResponseDto.Data);
+			Assert.Null(result.Data);
 
 
 			return;
@@ -107,28 +104,27 @@ public class CreateManagerCommandTests
 
 		if (invalidEmailType)
 		{
-			Assert.False(result.ResponseDto.IsSuccess);
+			Assert.False(result.IsSuccess);
 
 			Assert.Equal(
 				expected: (int)StatusCode.InvalidData,
-				actual: result.ResponseDto.StatusCode
+				actual: result.StatusCode
 			);
 
 			Assert.Equal(
 				expected: (int)HttpStatusCode.BadRequest,
-				actual: result.ResponseDto.HttpStatusCode
+				actual: result.HttpStatusCode
 			);
 
-			Assert.Null(result.ResponseDto.Data);
+			Assert.Null(result.Data);
 
-			Assert.NotNull(result.ResponseDto.Error);
+			Assert.NotNull(result.Error);
 
 			Assert.Equal(
-				expected:
-					new InvalidDataError(
-						property: nameof(requestDto.EmailType)
-					).Message,
-				actual: result.ResponseDto.Error.Errors.First()
+				expected: new InvalidDataError(
+					property: nameof(request.EmailType)
+				).Message,
+				actual: result.Error.Errors.First()
 			);
 
 			return;
@@ -136,27 +132,27 @@ public class CreateManagerCommandTests
 
 		Assert.NotNull(responseDtoData);
 
-		Assert.Null(result.ResponseDto.Error);
+		Assert.Null(result.Error);
 
-		Assert.True(result.ResponseDto.IsSuccess);
+		Assert.True(result.IsSuccess);
 
 		Assert.Equal(
 			expected: (int)HttpStatusCode.Created,
-			actual: result.ResponseDto.HttpStatusCode
+			actual: result.HttpStatusCode
 		);
 
 		Assert.Equal(
 			expected: (int)StatusCode.Succeeded,
-			actual: result.ResponseDto.StatusCode
+			actual: result.StatusCode
 		);
 
 		Assert.Equal(
-			expected: requestDto.Name,
+			expected: request.Name,
 			actual: responseDtoData.Name
 		);
 
 		Assert.Equal(
-			expected: requestDto.Surname,
+			expected: request.Surname,
 			actual: responseDtoData.Surname
 		);
 

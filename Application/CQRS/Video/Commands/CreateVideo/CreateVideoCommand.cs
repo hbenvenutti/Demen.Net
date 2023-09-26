@@ -1,4 +1,5 @@
 using System.Net;
+using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Video.Commands.CreateVideo.Dto;
 using Demen.Application.Dto;
 using Demen.Application.Error;
@@ -12,7 +13,7 @@ using MediatR;
 namespace Demen.Application.CQRS.Video.Commands.CreateVideo;
 
 public class CreateVideoCommand
-	: IRequestHandler<CreateVideoRequest, CreateVideoResponse>
+	: IRequestHandler<CreateVideoRequest, Response<CreateVideoResponseDto>>
 {
 	private readonly IVideoRepository _videoRepository;
 	private readonly IChannelRepository _channelRepository;
@@ -31,7 +32,7 @@ public class CreateVideoCommand
 
 	// ---------------------------------------------------------------------- //
 
-	public async Task<CreateVideoResponse> Handle(
+	public async Task<Response<CreateVideoResponseDto>> Handle(
 		CreateVideoRequest request,
 		CancellationToken cancellationToken
 	)
@@ -39,38 +40,32 @@ public class CreateVideoCommand
 		// ? ---- external -------------------------------------------------- //
 
 		var videoExists = await _videoRepository
-			.ExistsByYoutubeIdAsync(request.RequestDto.YoutubeId);
+			.ExistsByYoutubeIdAsync(request.YoutubeId);
 
 		if (videoExists)
-			return new CreateVideoResponse()
-			{
-				ResponseDto = new ResponseDto<CreateVideoResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.Conflict,
-					statusCode: (int)StatusCode.Conflict,
+			return new Response<CreateVideoResponseDto>(
+				httpStatusCode: (int)HttpStatusCode.Conflict,
+				statusCode: (int)StatusCode.Conflict,
 
-					errorDto: new ApplicationErrorDto(
-						new ResourceAlreadyExistsError(Resources.Video)
-							.Message
-					)
+				errorDto: new ApplicationErrorDto(
+					new ResourceAlreadyExistsError(Resources.Video)
+						.Message
 				)
-			};
+			);
 
 		var videoDto = await _contentProvider
-			.FetchVideoInfo(request.RequestDto.YoutubeId);
+			.FetchVideoInfo(request.YoutubeId);
 
 		if (videoDto is null)
-			return new CreateVideoResponse()
-			{
-				ResponseDto = new ResponseDto<CreateVideoResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.NotFound,
-					statusCode: (int)StatusCode.ExternalResourceNotFound,
+			return new Response<CreateVideoResponseDto>(
+				httpStatusCode: (int)HttpStatusCode.NotFound,
+				statusCode: (int)StatusCode.ExternalResourceNotFound,
 
-					errorDto: new ApplicationErrorDto(
-						new ResourceNotFoundError(Resources.ExternalVideo)
-							.Message
-					)
+				errorDto: new ApplicationErrorDto(
+					new ResourceNotFoundError(Resources.ExternalVideo)
+						.Message
 				)
-			};
+			);
 
 		// ? ---- channel --------------------------------------------------- //
 
@@ -82,18 +77,15 @@ public class CreateVideoCommand
 			var result = await HandleChannelCreation(videoDto.ChannelId);
 
 			if (!result.isSuccess)
-				return new CreateVideoResponse()
-				{
-					ResponseDto = new ResponseDto<CreateVideoResponseDto>(
-						httpStatusCode: (int)HttpStatusCode.NotFound,
-						statusCode: (int)StatusCode.ExternalResourceNotFound,
+				return new Response<CreateVideoResponseDto>(
+					httpStatusCode: (int)HttpStatusCode.NotFound,
+					statusCode: (int)StatusCode.ExternalResourceNotFound,
 
-						errorDto: new ApplicationErrorDto(
-							new ResourceNotFoundError(Resources.ExternalChannel)
-								.Message
-						)
+					errorDto: new ApplicationErrorDto(
+						new ResourceNotFoundError(Resources.ExternalChannel)
+							.Message
 					)
-				};
+				);
 
 			channelDomain = result.channel;
 		}
@@ -113,15 +105,12 @@ public class CreateVideoCommand
 
 		// ------------------------------------------------------------------ //
 
-		return new CreateVideoResponse()
-		{
-			ResponseDto = new ResponseDto<CreateVideoResponseDto>(
-				isSuccess: true,
-				httpStatusCode: (int)HttpStatusCode.Created,
-				statusCode: (int)StatusCode.Succeeded,
-				data: (CreateVideoResponseDto)videoDomain
-			)
-		};
+		return new Response<CreateVideoResponseDto>(
+			isSuccess: true,
+			httpStatusCode: (int)HttpStatusCode.Created,
+			statusCode: (int)StatusCode.Succeeded,
+			data: (CreateVideoResponseDto)videoDomain
+		);
 	}
 
 	// ---------------------------------------------------------------------- //

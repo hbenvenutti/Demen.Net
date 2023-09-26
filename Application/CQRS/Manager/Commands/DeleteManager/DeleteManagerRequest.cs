@@ -1,15 +1,10 @@
 using Demen.Application.CQRS.Base;
-using Demen.Application.CQRS.Manager.Commands.DeleteManager.Dto;
+using Demen.Application.Dto;
+using MediatR;
 
 namespace Demen.Application.CQRS.Manager.Commands.DeleteManager;
 
-public class DeleteManagerRequest
-	: IBaseCommandRequest<DeleteManagerResponse, DeleteManagerRequestDto>
+public class DeleteManagerRequest : IRequest<Response<EmptyDto>>
 {
-	public DeleteManagerRequestDto RequestDto { get; init; }
-
-	public DeleteManagerRequest(DeleteManagerRequestDto requestDto)
-	{
-		RequestDto = requestDto;
-	}
+	public required Guid Id { get; init; }
 }

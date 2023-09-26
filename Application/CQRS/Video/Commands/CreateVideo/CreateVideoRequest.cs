@@ -1,10 +1,10 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Video.Commands.CreateVideo.Dto;
+using MediatR;
 
 namespace Demen.Application.CQRS.Video.Commands.CreateVideo;
 
-public class CreateVideoRequest
-	: IBaseCommandRequest<CreateVideoResponse, CreateVideoRequestDto>
+public class CreateVideoRequest : IRequest<Response<CreateVideoResponseDto>>
 {
-	public required CreateVideoRequestDto RequestDto { get; init; }
+	public required string YoutubeId { get; init; }
 }

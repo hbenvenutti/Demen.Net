@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
-using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 using Demen.Common.Enums;
 using Demen.Domain.Management.Manager;
 using Demen.Test.Mocks.Repositories;
@@ -41,13 +40,12 @@ public class GetManagerQueryTests
 
 		_managerDomain = await _managerRepository.CreateAsync(_managerDomain);
 
-		var requestDto = new GetManagerRequestDto(
-			id: idExists
+		var request = new GetManagerRequest()
+		{
+			Id = idExists
 				? _managerDomain.ExternalId
 				: Guid.NewGuid()
-		);
-
-		var request = new GetManagerRequest(requestDto);
+		};
 
 		var handler = new GetManagerQueryHandler(_managerRepository);
 
@@ -57,13 +55,13 @@ public class GetManagerQueryTests
 			.Handle(request, _cancellationToken);
 
 		// ---- Assert ------------------------------------------------------ //
-		var responseDto = response.ResponseDto.Data;
+		var responseDto = response.Data;
 
 		if (!idExists)
 		{
 			Assert.Equal(
 				expected: (int)StatusCode.ResourceNotFound,
-				actual: response.ResponseDto.StatusCode
+				actual: response.StatusCode
 			);
 
 			return;

@@ -1,4 +1,5 @@
 using System.Net;
+using Demen.Application.CQRS.Base;
 using Demen.Application.Dto;
 using Demen.Common.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +43,7 @@ public class GlobalExceptionHandlerMiddleware
 				exception.Message, exception.InnerException.Message
 			};
 
-		var responseDto = new ResponseDto<EmptyDto>(
+		var responseDto = new Response<EmptyDto>(
 			httpStatusCode: (int)code,
 			statusCode: (int)Common.Enums.StatusCode.Unexpected,
 			errorDto: new ApplicationErrorDto(messages)

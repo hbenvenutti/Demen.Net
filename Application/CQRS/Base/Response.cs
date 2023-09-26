@@ -1,6 +1,8 @@
-namespace Demen.Application.Dto;
+using Demen.Application.Dto;
 
-public class ResponseDto<T> where T : class
+namespace Demen.Application.CQRS.Base;
+
+public class Response<T> where T : class
 {
 	public bool IsSuccess { get; }
 	public int HttpStatusCode { get; }
@@ -10,7 +12,7 @@ public class ResponseDto<T> where T : class
 
 	// ---- constructors ---------------------------------------------------- //
 
-	public ResponseDto(
+	public Response(
 		int httpStatusCode,
 		int statusCode,
 		T? data = null,

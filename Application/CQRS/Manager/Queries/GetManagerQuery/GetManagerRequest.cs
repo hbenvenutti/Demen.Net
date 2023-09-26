@@ -1,16 +1,10 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
+using MediatR;
 
 namespace Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
 
-public class GetManagerRequest
-	: IBaseCommandRequest<GetManagerResponse, GetManagerRequestDto>
+public class GetManagerRequest : IRequest<Response<GetManagerResponseDto>>
 {
-	public GetManagerRequestDto RequestDto { get; init; }
-
-	// ---- constructors ---------------------------------------------------- //
-	public GetManagerRequest(GetManagerRequestDto requestDto)
-	{
-		RequestDto = requestDto;
-	}
+	public required Guid Id { get; init; }
 }
