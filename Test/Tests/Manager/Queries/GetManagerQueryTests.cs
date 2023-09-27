@@ -38,8 +38,6 @@ public class GetManagerQueryTests
 	{
 		// ---- Arrange ----------------------------------------------------- //
 
-		_managerDomain = await _managerRepository.CreateAsync(_managerDomain);
-
 		var request = new GetManagerRequest()
 		{
 			Id = idExists
