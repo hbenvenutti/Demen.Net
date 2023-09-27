@@ -19,11 +19,9 @@ public static class ApiBootstrap
 		services.ConfigureMediatorServices();
 		services.ConfigureRepositories();
 		services.ConfigureProviders();
-
+		services.ConfigureSwagger();
 		services.AddControllers();
 		services.AddEndpointsApiExplorer();
-
-		services.AddSwaggerGen();
 
 		return services;
 	}
@@ -33,11 +31,7 @@ public static class ApiBootstrap
 		IWebHostEnvironment environment
 	)
 	{
-		if (environment.IsDevelopment())
-		{
-			app.UseSwagger();
-			app.UseSwaggerUI();
-		}
+		app.ConfigureSwagger(environment);
 
 		app.ConfigureGlobalMiddlewares();
 
