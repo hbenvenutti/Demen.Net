@@ -1,8 +1,8 @@
-using Demen.Domain.Base;
-
 namespace Demen.Domain.Management.Manager;
 
-public interface IManagerRepository : IRepository<ManagerDomain>
+public interface IManagerRepository
 {
+	Task<ManagerDomain> CreateAsync(ManagerDomainDto domain);
+	Task DeleteAsync(ManagerDomain domain);
 	Task<ManagerDomain?> FindByIdAsync(Guid id);
 }

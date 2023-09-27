@@ -18,7 +18,7 @@ public class ManagerRepository : IManagerRepository
 
 	// ---- write methods --------------------------------------------------- //
 
-	public async Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
+	public async Task<ManagerDomain> CreateAsync(ManagerDomainDto managerDomain)
 	{
 		var managerEntity = (ManagerEntity)managerDomain;
 

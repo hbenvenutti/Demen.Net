@@ -27,7 +27,7 @@ public class ManagerEntity : BaseEntity
 				.Select(email =>
 				{
 					email.Manager = null;
-					return (EmailDomain)email!;
+					return (EmailDomain)email;
 				})
 				.ToList()
 			: null;
@@ -54,11 +54,26 @@ public class ManagerEntity : BaseEntity
 			DeletedAt = managerEntity.DeletedAt,
 			Name = managerEntity.Name,
 			Surname = managerEntity.Surname,
-			Password = managerEntity.Password,
 			Emails = emails,
 			Videos = videos
 		};
 	}
+
+	public static implicit operator ManagerEntity(ManagerDomainDto managerDomain)
+		=> new()
+		{
+			Id = managerDomain.Id,
+			ExternalId = managerDomain.ExternalId,
+			Status = managerDomain.Status,
+			CreatedAt = managerDomain.CreatedAt,
+			UpdatedAt = managerDomain.UpdatedAt,
+			DeletedAt = managerDomain.DeletedAt,
+			Name = managerDomain.Name,
+			Surname = managerDomain.Surname,
+			Password = managerDomain.Password,
+			Emails = null,
+			Videos = null
+		};
 
 	public static implicit operator ManagerEntity(ManagerDomain managerDomain)
 		=> new()
@@ -71,7 +86,7 @@ public class ManagerEntity : BaseEntity
 			DeletedAt = managerDomain.DeletedAt,
 			Name = managerDomain.Name,
 			Surname = managerDomain.Surname,
-			Password = managerDomain.Password,
+			Password = "",
 			Emails = null,
 			Videos = null
 		};

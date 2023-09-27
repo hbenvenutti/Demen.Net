@@ -11,7 +11,7 @@ public class ManagerRepositoryMock : IManagerRepository
 	private readonly ICollection<ManagerDomain> _managers =
 		new List<ManagerDomain>();
 
-	public Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
+	public Task<ManagerDomain> CreateAsync(ManagerDomainDto managerDomain)
 	{
 		var newDomain = new ManagerDomain()
 		{
@@ -20,7 +20,6 @@ public class ManagerRepositoryMock : IManagerRepository
 			Status = Status.Active,
 			Name = managerDomain.Name,
 			Surname = managerDomain.Surname,
-			Password = managerDomain.Password,
 			CreatedAt = DateTime.Now,
 			UpdatedAt = null,
 			DeletedAt = null,
@@ -49,12 +48,12 @@ public class ManagerRepositoryMock : IManagerRepository
 
 	public async Task<ManagerDomain> Seed()
 	{
-		var managerDomain = ManagerDomain.Create(
+		var managerDomainDto = ManagerDomainDto.Create(
 			name: "John",
 			surname: "doe",
 			password: "password"
 		);
 
-		return await CreateAsync(managerDomain);
+		return await CreateAsync(managerDomainDto);
 	}
 }

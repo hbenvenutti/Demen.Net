@@ -1,6 +1,5 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
-using Demen.Application.Dto;
 using Demen.Domain.Management.Manager;
 using MediatR;
 
@@ -16,9 +15,9 @@ public class CreateManagerRequest
 	public string? EmailType { get; init; }
 
 	// ---- operators ------------------------------------------------------- //
-	public static implicit operator ManagerDomain(CreateManagerRequest dto)
+	public static implicit operator ManagerDomainDto(CreateManagerRequest dto)
 	{
-		return ManagerDomain.Create(
+		return ManagerDomainDto.Create(
 			name: dto.Name,
 			surname: dto.Surname,
 			password: dto.Password
