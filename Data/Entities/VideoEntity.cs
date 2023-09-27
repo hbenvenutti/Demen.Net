@@ -44,11 +44,8 @@ public class VideoEntity : BaseEntity
 		};
 	}
 
-	public static implicit operator VideoDomain?(VideoEntity? entity)
+	public static implicit operator VideoDomain(VideoEntity entity)
 	{
-		if (entity is null)
-			return null;
-
 		if(entity.Manager is not null)
 			entity.Manager.Videos = null;
 

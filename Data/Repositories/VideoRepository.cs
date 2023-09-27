@@ -25,7 +25,7 @@ public class VideoRepository : IVideoRepository
 
 		await _dbContext.SaveChangesAsync();
 
-		return (VideoDomain)entity!;
+		return (VideoDomain)entity;
 	}
 
 	public async Task DeleteAsync(VideoDomain domain)
@@ -43,18 +43,34 @@ public class VideoRepository : IVideoRepository
 
 	// ---- read ------------------------------------------------------------ //
 
-	public async Task<VideoDomain?> FindByIdAsync(Guid id)
+	public async Task<VideoDomain?> FindByIdAsync(
+		Guid id,
+		bool includeChannel = false
+	)
 	{
-		return (VideoDomain?) await _dbContext.Videos
-			.AsNoTracking()
+		var query = _dbContext.Videos
+			.AsNoTracking();
+
+		if (includeChannel)
+			query.Include(video => video.Channel);
+
+		var video = await query
 			.FirstOrDefaultAsync(video => video.ExternalId == id);
+
+		if (video is null) return null;
+
+		return (VideoDomain)video;
 	}
 
 	public async Task<VideoDomain?> FindByYoutubeIdAsync(string youtubeId)
 	{
-		return (VideoDomain?) await _dbContext.Videos
+		var video = await _dbContext.Videos
 			.AsNoTracking()
 			.FirstOrDefaultAsync(video => video.YoutubeId == youtubeId);
+
+		if (video is null) return null;
+
+		return (VideoDomain)video;
 	}
 
 	public async Task<bool> ExistsByYoutubeIdAsync(string youtubeId)

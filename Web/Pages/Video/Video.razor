@@ -1,8 +1,10 @@
 @namespace Demen.Web.Pages.Video
 
-@page "/Video"
+@page "/Videos/{id:guid}"
+
+<h1>@Id</h1>
 <YoutubeVideo YoutubeId="GIcAADklnRo" />
 
 @code {
-
+	[Parameter] public Guid Id { get; init; }
 }
