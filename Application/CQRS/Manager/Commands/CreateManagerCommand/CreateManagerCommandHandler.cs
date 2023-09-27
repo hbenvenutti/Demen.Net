@@ -64,7 +64,7 @@ public class CreateManagerCommandHandler
 		// ---- persistence ------------------------------------------------- //
 
 		var manager = await _managerRepository
-			.CreateAsync((ManagerDomain) request);
+			.CreateAsync((ManagerDomainDto) request);
 
 		var email = EmailDomain.Create(
 			managerId: manager.Id,
