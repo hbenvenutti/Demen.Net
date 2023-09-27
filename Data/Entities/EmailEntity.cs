@@ -1,5 +1,6 @@
 using Demen.Common.Enums;
 using Demen.Domain.Management.Email;
+using Demen.Domain.Management.Manager;
 
 namespace Demen.Data.Entities;
 
@@ -34,24 +35,22 @@ public class EmailEntity : BaseEntity
 			DeletedAt = emailDomain.DeletedAt
 		};
 
-	public static implicit operator EmailDomain?(EmailEntity? emailEntity)
-	{
-		if (emailEntity is null)
-			return null;
-
-		return new EmailDomain()
+	public static implicit operator EmailDomain(EmailEntity emailEntity) =>
+		new ()
 		{
 			Id = emailEntity.Id,
 			ExternalId = emailEntity.ExternalId,
 			ManagerId = emailEntity.ManagerId,
-			Manager = emailEntity.Manager,
 			Address = emailEntity.Address,
 			IsVerified = emailEntity.IsVerified,
 			Status = emailEntity.Status,
 			CreatedAt = emailEntity.CreatedAt,
 			UpdatedAt = emailEntity.UpdatedAt,
 			DeletedAt = emailEntity.DeletedAt,
-			Type = emailEntity.Type
+			Type = emailEntity.Type,
+
+			Manager = emailEntity.Manager is null
+				? null
+				: (ManagerDomain) emailEntity.Manager,
 		};
-	}
 }

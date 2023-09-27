@@ -1,4 +1,3 @@
-using Demen.Common.Enums;
 using Demen.Data.Contexts;
 using Demen.Data.Entities;
 using Demen.Data.Helpers;
@@ -26,7 +25,7 @@ public class EmailRepository : IEmailRepository
 
 		await _dbContext.SaveChangesAsync();
 
-		return (EmailDomain)emailEntity!;
+		return (EmailDomain)emailEntity;
 	}
 
 	public Task DeleteAsync(EmailDomain emailDomain)
@@ -48,7 +47,9 @@ public class EmailRepository : IEmailRepository
 			.AsNoTracking()
 			.SingleOrDefaultAsync(email => email.Address == address);
 
-		return (EmailDomain?)emailEntity;
+		if (emailEntity is null) return null;
+
+		return (EmailDomain)emailEntity;
 	}
 
 	public async Task<EmailDomain?> FindByIdAsync(Guid id)
@@ -57,6 +58,8 @@ public class EmailRepository : IEmailRepository
 			.AsNoTracking()
 			.SingleOrDefaultAsync(email => email.ExternalId == id);
 
-		return (EmailDomain?)emailEntity;
+		if (emailEntity is null) return null;
+
+		return (EmailDomain)emailEntity;
 	}
 }

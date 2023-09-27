@@ -24,7 +24,7 @@ public class ChannelRepository : IChannelRepository
 
 		await _dbContext.SaveChangesAsync();
 
-		return (ChannelDomain)entity!;
+		return (ChannelDomain)entity;
 	}
 
 	public async Task DeleteAsync(ChannelDomain domain)
@@ -41,8 +41,12 @@ public class ChannelRepository : IChannelRepository
 
 	public async Task<ChannelDomain?> FindByYoutubeIdAsync(string youtubeId)
 	{
-		return (ChannelDomain?) await _dbContext.Channels
+		var channelEntity = await _dbContext.Channels
 			.AsNoTracking()
 			.FirstOrDefaultAsync(channel => channel.YoutubeId == youtubeId);
+
+		if (channelEntity is null) return null;
+
+		return (ChannelDomain)channelEntity;
 	}
 }

@@ -18,15 +18,15 @@ public class ChannelEntity : BaseEntity
 
 	// ---- operators ------------------------------------------------------- //
 
-	public static implicit operator ChannelDomain?(ChannelEntity? entity)
+	public static implicit operator ChannelDomain(ChannelEntity entity)
 	{
-		if (entity is null) return null;
-
-		var videos = entity.Videos?
-			.Any()
-		    ?? false
+		var videos = entity.Videos?.Any() ?? false
 			? entity.Videos
-				.Select(video => (VideoDomain)video!)
+				.Select(video =>
+				{
+					video.Channel = null;
+					return (VideoDomain)video;
+				})
 				.ToList()
 			: null;
 

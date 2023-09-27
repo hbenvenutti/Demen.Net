@@ -20,10 +20,8 @@ public class ManagerEntity : BaseEntity
 		new List<VideoEntity>();
 
 	// ---- factories ------------------------------------------------------- //
-	public static implicit operator ManagerDomain?(ManagerEntity? managerEntity)
+	public static implicit operator ManagerDomain(ManagerEntity managerEntity)
 	{
-		if (managerEntity is null) return null;
-
 		var emails = managerEntity.Emails?.Any() ?? false
 			? managerEntity.Emails
 				.Select(email =>
@@ -40,7 +38,7 @@ public class ManagerEntity : BaseEntity
 				.Select(video =>
 				{
 					video.Manager = null;
-					return (VideoDomain)video!;
+					return (VideoDomain)video;
 				})
 				.ToList()
 
