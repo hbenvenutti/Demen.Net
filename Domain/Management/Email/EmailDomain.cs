@@ -9,13 +9,13 @@ public class EmailDomain : BaseDomain
 	// ---- properties ------------------------------------------------------ //
 
 	public required string Address { get; init; }
-	public required bool IsVerified { get; init; } = false;
+	public required bool IsVerified { get; init; }
 	public required EmailType Type { get; init; }
 
 	// ---- relationships --------------------------------------------------- //
 
 	public required int ManagerId { get; init; }
-	public required ManagerDomain? Manager { get; init; }
+	public required ManagerDomain? Manager { get; set; }
 
 	// ---- factories ------------------------------------------------------- //
 
