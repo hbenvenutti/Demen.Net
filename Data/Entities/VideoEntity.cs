@@ -1,4 +1,6 @@
+using Demen.Domain.Content.Channel;
 using Demen.Domain.Content.Video;
+using Demen.Domain.Management.Manager;
 
 namespace Demen.Data.Entities;
 
@@ -64,11 +66,17 @@ public class VideoEntity : BaseEntity
 			CreatedAt = entity.CreatedAt,
 			UpdatedAt = entity.UpdatedAt,
 			DeletedAt = entity.DeletedAt,
-			Manager = entity.Manager,
 			PublishedAt = entity.PublishedAt,
 			Status = entity.Status,
 			ChannelId = entity.ChannelId,
-			Channel = entity.Channel
+
+			Manager = entity.Manager is null
+				? null
+				: (ManagerDomain) entity.Manager,
+
+			Channel = entity.Channel is null
+				? null
+				: (ChannelDomain) entity.Channel
 		};
 	}
 }
