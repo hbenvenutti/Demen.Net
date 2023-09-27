@@ -9,6 +9,7 @@ public interface IVideoRepository : IRepository<VideoDomain>
 
 	Task<VideoDomain?> FindByIdAsync(
 		Guid id,
-		bool includeChannel = false
+		bool includeChannel = false,
+		bool includeManager = false
 	);
 }

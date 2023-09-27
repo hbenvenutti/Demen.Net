@@ -45,7 +45,8 @@ public class VideoRepository : IVideoRepository
 
 	public async Task<VideoDomain?> FindByIdAsync(
 		Guid id,
-		bool includeChannel = false
+		bool includeChannel = false,
+		bool includeManager = false
 	)
 	{
 		var query = _dbContext.Videos
@@ -53,6 +54,9 @@ public class VideoRepository : IVideoRepository
 
 		if (includeChannel)
 			query.Include(video => video.Channel);
+
+		if (includeManager)
+			query.Include(video => video.Manager);
 
 		var video = await query
 			.FirstOrDefaultAsync(video => video.ExternalId == id);
