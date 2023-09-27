@@ -1,5 +1,6 @@
 using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Video.Commands.CreateVideo;
+using Demen.Application.CQRS.Video.Queries.FindVideo;
 using Demen.Application.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -56,9 +57,25 @@ namespace Demen.API.Controllers
 	    }
 
 	    [HttpGet(template: "{id:Guid}")]
-	    public async Task<IActionResult> GetVideoById(Guid id)
+	    public async Task<IActionResult> GetVideoById(
+	    [FromRoute] Guid id,
+		[FromQuery] bool channel = false,
+		[FromQuery] bool manager = false
+		)
 	    {
-		    return Ok();
+		    var request = new FindVideoRequest
+		    {
+			    Id = id,
+			    IncludeChannel = channel,
+			    IncludeManager = manager
+		    };
+
+		    var result = await _mediator.Send(request);
+
+		    return StatusCode(
+			    statusCode: result.HttpStatusCode,
+			    value: result
+		    );
 	    }
     }
 }
