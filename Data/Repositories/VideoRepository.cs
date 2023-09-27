@@ -53,10 +53,10 @@ public class VideoRepository : IVideoRepository
 			.AsNoTracking();
 
 		if (includeChannel)
-			query.Include(video => video.Channel);
+			query = query.Include(video => video.Channel);
 
 		if (includeManager)
-			query.Include(video => video.Manager);
+			query = query.Include(video => video.Manager);
 
 		var video = await query
 			.FirstOrDefaultAsync(video => video.ExternalId == id);
