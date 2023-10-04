@@ -53,7 +53,7 @@ public class ManagerController : ControllerBase
 
 		if (!response.IsSuccess)
 			return StatusCode(
-				statusCode: response.HttpStatusCode,
+				statusCode: (int)response.HttpStatusCode,
 				value: response
 			);
 
@@ -96,7 +96,7 @@ public class ManagerController : ControllerBase
 			.Send(request: request);
 
 		return StatusCode(
-			statusCode: response.HttpStatusCode,
+			statusCode: (int)response.HttpStatusCode,
 			value: response
 		);
 	}
@@ -123,7 +123,7 @@ public class ManagerController : ControllerBase
 			.Send(request: request);
 
 		return StatusCode(
-			statusCode: response.HttpStatusCode,
+			statusCode: (int)response.HttpStatusCode,
 			value: response
 		);
 	}

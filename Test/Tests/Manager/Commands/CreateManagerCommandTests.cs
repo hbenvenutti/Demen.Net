@@ -10,7 +10,7 @@ namespace Demen.Test.Tests.Manager.Commands;
 [ExcludeFromCodeCoverage]
 public class CreateManagerCommandTests
 {
-	private readonly ManagerRepositoryMock _managerRepository = new ();
+	private readonly ManagerRepositoryMock _managerRepository = new();
 	private readonly EmailRepositoryMock _emailRepository = new();
 	private readonly CancellationToken _cancellationToken = new();
 
@@ -19,18 +19,11 @@ public class CreateManagerCommandTests
 
 	// ---- constructor ----------------------------------------------------- //
 
-	public CreateManagerCommandTests()
-	{
-		Seed();
-	}
+	public CreateManagerCommandTests() => Seed();
 
 	// ---- seeds ----------------------------------------------------------- //
 
-	private async void Seed()
-	{
-		await _emailRepository
-			.Seed(ExistentEmail);
-	}
+	private async void Seed() => await _emailRepository.Seed(ExistentEmail);
 
 	// ---- tests ----------------------------------------------------------- //
 
@@ -80,12 +73,12 @@ public class CreateManagerCommandTests
 			Assert.False(result.IsSuccess);
 
 			Assert.Equal(
-				expected: (int)StatusCode.Conflict,
+				expected: StatusCode.Conflict,
 				actual: result.StatusCode
 			);
 
 			Assert.Equal(
-				expected: (int)HttpStatusCode.Conflict,
+				expected: HttpStatusCode.Conflict,
 				actual: result.HttpStatusCode
 			);
 
@@ -98,7 +91,6 @@ public class CreateManagerCommandTests
 
 			Assert.Null(result.Data);
 
-
 			return;
 		}
 
@@ -107,12 +99,12 @@ public class CreateManagerCommandTests
 			Assert.False(result.IsSuccess);
 
 			Assert.Equal(
-				expected: (int)StatusCode.InvalidData,
+				expected: StatusCode.InvalidData,
 				actual: result.StatusCode
 			);
 
 			Assert.Equal(
-				expected: (int)HttpStatusCode.BadRequest,
+				expected: HttpStatusCode.BadRequest,
 				actual: result.HttpStatusCode
 			);
 
@@ -124,6 +116,7 @@ public class CreateManagerCommandTests
 				expected: new InvalidDataError(
 					property: nameof(request.EmailType)
 				).Message,
+
 				actual: result.Error.Errors.First()
 			);
 
@@ -137,12 +130,12 @@ public class CreateManagerCommandTests
 		Assert.True(result.IsSuccess);
 
 		Assert.Equal(
-			expected: (int)HttpStatusCode.Created,
+			expected: HttpStatusCode.Created,
 			actual: result.HttpStatusCode
 		);
 
 		Assert.Equal(
-			expected: (int)StatusCode.Succeeded,
+			expected: StatusCode.Succeeded,
 			actual: result.StatusCode
 		);
 

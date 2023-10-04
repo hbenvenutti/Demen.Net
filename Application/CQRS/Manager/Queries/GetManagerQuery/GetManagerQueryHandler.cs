@@ -36,8 +36,8 @@ public class GetManagerQueryHandler :
 
 		if (managerDomain is null)
 			return new Response<GetManagerResponseDto>(
-				httpStatusCode: (int)HttpStatusCode.NotFound,
-				statusCode: (int)StatusCode.ResourceNotFound,
+				httpStatusCode: HttpStatusCode.NotFound,
+				statusCode: StatusCode.ResourceNotFound,
 				errorDto: new ApplicationErrorDto(
 					new ResourceNotFoundError(Resources.Manager).Message
 				)
@@ -47,8 +47,8 @@ public class GetManagerQueryHandler :
 
 		return new Response<GetManagerResponseDto>(
 			isSuccess: true,
-			httpStatusCode: (int)HttpStatusCode.OK,
-			statusCode: (int)StatusCode.Succeeded,
+			httpStatusCode: HttpStatusCode.OK,
+			statusCode: StatusCode.Succeeded,
 			data: responseDto
 		);
 	}

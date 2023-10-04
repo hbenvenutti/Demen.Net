@@ -33,19 +33,17 @@ public class FindVideoQuery
 
 		if (video is null)
 			return new Response<FindVideoResponseDto>(
-				httpStatusCode: (int)HttpStatusCode.NotFound,
-				statusCode: (int)StatusCode.ResourceNotFound,
+				httpStatusCode: HttpStatusCode.NotFound,
+				statusCode: StatusCode.ResourceNotFound,
 				errorDto: new ApplicationErrorDto(
-					new ResourceNotFoundError(Resources.Video)
-						.Message
+					new ResourceNotFoundError(Resources.Video).Message
 				)
 			);
 
 		return new Response<FindVideoResponseDto>(
 			isSuccess: true,
-			httpStatusCode: (int)HttpStatusCode.OK,
-			statusCode: (int)StatusCode.Succeeded,
-			errorDto: null,
+			httpStatusCode: HttpStatusCode.OK,
+			statusCode: StatusCode.Succeeded,
 			data: new FindVideoResponseDto
 			{
 				Video = video

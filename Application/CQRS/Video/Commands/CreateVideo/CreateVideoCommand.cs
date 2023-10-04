@@ -44,8 +44,8 @@ public class CreateVideoCommand
 
 		if (videoExists)
 			return new Response<CreateVideoResponseDto>(
-				httpStatusCode: (int)HttpStatusCode.Conflict,
-				statusCode: (int)StatusCode.Conflict,
+				httpStatusCode: HttpStatusCode.Conflict,
+				statusCode: StatusCode.Conflict,
 
 				errorDto: new ApplicationErrorDto(
 					new ResourceAlreadyExistsError(Resources.Video)
@@ -58,8 +58,8 @@ public class CreateVideoCommand
 
 		if (videoDto is null)
 			return new Response<CreateVideoResponseDto>(
-				httpStatusCode: (int)HttpStatusCode.NotFound,
-				statusCode: (int)StatusCode.ExternalResourceNotFound,
+				httpStatusCode: HttpStatusCode.NotFound,
+				statusCode: StatusCode.ExternalResourceNotFound,
 
 				errorDto: new ApplicationErrorDto(
 					new ResourceNotFoundError(Resources.ExternalVideo)
@@ -78,8 +78,8 @@ public class CreateVideoCommand
 
 			if (!result.isSuccess)
 				return new Response<CreateVideoResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.NotFound,
-					statusCode: (int)StatusCode.ExternalResourceNotFound,
+					httpStatusCode: HttpStatusCode.NotFound,
+					statusCode: StatusCode.ExternalResourceNotFound,
 
 					errorDto: new ApplicationErrorDto(
 						new ResourceNotFoundError(Resources.ExternalChannel)
@@ -107,8 +107,8 @@ public class CreateVideoCommand
 
 		return new Response<CreateVideoResponseDto>(
 			isSuccess: true,
-			httpStatusCode: (int)HttpStatusCode.Created,
-			statusCode: (int)StatusCode.Succeeded,
+			httpStatusCode: HttpStatusCode.Created,
+			statusCode: StatusCode.Succeeded,
 			data: (CreateVideoResponseDto)videoDomain
 		);
 	}

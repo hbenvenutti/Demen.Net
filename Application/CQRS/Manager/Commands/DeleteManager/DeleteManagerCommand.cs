@@ -29,8 +29,8 @@ public class DeleteManagerCommand
 
 		if (manager is null || manager.Status == Status.Deleted)
 			return new Response<EmptyDto>(
-				httpStatusCode: (int)HttpStatusCode.NotFound,
-				statusCode: (int)StatusCode.ResourceNotFound,
+				httpStatusCode: HttpStatusCode.NotFound,
+				statusCode: StatusCode.ResourceNotFound,
 				errorDto: new ApplicationErrorDto(
 					new ResourceNotFoundError(Resources.Manager).Message
 				)
@@ -41,8 +41,8 @@ public class DeleteManagerCommand
 
 		return new Response<EmptyDto>(
 			isSuccess: true,
-			httpStatusCode: (int)HttpStatusCode.OK,
-			statusCode: (int)StatusCode.Succeeded
+			httpStatusCode: HttpStatusCode.OK,
+			statusCode: StatusCode.Succeeded
 		);
 	}
 }

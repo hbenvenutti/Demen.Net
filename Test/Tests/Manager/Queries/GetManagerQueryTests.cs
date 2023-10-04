@@ -58,7 +58,7 @@ public class GetManagerQueryTests
 		if (!idExists)
 		{
 			Assert.Equal(
-				expected: (int)StatusCode.ResourceNotFound,
+				expected: StatusCode.ResourceNotFound,
 				actual: response.StatusCode
 			);
 

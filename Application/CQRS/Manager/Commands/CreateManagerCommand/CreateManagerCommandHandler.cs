@@ -42,8 +42,8 @@ public class CreateManagerCommandHandler
 
 		if (!dataValidationResult.succeded)
 			return new Response<CreateManagerResponseDto>(
-				httpStatusCode: (int)HttpStatusCode.BadRequest,
-				statusCode: (int)StatusCode.InvalidData,
+				httpStatusCode: HttpStatusCode.BadRequest,
+				statusCode: StatusCode.InvalidData,
 				errorDto: new ApplicationErrorDto(
 					dataValidationResult.errorMessage
 				)
@@ -54,8 +54,8 @@ public class CreateManagerCommandHandler
 
 		if (storedEmail is not null)
 			return new Response<CreateManagerResponseDto>(
-				httpStatusCode: (int)HttpStatusCode.Conflict,
-				statusCode: (int)StatusCode.Conflict,
+				httpStatusCode: HttpStatusCode.Conflict,
+				statusCode: StatusCode.Conflict,
 				errorDto: new ApplicationErrorDto(
 					EmailInUseError.Message
 				)
@@ -80,8 +80,8 @@ public class CreateManagerCommandHandler
 
 		return new Response<CreateManagerResponseDto>(
 			isSuccess: true,
-			httpStatusCode: (int)HttpStatusCode.Created,
-			statusCode: (int)StatusCode.Succeeded,
+			httpStatusCode: HttpStatusCode.Created,
+			statusCode: StatusCode.Succeeded,
 			data: responseDto
 		);
 	}

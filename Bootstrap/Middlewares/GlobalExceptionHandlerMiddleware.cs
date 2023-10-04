@@ -1,3 +1,4 @@
+using System.Net;
 using Demen.Application.CQRS.Base;
 using Demen.Application.Dto;
 using Demen.Common.Enums;
@@ -33,7 +34,7 @@ public class GlobalExceptionHandlerMiddleware
 		Exception exception
 	)
 	{
-		const int code = StatusCodes.Status500InternalServerError;
+		const HttpStatusCode httpStatusCode = HttpStatusCode.InternalServerError;
 
 		var messages = exception.InnerException is null
 			? new List<string>() { exception.Message }
@@ -44,15 +45,15 @@ public class GlobalExceptionHandlerMiddleware
 			};
 
 		var responseDto = new Response<EmptyDto>(
-			httpStatusCode: code,
-			statusCode: (int)StatusCode.Unexpected,
+			httpStatusCode: httpStatusCode,
+			statusCode: StatusCode.Unexpected,
 			errorDto: new ApplicationErrorDto(messages)
 		);
 
 		var jsonDto = JsonHelper.ToJson(responseDto);
 
 		context.Response.ContentType = "application/json";
-		context.Response.StatusCode = code;
+		context.Response.StatusCode = (int)httpStatusCode;
 
 		return context.Response.WriteAsync(jsonDto);
 	}

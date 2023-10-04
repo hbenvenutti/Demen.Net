@@ -45,7 +45,7 @@ public class VideoController : ControllerBase
 
 		if (!response.IsSuccess)
 			return StatusCode(
-				statusCode: response.HttpStatusCode,
+				statusCode: (int)response.HttpStatusCode,
 				value: response
 			);
 
@@ -70,11 +70,11 @@ public class VideoController : ControllerBase
 			IncludeManager = manager
 		};
 
-		var result = await _mediator.Send(request);
+		var response = await _mediator.Send(request);
 
 		return StatusCode(
-			statusCode: result.HttpStatusCode,
-			value: result
+			statusCode: (int)response.HttpStatusCode,
+			value: response
 		);
 	}
 }
