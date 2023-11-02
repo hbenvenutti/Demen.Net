@@ -1,0 +1,21 @@
+@namespace Demen.Web.Pages.Video
+
+<link rel="stylesheet" href="css/YoutubeVideo.css">
+
+<div class="youtube-video">
+    <iframe
+        width="1280"
+        height="720"
+        src=@($"{YoutubeProps.YoutubeUrl}{YoutubeId}{YoutubeProps.YoutubeUrlOptions}")
+        @* title="How To Learn Blazor In 2023" *@
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+    >
+
+    </iframe>
+</div>
+
+@code {
+    [Parameter] public string YoutubeId { get; set; }
+}

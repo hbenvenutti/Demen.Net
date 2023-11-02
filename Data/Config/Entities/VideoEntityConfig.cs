@@ -10,12 +10,11 @@ public class VideoEntityConfig : IEntityTypeConfiguration<VideoEntity>
 {
 	public void Configure(EntityTypeBuilder<VideoEntity> builder)
 	{
-		builder
-			.ToTable(
-				name: "videos",
-				table => table
-					.CreateStatusConstraint(name: "CK_video_status")
-			);
+		builder.ToTable(
+			name: "videos",
+			buildAction: table => table
+				.CreateStatusConstraint(name: "CK_video_status")
+		);
 
 		builder
 			.ConfigureBaseEntityProperties();
@@ -33,11 +32,23 @@ public class VideoEntityConfig : IEntityTypeConfiguration<VideoEntity>
 			.OnDelete(DeleteBehavior.Restrict)
 			.HasConstraintName("FK_video_manager_id");
 
+		builder
+			.HasOne(video => video.Channel)
+			.WithMany(channel => channel.Videos)
+			.HasForeignKey(video => video.ChannelId)
+			.OnDelete(DeleteBehavior.Restrict)
+			.HasConstraintName("FK_video_channel_id");
+
 		// ---- columns ----------------------------------------------------- //
 
 		builder
 			.Property(video => video.ManagerId)
 			.HasColumnName("manager_id")
+			.IsRequired();
+
+		builder
+			.Property(video => video.ChannelId)
+			.HasColumnName("channel_id")
 			.IsRequired();
 
 		builder
@@ -63,5 +74,17 @@ public class VideoEntityConfig : IEntityTypeConfiguration<VideoEntity>
 			.HasColumnName("youtube_id")
 			.HasColumnType("varchar")
 			.IsRequired();
+
+		builder
+			.Property(video => video.PublishedAt)
+			.HasColumnName("published_at")
+			.IsRequired();
+
+		// ---- indexes ----------------------------------------------------- //
+
+		builder
+			.HasIndex(video => video.YoutubeId)
+			.HasDatabaseName("IX_video_youtube_id")
+			.IsUnique();
 	}
 }

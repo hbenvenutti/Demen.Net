@@ -1,6 +1,6 @@
-using Demen.Common.Enums;
 using Demen.Data.Contexts;
 using Demen.Data.Entities;
+using Demen.Data.Helpers;
 using Demen.Domain.Management.Manager;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +18,9 @@ public class ManagerRepository : IManagerRepository
 
 	// ---- write methods --------------------------------------------------- //
 
-	public async Task<ManagerDomain> CreateAsync(ManagerDomain managerDomain)
+	public async Task<ManagerDomain> CreateAsync(ManagerDomainDto managerDomain)
 	{
-		var managerEntity = (ManagerEntity)managerDomain!;
+		var managerEntity = (ManagerEntity)managerDomain;
 
 		await _dbContext
 			.Managers
@@ -29,15 +29,14 @@ public class ManagerRepository : IManagerRepository
 		await _dbContext
 			.SaveChangesAsync();
 
-		return (ManagerDomain)managerEntity!;
+		return (ManagerDomain)managerEntity;
 	}
 
 	public async Task DeleteAsync(ManagerDomain managerDomain)
 	{
-		var managerEntity = (ManagerEntity)managerDomain!;
+		var managerEntity = (ManagerEntity)managerDomain;
 
-		managerEntity.Status = Status.Deleted;
-		managerEntity.DeletedAt = DateTime.UtcNow;
+		managerEntity.DeleteEntity();
 
 		_dbContext
 			.Managers
@@ -58,6 +57,8 @@ public class ManagerRepository : IManagerRepository
 			.AsNoTracking()
 			.SingleOrDefaultAsync(manager => manager.ExternalId == id);
 
-		return (ManagerDomain?)managerEntity;
+		if (managerEntity is null) return null;
+
+		return (ManagerDomain)managerEntity;
 	}
 }

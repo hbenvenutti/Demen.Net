@@ -1,7 +1,7 @@
+using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Application.CQRS.Manager.Commands.DeleteManager;
-using Demen.Application.CQRS.Manager.Commands.DeleteManager.Dto;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 using Demen.Application.Dto;
@@ -31,38 +31,36 @@ public class ManagerController : ControllerBase
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status201Created,
-		type: typeof(CreateManagerResponseDto)
+		type: typeof(Response<CreateManagerResponseDto>)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status400BadRequest,
-		type: typeof(ResponseDto<CreateManagerResponseDto>)
+		type: typeof(Response<CreateManagerResponseDto>)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status500InternalServerError,
-		type: typeof(ResponseDto<EmptyDto>)
+		type: typeof(Response<EmptyDto>)
 	)]
 
 	public async Task<IActionResult> CreateManager(
-		[FromBody] CreateManagerRequestDto requestDto
+		[FromBody] CreateManagerRequest request
 	)
 	{
-		var request = new CreateManagerRequest(requestDto: requestDto);
-
 		var response = await _mediator
 			.Send(request: request);
 
-		if (!response.ResponseDto.IsSuccess)
+		if (!response.IsSuccess)
 			return StatusCode(
-				statusCode: response.ResponseDto.HttpStatusCode,
-				value: response.ResponseDto
+				statusCode: (int)response.HttpStatusCode,
+				value: response
 			);
 
 		return CreatedAtAction(
 			actionName: nameof(GetManagerById),
-			routeValues: new { id = response.ResponseDto.Data!.Id },
-			value: response.ResponseDto
+			routeValues: new { id = response.Data!.Id },
+			value: response
 		);
 	}
 
@@ -77,31 +75,29 @@ public class ManagerController : ControllerBase
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status400BadRequest,
-		type: typeof(ResponseDto<GetManagerResponseDto>)
+		type: typeof(Response<GetManagerResponseDto>)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status404NotFound,
-		type: typeof(ResponseDto<GetManagerResponseDto>)
+		type: typeof(Response<GetManagerResponseDto>)
 	)]
 
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status500InternalServerError,
-		type: typeof(ResponseDto<EmptyDto>)
+		type: typeof(Response<EmptyDto>)
 	)]
 
 	public async Task<IActionResult> GetManagerById([FromRoute] Guid id)
 	{
-		var requestDto = new GetManagerRequestDto(id: id);
-
-		var request = new GetManagerRequest(requestDto);
+		var request = new GetManagerRequest() {Id = id 	};
 
 		var response = await _mediator
 			.Send(request: request);
 
 		return StatusCode(
-			statusCode: response.ResponseDto.HttpStatusCode,
-			value: response.ResponseDto
+			statusCode: (int)response.HttpStatusCode,
+			value: response
 		);
 	}
 
@@ -112,28 +108,23 @@ public class ManagerController : ControllerBase
 	[ProducesResponseType(statusCode: StatusCodes.Status200OK)]
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status404NotFound,
-		type: typeof(ResponseDto<EmptyDto>)
+		type: typeof(Response<EmptyDto>)
 	)]
 	[ProducesResponseType(
 		statusCode: StatusCodes.Status500InternalServerError,
-		type: typeof(ResponseDto<EmptyDto>)
+		type: typeof(Response<EmptyDto>)
 	)]
 
 	public async Task<IActionResult> DeleteManagerById([FromRoute] Guid id)
 	{
-		var requestDto = new DeleteManagerRequestDto()
-		{
-			Id = id
-		};
-
-		var request = new DeleteManagerRequest(requestDto);
+		var request = new DeleteManagerRequest() { Id = id };
 
 		var response = await _mediator
 			.Send(request: request);
 
 		return StatusCode(
-			statusCode: response.ResponseDto.HttpStatusCode,
-			value: response.ResponseDto
+			statusCode: (int)response.HttpStatusCode,
+			value: response
 		);
 	}
 }

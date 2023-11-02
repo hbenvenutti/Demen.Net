@@ -4,10 +4,10 @@ namespace Demen.Domain.Base;
 
 public abstract class BaseDomain
 {
-	public int Id { get; protected init; }
-	public Guid ExternalId { get; protected init; }
-	public DateTime CreatedAt { get; protected init; }
-	public DateTime? UpdatedAt { get; protected init; }
-	public DateTime? DeletedAt { get; protected init; }
-	public Status Status { get; protected init; }
+	public required int Id { get; init; }
+	public required Guid ExternalId { get; init; }
+	public required DateTime CreatedAt { get; init; }
+	public required Status Status { get; init; }
+	public required DateTime? UpdatedAt { get; init; }
+	public required DateTime? DeletedAt { get; init; }
 }

@@ -1,4 +1,6 @@
-using Demen.Domain.Content;
+using Demen.Domain.Content.Channel;
+using Demen.Domain.Content.Video;
+using Demen.Domain.Management.Manager;
 
 namespace Demen.Data.Entities;
 
@@ -10,18 +12,19 @@ public class VideoEntity : BaseEntity
 	public required string Description { get; set; }
 	public required string ThumbnailUrl { get; set; }
 	public required string YoutubeId { get; set; }
+	public required DateTime PublishedAt { get; set; }
 
 	// ---- relationships --------------------------------------------------- //
 
-	public int ManagerId { get; set; }
-	public ManagerEntity? Manager { get; set; }
+	public required int ManagerId { get; set; }
+	public required int ChannelId { get; set; }
+	public required ManagerEntity? Manager { get; set; }
+	public required ChannelEntity? Channel { get; set; }
 
 	// ---- operators ------------------------------------------------------- //
 
-	public static implicit operator VideoEntity?(VideoDomain? domain)
+	public static implicit operator VideoEntity(VideoDomain domain)
 	{
-		if (domain is null)
-			return null;
 
 		return new VideoEntity()
 		{
@@ -35,30 +38,45 @@ public class VideoEntity : BaseEntity
 			CreatedAt = domain.CreatedAt,
 			UpdatedAt = domain.UpdatedAt,
 			DeletedAt = domain.DeletedAt,
-			Manager = null
+			PublishedAt = domain.PublishedAt,
+			Manager = null,
+			Status = domain.Status,
+			ChannelId = domain.ChannelId,
+			Channel = null
 		};
 	}
 
-	public static implicit operator VideoDomain?(VideoEntity? entity)
+	public static implicit operator VideoDomain(VideoEntity entity)
 	{
-		if (entity is null)
-			return null;
-
 		if(entity.Manager is not null)
 			entity.Manager.Videos = null;
 
-		return new VideoDomain(
-			id: entity.Id,
-			title: entity.Title,
-			description: entity.Description,
-			thumbnailUrl: entity.ThumbnailUrl,
-			youtubeId: entity.YoutubeId,
-			managerId: entity.ManagerId,
-			externalId: entity.ExternalId,
-			createdAt: entity.CreatedAt,
-			updatedAt: entity.UpdatedAt,
-			deletedAt: entity.DeletedAt,
-			manager: entity.Manager
-		);
+		if (entity.Channel is not null)
+			entity.Channel.Videos = null;
+
+		return new VideoDomain()
+		{
+			Id = entity.Id,
+			Title = entity.Title,
+			Description = entity.Description,
+			ThumbnailUrl = entity.ThumbnailUrl,
+			YoutubeId = entity.YoutubeId,
+			ManagerId = entity.ManagerId,
+			ExternalId = entity.ExternalId,
+			CreatedAt = entity.CreatedAt,
+			UpdatedAt = entity.UpdatedAt,
+			DeletedAt = entity.DeletedAt,
+			PublishedAt = entity.PublishedAt,
+			Status = entity.Status,
+			ChannelId = entity.ChannelId,
+
+			Manager = entity.Manager is null
+				? null
+				: (ManagerDomain) entity.Manager,
+
+			Channel = entity.Channel is null
+				? null
+				: (ChannelDomain) entity.Channel
+		};
 	}
 }

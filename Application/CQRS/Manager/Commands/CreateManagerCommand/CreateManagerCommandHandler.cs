@@ -1,4 +1,5 @@
 using System.Net;
+using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Commands.CreateManagerCommand.Dto;
 using Demen.Application.Dto;
 using Demen.Application.Error;
@@ -11,7 +12,7 @@ using MediatR;
 namespace Demen.Application.CQRS.Manager.Commands.CreateManagerCommand;
 
 public class CreateManagerCommandHandler
-	: IRequestHandler<CreateManagerRequest, CreateManagerResponse>
+	: IRequestHandler<CreateManagerRequest, Response<CreateManagerResponseDto>>
 {
 	// ---- fields ---------------------------------------------------------- //
 
@@ -30,49 +31,45 @@ public class CreateManagerCommandHandler
 	}
 
 	// ---- methods --------------------------------------------------------- //
-	public async Task<CreateManagerResponse> Handle(
+	public async Task<Response<CreateManagerResponseDto>> Handle(
 		CreateManagerRequest request,
 		CancellationToken cancellationToken
 	)
 	{
 		// ---- validation -------------------------------------------------- //
 		var dataValidationResult =
-			IsRequestDtoValid(requestDto: request.RequestDto);
+			IsRequestDtoValid(requestDto: request);
 
 		if (!dataValidationResult.succeded)
-			return new CreateManagerResponse(
-				new ResponseDto<CreateManagerResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.BadRequest,
-					statusCode: (int)StatusCode.InvalidData,
-					errorDto: new ApplicationErrorDto(
-						dataValidationResult.errorMessage
-					)
+			return new Response<CreateManagerResponseDto>(
+				httpStatusCode: HttpStatusCode.BadRequest,
+				statusCode: StatusCode.InvalidData,
+				errorDto: new ApplicationErrorDto(
+					dataValidationResult.errorMessage
 				)
 			);
 
 		var storedEmail = await _emailRepository
-			.FindByAddressAsync(request.RequestDto.Email);
+			.FindByAddressAsync(request.Email);
 
 		if (storedEmail is not null)
-			return new CreateManagerResponse(
-				new ResponseDto<CreateManagerResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.BadRequest,
-					statusCode: (int)StatusCode.Conflict,
-					errorDto: new ApplicationErrorDto(
-						EmailInUseError.Message
-					)
+			return new Response<CreateManagerResponseDto>(
+				httpStatusCode: HttpStatusCode.Conflict,
+				statusCode: StatusCode.Conflict,
+				errorDto: new ApplicationErrorDto(
+					EmailInUseError.Message
 				)
 			);
 
 		// ---- persistence ------------------------------------------------- //
 
 		var manager = await _managerRepository
-			.CreateAsync((ManagerDomain) request.RequestDto);
+			.CreateAsync((ManagerDomainDto) request);
 
 		var email = EmailDomain.Create(
 			managerId: manager.Id,
-			address: request.RequestDto.Email,
-			type: request.RequestDto.EmailType?.StringToEnum<EmailType>()
+			address: request.Email,
+			type: request.EmailType?.StringToEnum<EmailType>()
 		);
 
 		await _emailRepository.CreateAsync(email);
@@ -81,20 +78,18 @@ public class CreateManagerCommandHandler
 
 		var responseDto = (CreateManagerResponseDto)manager;
 
-		return new CreateManagerResponse(
-			new ResponseDto<CreateManagerResponseDto>(
-				isSuccess: true,
-				httpStatusCode: (int)HttpStatusCode.Created,
-				statusCode: (int)StatusCode.Succeeded,
-				data: responseDto
-			)
+		return new Response<CreateManagerResponseDto>(
+			isSuccess: true,
+			httpStatusCode: HttpStatusCode.Created,
+			statusCode: StatusCode.Succeeded,
+			data: responseDto
 		);
 	}
 
 	// ---- helpers --------------------------------------------------------- //
 
 	private static (bool succeded, string errorMessage) IsRequestDtoValid(
-		CreateManagerRequestDto requestDto
+		CreateManagerRequest requestDto
 	)
 	{
 		return (

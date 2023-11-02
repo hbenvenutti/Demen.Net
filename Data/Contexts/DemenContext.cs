@@ -10,6 +10,7 @@ public sealed class DemenContext : DbContext, IDemenContext
 	public DbSet<ManagerEntity> Managers { get; set; }
 	public DbSet<EmailEntity> Emails { get; set; }
 	public DbSet<VideoEntity> Videos { get; set; }
+	public DbSet<ChannelEntity> Channels { get; set; }
 
 	public DemenContext(DbContextOptions<DemenContext> options)
 		: base(options)
@@ -17,6 +18,7 @@ public sealed class DemenContext : DbContext, IDemenContext
 		Managers = Set<ManagerEntity>();
 		Emails = Set<EmailEntity>();
 		Videos = Set<VideoEntity>();
+		Channels = Set<ChannelEntity>();
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +26,7 @@ public sealed class DemenContext : DbContext, IDemenContext
 		modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
 		modelBuilder.ApplyConfiguration(new EmailEntityConfig());
 		modelBuilder.ApplyConfiguration(new VideoEntityConfig());
+		modelBuilder.ApplyConfiguration(new ChannelEntityConfig());
 	}
 
 	public override Task<int> SaveChangesAsync(

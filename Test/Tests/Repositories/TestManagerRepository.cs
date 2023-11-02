@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Demen.Common.Enums;
 using Demen.Data.Contexts;
-using Demen.Data.Entities;
 using Demen.Data.Repositories;
 using Demen.Domain.Management.Manager;
 using Demen.Test.Mocks.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Demen.Test.Tests.Repositories;
 
@@ -32,7 +30,7 @@ public class TestManagerRepository
 	public async void CreateManagerTest()
 	{
 		var manager = await _managerRepository
-			.CreateAsync(ManagerDomain.Create(
+			.CreateAsync(ManagerDomainDto.Create(
 				name: "John",
 				surname: "Doe",
 				password: "password"
@@ -160,11 +158,13 @@ public class TestManagerRepository
 
 	private async Task<ManagerDomain> Seed()
 	{
-		var manager = await _managerRepository.CreateAsync(ManagerDomain.Create(
-			name: "John",
-			surname: "Doe",
-			password: "password"
-		));
+		var manager = await _managerRepository.CreateAsync(
+			ManagerDomainDto.Create(
+				name: "John",
+				surname: "Doe",
+				password: "password"
+			)
+		);
 
 		_dbContext
 			.ChangeTracker

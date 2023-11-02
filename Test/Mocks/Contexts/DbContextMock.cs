@@ -11,6 +11,7 @@ public class DbContextMock : IDemenContext
 	public DbSet<ManagerEntity> Managers { get; set; } = null!;
 	public DbSet<EmailEntity> Emails { get; set; } = null!;
 	public DbSet<VideoEntity> Videos { get; set; } = null!;
+	public DbSet<ChannelEntity> Channels { get; set; } = null!;
 
 	public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 	{

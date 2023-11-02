@@ -1,4 +1,5 @@
 using System.Net;
+using Demen.Application.CQRS.Base;
 using Demen.Application.CQRS.Manager.Queries.GetManagerQuery.Dto;
 using Demen.Application.Dto;
 using Demen.Application.Error;
@@ -10,7 +11,7 @@ using MediatR;
 namespace Demen.Application.CQRS.Manager.Queries.GetManagerQuery;
 
 public class GetManagerQueryHandler :
-	IRequestHandler<GetManagerRequest, GetManagerResponse>
+	IRequestHandler<GetManagerRequest, Response<GetManagerResponseDto>>
 {
 	// ---- fields ---------------------------------------------------------- //
 
@@ -25,34 +26,30 @@ public class GetManagerQueryHandler :
 
 	// ---- methods --------------------------------------------------------- //
 
-	public async Task<GetManagerResponse> Handle(
+	public async Task<Response<GetManagerResponseDto>> Handle(
 		GetManagerRequest request,
 		CancellationToken cancellationToken
 	)
 	{
 		var managerDomain = await _managerRepository
-			.FindByIdAsync(request.RequestDto.Id);
+			.FindByIdAsync(request.Id);
 
 		if (managerDomain is null)
-			return new GetManagerResponse(
-				new ResponseDto<GetManagerResponseDto>(
-					httpStatusCode: (int)HttpStatusCode.NotFound,
-					statusCode: (int)StatusCode.ResourceNotFound,
-					errorDto: new ApplicationErrorDto(
-						new ResourceNotFoundError(Resources.Manager).Message
-					)
+			return new Response<GetManagerResponseDto>(
+				httpStatusCode: HttpStatusCode.NotFound,
+				statusCode: StatusCode.ResourceNotFound,
+				errorDto: new ApplicationErrorDto(
+					new ResourceNotFoundError(Resources.Manager).Message
 				)
 			);
 
 		var responseDto = (GetManagerResponseDto)managerDomain;
 
-		return new GetManagerResponse(
-			new ResponseDto<GetManagerResponseDto>(
-				isSuccess: true,
-				httpStatusCode: (int)HttpStatusCode.OK,
-				statusCode: (int)StatusCode.Succeeded,
-				data: responseDto
-			)
+		return new Response<GetManagerResponseDto>(
+			isSuccess: true,
+			httpStatusCode: HttpStatusCode.OK,
+			statusCode: StatusCode.Succeeded,
+			data: responseDto
 		);
 	}
 }
