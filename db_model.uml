@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.__EFMigrationsHistory</OriginalElement>
+  <nodes>
+    <node x="-175.875" y="-170.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.channels</node>
+    <node x="149.0" y="-170.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.managers</node>
+    <node x="393.875" y="150.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.emails</node>
+    <node x="488.875" y="-170.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.__EFMigrationsHistory</node>
+    <node x="-111.125" y="150.0">98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.videos</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.videos" target="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.managers" relationship="REFERENCES">
+      <point x="69.25" y="-169.5" />
+      <point x="96.625" y="125.0" />
+      <point x="283.0" y="125.0" />
+      <point x="0.0" y="123.5" />
+    </edge>
+    <edge source="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.videos" target="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.channels" relationship="REFERENCES">
+      <point x="-69.25" y="-169.5" />
+      <point x="0.0" y="135.0" />
+    </edge>
+    <edge source="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.emails" target="98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.managers" relationship="REFERENCES">
+      <point x="0.0" y="-135.0" />
+      <point x="527.875" y="125.0" />
+      <point x="283.0" y="125.0" />
+      <point x="0.0" y="123.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="292.5" y="159.5" />
+  <SelectedNodes>
+    <node>98db0d2c-74f0-4a7b-983a-be8504b7cc81.TABLE:demen.public.emails</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
